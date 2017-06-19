@@ -1,6 +1,10 @@
-./src/miniVilles/metier/Carte.java
-./src/miniVilles/metier/Etablissement.java
-./src/miniVilles/metier/Monument.java
+./src/miniVilles/metier/carte/Carte.java
+./src/miniVilles/metier/carte/Etablissement.java
+./src/miniVilles/metier/carte/EtablissementBleu.java
+./src/miniVilles/metier/carte/EtablissementVert.java
+./src/miniVilles/metier/carte/EtablissementRouge.java
+./src/miniVilles/metier/carte/Monument.java
+
 ./src/miniVilles/metier/Joueur.java
 ./src/miniVilles/metier/Pioche.java
 

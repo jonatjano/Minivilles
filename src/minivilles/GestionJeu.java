@@ -3,6 +3,7 @@ package minivilles;
 import minivilles.ihm.*;
 import minivilles.metier.*;
 import minivilles.util.Utility;
+import java.util.Scanner;
 
 
 public class GestionJeu
@@ -37,12 +38,12 @@ public class GestionJeu
 		while (true)
 		{
 			if (cpt == indexFirstPlayer)
-				this.ihm.displayTour(++cptTour);
+				this.ihm.displayTour(this.pioche, ++cptTour);
 
 			this.joueur = this.tabJoueur[cpt];
 
-			System.out.println( String.format("%-15s (%3d)   -> %d", this.joueur.getPrenom(), this.joueur.getMonnaie(), this.lancerDe(1)) );
-			Utility.waitForSeconds(1.5f);
+			this.ihm.displayJoueur( this.joueur, this.lancerDe(1) );
+			//Utility.waitForSeconds(1.5f);
 
 			cpt++; cpt = cpt%nbJoueur;
 		}

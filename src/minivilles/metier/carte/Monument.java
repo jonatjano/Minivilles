@@ -1,4 +1,4 @@
-package minivilles.metier;
+package minivilles.metier.carte;
 
 
 public class Monument extends Carte
@@ -9,7 +9,7 @@ public class Monument extends Carte
 
 	public Monument (String nom, String description, int cout)
 	{
-		super(nom, "Monument", description, cout, 1);
+		super(nom, "Monument", description, false, cout);
 
 		this.estConstruit = false;
 	}
