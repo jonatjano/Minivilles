@@ -56,11 +56,4 @@ public class GestionJeu
 	{
 		return (int) (Math.random() * MAX_VAL * nbDe) + 1;
 	}
-
-
-	public static void main (String[] args)
-	{
-		GestionJeu gestion = new GestionJeu(new IHMConsole(), "Michel", "Jean-Pierre");
-		gestion.lancer(0);
-	}
 }
