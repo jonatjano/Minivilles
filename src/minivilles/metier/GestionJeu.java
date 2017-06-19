@@ -49,7 +49,7 @@ public class GestionJeu
 
 	public int lancerDe (int nbDe)
 	{
-		return (int) (Math.random() * (MAX_VAL - 1)) + 1;
+		return (int) (Math.random() * MAX_VAL * nbDe) + 1;
 	}
 
 
