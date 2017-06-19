@@ -1,7 +1,7 @@
 package minivilles.metier;
 
 
-public class Monument
+public class Monument extends Carte
 {
 	boolean estConstruit;
 

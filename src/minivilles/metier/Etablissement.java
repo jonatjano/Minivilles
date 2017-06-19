@@ -1,15 +1,11 @@
 package minivilles.metier;
 
 
-public abstract class Carte
+public abstract class Etablissement extends Carte
 {
-	public Carte (String nom, String type, String description, int cout, int nbMax)
+	public Etablissement (String nom, String type, String description, int cout, int nbMax)
 	{
-		this.nom 			= nom;
-		this.type 			= type;
-		this.description 	= description;
-		this.cout			= cout;
-		this.nbMax			= nbMax;
+		super(nom, type, description, cout, nbMax);
 	}
 
 
