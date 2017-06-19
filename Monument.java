@@ -6,9 +6,9 @@ public class Monument
 	boolean estConstruit;
 
 
-	public Monument (String nom, String type, String description, int cout, int nbMax)
+	public Monument (String nom, String description, int cout)
 	{
-		super(nom, type, description, cout, nbMax);
+		super(nom, "Monument", description, cout, 1);
 
 		this.estConstruit = false;
 	}

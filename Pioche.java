@@ -9,7 +9,7 @@ public class Pioche
 
 	public Pioche ()
 	{
-		cartes 		= new Carte[];
+		cartes 		= new Carte[12];	// 12 (+ 3)
 		nbCartes	= new int[];
 	}
 

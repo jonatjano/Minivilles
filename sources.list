@@ -1,0 +1,10 @@
+./src/metier/Carte
+./src/metier/Etablissement
+./src/metier/Monument
+./src/metier/Joueur
+./src/metier/Pioche
+
+./src/ihm/IHMConsole
+
+./src/GestionJeu
+
