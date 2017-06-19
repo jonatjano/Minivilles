@@ -1,4 +1,4 @@
-package miniVilles.metier;
+package minivilles.metier;
 
 
 public class Carte

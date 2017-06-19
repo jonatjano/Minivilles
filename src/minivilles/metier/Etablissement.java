@@ -1,4 +1,4 @@
-package miniVilles.metier;
+package minivilles.metier;
 
 
 public abstract class Carte
@@ -25,7 +25,7 @@ public abstract class Carte
 	{
 		String sRet = "";
 
-		sRet += 
+		sRet +=
 
 		return sRet;
 	}
