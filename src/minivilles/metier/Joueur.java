@@ -9,8 +9,8 @@ import java.util.Map;
 
 public class Joueur
 {
-	private String 				prenom;
-	private int 				monnaie;
+	private String 	prenom;
+	private int 	monnaie;
 
 	private ArrayList<Etablissement> 	etablissements;
 	private ArrayList<Monument> 		monuments;
@@ -32,15 +32,15 @@ public class Joueur
 
 	/* GETTER */
 
-	public String 					getPrenom ()					{return this.prenom;				}
-	public ArrayList<Monument> 		getMonuments ()					{return this.monuments;				}
-	public ArrayList<Etablissement> getEtablissements ()			{return this.etablissements;		}
-	public int 						getMonnaie ()					{return this.monnaie;				}
+	public String 					getPrenom ()					{ return this.prenom;				}
+	public ArrayList<Monument> 		getMonuments ()					{ return this.monuments;			}
+	public ArrayList<Etablissement> getEtablissements ()			{ return this.etablissements;		}
+	public int 						getMonnaie ()					{ return this.monnaie;				}
 
 	/* SETTER */
 
 	public void setMonnaie (int valeur)						{ this.monnaie += valeur;					}
-	//public void addEtablissement (String nom)	{ this.etablissements.add(etablissement);	}
+	public void addEtablissement (Etablissement et)			{ this.etablissements.add(et);	}
 
 	/* toString */
 
@@ -51,6 +51,17 @@ public class Joueur
 
 	public String toStringCartes ()
 	{
-		return String.format( "%s", this.etablissements.stream().map(Etablissement::toStringNom).collect(Collectors.joining(" | ")) );
+		//return String.format( "%s", this.etablissements.stream().map(Etablissement::toStringNom).collect(Collectors.joining(" | ")) );
+		String sRet = "";
+
+		for (int i = 0; i < this.etablissements.size(); i++)
+		{
+			sRet += String.format( "%s", this.etablissements.get(i).toStringNom() );
+
+			if (i%4 == 3)	sRet += "\n";
+			else 			sRet += " | ";
+		}
+
+		return sRet;
 	}
 }

@@ -37,8 +37,11 @@ public class GestionJeu
 		int cpt 	= indexFirstPlayer;
 		while (true)
 		{
+			// Nouveau tour
 			if (cpt == indexFirstPlayer)
+			{
 				this.ihm.displayTour(this.pioche, ++cptTour);
+			}
 
 			this.joueur = this.tabJoueur[cpt];
 

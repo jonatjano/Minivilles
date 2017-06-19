@@ -34,7 +34,7 @@ public abstract class Carte
 	public String 				getNom ()			{ return this.nom;			}
 	public String 				getType ()			{ return this.type;			}
 	public String 				getDescription ()	{ return this.description;	}
-	public int 				 	getCout ()			{ return this.coutPiece;	}
+	public int 				 	getCoutPiece ()			{ return this.coutPiece;	}
 	public boolean				estLimite ()		{ return this.estLimite;	}
 	public Joueur 				getJoueur ()		{ return this.joueur;		}
 

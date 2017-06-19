@@ -7,14 +7,14 @@ public class Pioche
 {
 	public final static int NB = 12;
 
-	private Carte[] cartes;
-	private int[] 	nbCartes;
+	private Etablissement[] cartes;
+	private int[] 			nbCartes;
 
 	/* Constructeur */
 
 	public Pioche ()
 	{
-		this.cartes 	= new Carte[Pioche.NB];	// 12 (+ 3 (Les monuments))
+		this.cartes 	= new Etablissement[Pioche.NB];	// 12 (+ 3 (Les monuments))
 
 		this.nbCartes	= new int[Pioche.NB];
 		for (int i = 0; i < this.nbCartes.length; i++)
@@ -25,8 +25,8 @@ public class Pioche
 		this.cartes[0] 	= new EtablissementBleu("Champs de blé", 				"Culture", 		1, 					1, 1);
 		this.cartes[1]	= new EtablissementBleu("Ferme", 						"Elevage", 		1, 					1, 2);
 		this.cartes[5] 	= new EtablissementBleu("Forêt", 						"Ressources", 	1, 					3, 5);
-		this.cartes[8] 	= new EtablissementBleu("Mine", 							"Ressources", 	5, 					6, 9);
-		this.cartes[10] 	= new EtablissementBleu("Verger", 						"Culture", 		3, 					3, 10);
+		this.cartes[8] 	= new EtablissementBleu("Mine", 						"Ressources", 	5, 					6, 9);
+		this.cartes[10] = new EtablissementBleu("Verger", 						"Culture", 		3, 					3, 10);
 
 		this.cartes[2] 	= new EtablissementVert("Boulangerie", 					"Commerce", 	1, 					1, 2,3);
 		this.cartes[4] 	= new EtablissementVert("Superette", 					"Commerce", 	3, 					2, 4);
@@ -36,6 +36,17 @@ public class Pioche
 
 		this.cartes[3] 	= new EtablissementRouge("Café", 						"Restauration", 1, 					2, 3);
 		this.cartes[9] 	= new EtablissementRouge("Restaurant", 					"Restauration", 2, 					3, 9,10);
+	}
+
+	public Etablissement getEtablissement (int id)
+	{
+		if (id >= 0 && id < Pioche.NB && this.nbCartes[id] > 0)
+		{
+			this.nbCartes[id]--;
+			return this.cartes[id];
+		}
+
+		return null;
 	}
 
 	/* toString */
@@ -54,12 +65,17 @@ public class Pioche
 	{
 		String sRet = "";
 
+		int cpt = 0;
 		for (int i = 0; i < this.cartes.length; i++)
 		{
-			sRet += String.format( "%2d ~ %s  x %d", i+1, this.cartes[i].toStringNom(), this.nbCartes[i] );
+			if (this.nbCartes[i] != 0)
+			{
+				sRet += String.format( "%2d ~ %s (%2d P) x %d", i+1, this.cartes[i].toStringNom(), this.cartes[i].getCoutPiece(), this.nbCartes[i] );
 
-			if (i%3 == 2)	sRet += "\n";
-			else 			sRet += " | ";
+				if (cpt%3 == 2)	sRet += "\n";
+				else 			sRet += " | ";
+				cpt++;
+			}
 		}
 
 		return sRet;

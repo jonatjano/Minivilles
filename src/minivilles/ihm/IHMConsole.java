@@ -25,7 +25,7 @@ public class IHMConsole
 		Scanner sc = new Scanner(System.in);
 
 
-		System.out.println( String.format("%-15s (%3d)   -> %d", joueur.getPrenom(), joueur.getMonnaie(), lancerDe) );
+		System.out.println( String.format("\n\n%-15s (%3d)   -> %d", joueur.getPrenom(), joueur.getMonnaie(), lancerDe) );
 		System.out.println( joueur.toStringCartes() );
 		
 		/* Demande de construction */
@@ -44,14 +44,23 @@ public class IHMConsole
 			System.out.println("\n   Lequel ?");
 			System.out.println( pioche.toStringNom() );
 
-			ans = "";
-			while ( !ans.matches("[0-9]+") && Integer.parseInt(ans) <= Pioche.NB  )
+			Etablissement e = null;
+			while ( e == null )
 			{
 				System.out.print("-> Entrez l'index : ");
-				String nom = sc.nextLine();
+				try
+				{
+					e = pioche.getEtablissement( Integer.parseInt(sc.nextLine()) - 1 );
+				}
+				catch (Exception ex)
+				{
+					System.out.println("\tErreur : Index invalide");
+				}
 			}
+
+			System.out.println("-> '" + e.getNom() + "' ajouté !");
+			joueur.addEtablissement(e);
 		}
 
-		sc.close();
 	}
 }
