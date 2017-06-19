@@ -1,3 +1,7 @@
+package miniVilles;
+
+import miniVilles.ihm;
+import miniVilles.metier;
 
 
 public class GestionJeu
@@ -21,12 +25,14 @@ public class GestionJeu
 
 	public void lancer ()
 	{
-		
+		for (Joueur j : this.tabJoueur)
+			System.out.println(j);
 	}
 
 
 	public static main (String[] args)
 	{
-
+		GestionJeu gestion = new GestionJeu(2);
+		gestion.lancer();
 	}
 }
