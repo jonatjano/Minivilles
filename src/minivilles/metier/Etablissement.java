@@ -10,10 +10,9 @@ public abstract class Etablissement extends Carte
 
 	/* GETTER */
 
-	public int getNbMax ()
-	{
-		return this.nbMax;
-	}
+	public int getNbMax (){return this.nbMax;}
+
+	/* toString */
 
 	public String toString ()
 	{
