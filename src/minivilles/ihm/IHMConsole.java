@@ -36,8 +36,13 @@ public class IHMConsole
 
 		if ( ans.equals("o") )
 		{
-			System.out.println("Lequel ?");
+			ArrayList<Etablissement> etablissements = joueur.getEtablissements();
 
+			System.out.println("Lequel ?");
+			for (Etablissement etablissement : etablissements)
+				System.out.println( "\t- " + etablissement.toStringNom() );
+
+			sc.nextLine();
 		}
 
 		sc.close();

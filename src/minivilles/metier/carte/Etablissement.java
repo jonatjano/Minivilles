@@ -20,16 +20,4 @@ public abstract class Etablissement extends Carte
 	}
 
 	public ArrayList<Integer> 	getvalActivation ()	{ return this.valActivation;		}
-
-	public String toString ()
-	{
-		String sRet = "";
-
-		sRet += String.format( "--- %-15s ---\nType : %s\nCoûts : %s\nDescription :\n%s", 	this.getNom(),
-																							this.valActivation.stream().map(Object::toString).collect(Collectors.joining(", ")),
-																							this.getType(),
-																							this.getDescription() );
-
-		return sRet;
-	}
 }

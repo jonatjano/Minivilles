@@ -58,6 +58,6 @@ public abstract class Carte
 
 	public String toStringNom ()
 	{
-		return String.format("%-17.17s", this.getNom());
+		return String.format( "%-17.17s", this.getNom() );
 	}
 }
