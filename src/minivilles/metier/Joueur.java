@@ -6,11 +6,11 @@ import java.util.Arrays;
 
 public class Joueur
 {
-	String prenom;
+	private String 				prenom;
+	private int 				monnaie;
 
-	private ArrayList<Carte> etablissements;
-	private ArrayList<Carte> monuments;
-	private int monnaie;
+	private ArrayList<Carte> 	etablissements;
+	private ArrayList<Carte> 	monuments;
 
 
 	public Joueur(String prenom)
@@ -34,14 +34,19 @@ public class Joueur
 
 	/* GETTER */
 
-	public String getPrenom ()								{return this.prenom;}
+	public String 			getPrenom ()					{return this.prenom;}
 	public ArrayList<Carte> getMonuments ()					{return this.monuments;}
 	public ArrayList<Carte> getEtablissements ()			{return this.etablissements;}
-	public int getMonnaie ()								{return this.monnaie;}
+	public int 				getMonnaie ()					{return this.monnaie;}
 
 	/* SETTER */
 
 	public void setMonnaie (int valeur)						{this.monnaie+=valeur;}
 	public void ajouterMonument (Carte monument)			{this.monuments.add(monument);}
 	public void ajouterEtablissement (Carte etablissement)	{this.monuments.add(etablissement);}
+
+	public String toString ()
+	{
+		return String.format("%-20ds -> %4d", this.prenom, this.monnaie);
+	}
 }

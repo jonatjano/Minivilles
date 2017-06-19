@@ -8,14 +8,12 @@ public abstract class Etablissement extends Carte
 		super(nom, type, description, cout, nbMax);
 	}
 
-
 	/* GETTER */
 
 	public int getNbMax ()
 	{
 		return this.nbMax;
 	}
-
 
 	public String toString ()
 	{
