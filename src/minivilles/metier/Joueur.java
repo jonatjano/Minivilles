@@ -12,6 +12,7 @@ public class Joueur
 	private ArrayList<Carte> 	etablissements;
 	private ArrayList<Carte> 	monuments;
 
+	/* Constructeur principal */
 
 	public Joueur(String prenom)
 	{
@@ -23,6 +24,8 @@ public class Joueur
 																				new Monument("Parc d'Attractions", "", 16) }) );
 		this.monnaie = 3;
 	}
+
+	/* Constructeur avec choix de monnaie au départ */
 
 	public Joueur(String prenom, int monnaie)
 	{
@@ -44,6 +47,8 @@ public class Joueur
 	public void setMonnaie (int valeur)						{this.monnaie+=valeur;}
 	public void ajouterMonument (Carte monument)			{this.monuments.add(monument);}
 	public void ajouterEtablissement (Carte etablissement)	{this.monuments.add(etablissement);}
+
+	/* toString */
 
 	public String toString ()
 	{

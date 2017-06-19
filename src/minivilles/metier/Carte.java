@@ -22,31 +22,13 @@ public class Carte
 
 	/* GETTER */
 
-	public String getNom()
-	{
-		return this.nom;
-	}
+	public String getNom(){return this.nom;}
+	public String getType(){return this.type;}
+	public String getDescription(){return this.description;}
+	public int getCout(){return this.cout;}
+	public int getNbMax (){return this.nbMax;}
 
-	public String getType()
-	{
-		return this.type;
-	}
-
-	public String getDescription()
-	{
-		return this.description;
-	}
-
-	public int getCout()
-	{
-		return this.cout;
-	}
-
-	public int getNbMax ()
-	{
-		return this.nbMax;
-	}
-
+	/* toString */
 
 	public String toString ()
 	{

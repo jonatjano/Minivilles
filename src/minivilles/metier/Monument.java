@@ -5,6 +5,7 @@ public class Monument extends Carte
 {
 	boolean estConstruit;
 
+	/* Constructeur */
 
 	public Monument (String nom, String description, int cout)
 	{
@@ -12,6 +13,8 @@ public class Monument extends Carte
 
 		this.estConstruit = false;
 	}
+
+	/* toString */
 
 	public String toString ()
 	{
