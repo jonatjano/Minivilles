@@ -3,6 +3,7 @@ package minivilles;
 import minivilles.ihm.*;
 import minivilles.metier.*;
 import minivilles.util.Utility;
+import java.util.ArrayList;
 
 
 public class Controleur
@@ -17,8 +18,8 @@ public class Controleur
 
 	public void lancer ()
 	{
-		String 		choix = "";
-		String[] 	names = null;
+		String 				choix = "";
+		ArrayList<String> 	names = null;
 		do 
 		{
 			choix = this.ihm.displayMenu();
@@ -28,16 +29,14 @@ public class Controleur
 				case "1":
 					names = this.ihm.displayChoixJoueurs();
 					break;
-				case "-1":
-					break;
 			}
-		} while ( choix.matches("-1") );
-
-		if (names != null)
+		} while ( !choix.matches("-1") && names == null );
+		
+		if (names != null && names.size() != 0)
 			this.nouvellePartie(names);
 	}
 
-	public void nouvellePartie (String... names)
+	public void nouvellePartie (ArrayList<String> names)
 	{
 		GestionJeu gj = new GestionJeu(this.ihm, names);
 		gj.lancer(0);

@@ -4,6 +4,7 @@ import minivilles.ihm.*;
 import minivilles.metier.*;
 import minivilles.util.Utility;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 
 public class GestionJeu
@@ -18,15 +19,15 @@ public class GestionJeu
 	private Joueur 		joueur;
 
 
-	public GestionJeu (IHMConsole ihm, String... names)
+	public GestionJeu (IHMConsole ihm, ArrayList<String> names)
 	{
 		this.ihm 		= ihm;
 		this.pioche 	= new Pioche();
-		this.nbJoueur 	= names.length;
+		this.nbJoueur 	= names.size();
 		
 		this.tabJoueur = new Joueur[this.nbJoueur];
 		for (int i = 0; i < nbJoueur; i++)
-			tabJoueur[i] = new Joueur(names[i], 20);	// 3
+			tabJoueur[i] = new Joueur(names.get(i), 20);	// 3
 
 		this.joueur = null;
 	}
