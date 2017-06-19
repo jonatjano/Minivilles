@@ -14,6 +14,8 @@ public class Monument extends Carte
 		this.estConstruit = false;
 	}
 
+	public boolean estConstruit() { return this.estConstruit; }
+
 	/* toString */
 
 	public String toString ()

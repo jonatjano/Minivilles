@@ -30,6 +30,8 @@ public class Joueur
 		this.monnaie = monnaie;
 	}
 
+	public int getNbDes() { return this.monuments.get(0).estConstruit() ? 2 : 1; }
+
 	/* GETTER */
 
 	public String 					getPrenom ()					{ return this.prenom;				}
@@ -47,6 +49,7 @@ public class Joueur
 		}
 		return false;
 	}
+
 	public void addEtablissement (Etablissement et)			{ this.etablissements.add(et);				}
 
 	/* toString */
