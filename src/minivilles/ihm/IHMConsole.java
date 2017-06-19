@@ -14,6 +14,29 @@ public class IHMConsole
 
 	}
 
+	public String displayMenu ()
+	{
+		System.out.println(	"~ MENU PRINCIPAL ~\n"		+
+							" 1 : Nouvelle partie\n" 	+
+							"-1 : Quitter"					);
+
+		Scanner sc = new Scanner (System.in);
+		String ans = "";
+		do
+		{
+			ans = sc.nextLine();
+
+			if ( !ans.matches("-1|1") )	System.out.println("\tErreur : Paramètre incorrect");
+		} while ( !ans.matches("-1|1") );
+		
+		return ans;
+	}
+
+	public String[] displayChoixJoueurs ()
+	{
+		
+	}
+
 	public void displayTour (Pioche pioche, int numTour)
 	{
 		System.out.println( String.format("\n\n\t--- Tour n°%2d ---\n", numTour) );
