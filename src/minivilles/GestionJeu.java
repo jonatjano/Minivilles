@@ -46,7 +46,9 @@ public class GestionJeu
 
 			this.joueur = this.tabJoueur[cpt];
 
-			this.ihm.displayJoueur( this.pioche, this.joueur, this.lancerDe(1) );
+			//~ CHANGER L'ORDRE
+			int nbDe = this.ihm.displayChoixDe( 1, this.joueur.getNbDes() );
+			this.ihm.displayJoueur( this.pioche, this.joueur, this.lancerDe(nbDe) );
 			//Utility.waitForSeconds(1.5f);
 
 			cpt++; cpt = cpt%nbJoueur;
