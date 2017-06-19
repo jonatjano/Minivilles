@@ -1,7 +1,7 @@
 package miniVilles;
 
-import miniVilles.ihm;
-import miniVilles.metier;
+import miniVilles.ihm.*;
+import miniVilles.metier.*;
 
 
 public class GestionJeu
