@@ -1,3 +1,4 @@
+package miniVilles.metier;
 
 
 public class Pioche
