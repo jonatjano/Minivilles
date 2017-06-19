@@ -56,6 +56,11 @@ public abstract class Carte
 		return sRet;
 	}
 
+	public boolean equals(Carte c)
+	{
+		return this.nom.equals(c.nom);
+	}
+
 	public String toStringNom ()
 	{
 		return String.format( "%-17.17s", this.getNom() );
