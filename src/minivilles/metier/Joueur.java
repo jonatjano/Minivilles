@@ -23,10 +23,10 @@ public class Joueur
 																						new Monument("Gare", "", 4),
 																						new Monument("Centre Commercial", "", 10),
 																						new Monument("Parc d'Attractions", "", 16) }) );
-		
+
 		this.etablissements = new ArrayList<Etablissement>( Arrays.asList(new Etablissement[] { new EtablissementBleu("Champs de blé", 	"Culture", 	1, 1, 1),
 																								new EtablissementVert("Boulangerie", 	"Commerce", 1, 1, 2,3) }) );
-		
+
 		this.monnaie = monnaie;
 	}
 
@@ -39,8 +39,15 @@ public class Joueur
 
 	/* SETTER */
 
-	public void setMonnaie (int valeur)						{ this.monnaie += valeur;					}
-	public void addEtablissement (Etablissement et)			{ this.etablissements.add(et);	}
+	public boolean addMonnaie (int valeur)
+	{
+		if (this.monnaie + valeur >= 0) {
+			this.monnaie += valeur;
+			return true;
+		}
+		return false;
+	}
+	public void addEtablissement (Etablissement et)			{ this.etablissements.add(et);				}
 
 	/* toString */
 

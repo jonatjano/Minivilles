@@ -38,12 +38,14 @@ public class Pioche
 		this.cartes[9] 	= new EtablissementRouge("Restaurant", 					"Restauration", 2, 					3, 9,10);
 	}
 
-	public Etablissement getEtablissement (int id)
+	public Etablissement achatEtablissement (int id, Joueur j)
 	{
 		if (id >= 0 && id < Pioche.NB && this.nbCartes[id] > 0)
 		{
-			this.nbCartes[id]--;
-			return this.cartes[id];
+			if (j.addMonnaie(- this.cartes[id].getCoutPiece())) {
+				this.nbCartes[id]--;
+				return this.cartes[id];
+			}
 		}
 
 		return null;

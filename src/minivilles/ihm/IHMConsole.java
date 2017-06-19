@@ -28,13 +28,13 @@ public class IHMConsole
 
 			if ( !ans.matches("-1|1") )	System.out.println("\tErreur : Paramètre incorrect");
 		} while ( !ans.matches("-1|1") );
-		
+
 		return ans;
 	}
 
 	public String[] displayChoixJoueurs ()
 	{
-		
+
 	}
 
 	public void displayTour (Pioche pioche, int numTour)
@@ -50,7 +50,7 @@ public class IHMConsole
 
 		System.out.println( String.format("\n\n%-15s (%3d)   -> %d", joueur.getPrenom(), joueur.getMonnaie(), lancerDe) );
 		System.out.println( joueur.toStringCartes() );
-		
+
 		/* Demande de construction */
 		String ans = "";
 		while ( !ans.matches("n|o") )
@@ -73,7 +73,7 @@ public class IHMConsole
 				System.out.print("-> Entrez l'index : ");
 				try
 				{
-					e = pioche.getEtablissement( Integer.parseInt(sc.nextLine()) - 1 );
+					e = pioche.achatEtablissement( Integer.parseInt(sc.nextLine()) - 1, joueur);
 				}
 				catch (Exception ex)
 				{
