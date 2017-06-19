@@ -8,3 +8,4 @@
 
 ./src/miniVilles/GestionJeu.java
 
+./src/miniVilles/util/Utility.java
