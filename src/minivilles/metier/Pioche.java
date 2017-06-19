@@ -10,8 +10,9 @@ public class Pioche
 
 	public Pioche ()
 	{
-		cartes 		= new Carte[12];	// 12 (+ 3)
-		nbCartes	= new int[12];
+		int nb = 12;
+		cartes 		= new Carte[nb];	// 12 (+ 3 (Les monuments))
+		nbCartes	= new int[nb];
 	}
 
 	/* toString */
@@ -20,8 +21,8 @@ public class Pioche
 	{
 		String sRet = "";
 
-		for (Carte carte : cartes)
-			sRet += carte.toString();
+		for (int i = 0; i < this.cartes.length; i++)
+			sRet += String.format( "x %d\n%s", this.nbCartes[i], this.cartes[i].toString() );
 
 		return sRet;
 	}

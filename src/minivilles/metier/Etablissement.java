@@ -3,16 +3,11 @@ package minivilles.metier;
 
 public abstract class Etablissement extends Carte
 {
-	public Etablissement (String nom, String type, String description, int cout, int nbMax)
+	public Etablissement (String nom, String type, String description, int nbMax, int... cout)
 	{
-		super(nom, type, description, cout, nbMax);
+		super(nom, type, description, nbMax, cout);
 	}
 
-	/* GETTER */
-
-	public int getNbMax (){return this.nbMax;}
-
-	/* toString */
 
 	public String toString ()
 	{
