@@ -1,2 +1,4 @@
-javac *.java
-java GestionJeu
+javac @options.list @sources.list
+cd ../class
+java minivilles.GestionJeu
+cd ../src
