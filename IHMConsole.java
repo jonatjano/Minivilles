@@ -1,6 +1,6 @@
 package miniVilles.ihm;
 
-import miniVilles;
+import miniVilles.GestionJeu;
 
 
 public class IHMConsole
