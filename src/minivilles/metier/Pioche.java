@@ -5,17 +5,18 @@ import minivilles.metier.carte.*;
 
 public class Pioche
 {
-	Carte[] cartes;
-	int[] 	nbCartes;
+	public final static int NB = 12;
+
+	private Carte[] cartes;
+	private int[] 	nbCartes;
 
 	/* Constructeur */
 
 	public Pioche ()
 	{
-		int nb = 12;
-		cartes 		= new Carte[nb];	// 12 (+ 3 (Les monuments))
+		this.cartes 	= new Carte[Pioche.NB];	// 12 (+ 3 (Les monuments))
 
-		nbCartes	= new int[nb];
+		this.nbCartes	= new int[Pioche.NB];
 		for (int i = 0; i < this.nbCartes.length; i++)
 			this.nbCartes[i] = 6;
 
@@ -55,7 +56,7 @@ public class Pioche
 
 		for (int i = 0; i < this.cartes.length; i++)
 		{
-			sRet += String.format( "%s - x %d", this.cartes[i].toStringNom(), this.nbCartes[i] );
+			sRet += String.format( "%2d ~ %s  x %d", i+1, this.cartes[i].toStringNom(), this.nbCartes[i] );
 
 			if (i%3 == 2)	sRet += "\n";
 			else 			sRet += " | ";

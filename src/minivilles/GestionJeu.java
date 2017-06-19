@@ -42,7 +42,7 @@ public class GestionJeu
 
 			this.joueur = this.tabJoueur[cpt];
 
-			this.ihm.displayJoueur( this.joueur, this.lancerDe(1) );
+			this.ihm.displayJoueur( this.pioche, this.joueur, this.lancerDe(1) );
 			//Utility.waitForSeconds(1.5f);
 
 			cpt++; cpt = cpt%nbJoueur;
