@@ -3,9 +3,10 @@
 ./src/miniVilles/metier/Monument.java
 ./src/miniVilles/metier/Joueur.java
 ./src/miniVilles/metier/Pioche.java
+./src/miniVilles/metier/GestionJeu.java
 
 ./src/miniVilles/ihm/IHMConsole.java
 
-./src/miniVilles/GestionJeu.java
+./src/miniVilles/Controleur.java
 
 ./src/miniVilles/util/Utility.java

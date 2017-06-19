@@ -1,5 +1,5 @@
 javac @options.list @sources.list
 cd class
-java minivilles.GestionJeu
+java minivilles.metier.GestionJeu
 cd ..
 PAUSE

@@ -1,9 +1,12 @@
 package minivilles.ihm;
 
-import minivilles.GestionJeu;
+import minivilles.metier.*;
 
 
 public class IHMConsole
 {
-
+	public IHMConsole ()
+	{
+		
+	}
 }
