@@ -30,7 +30,7 @@ public class Joueur
 		this.monnaie = monnaie;
 	}
 
-	public int getNbDes() { return this.monuments.get(0).estConstruit() ? 2 : 1; }
+	public int getNbDes() { return this.monuments.get(0).estConstruit() ? 2 : 1;}
 
 	/* GETTER */
 
