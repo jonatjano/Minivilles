@@ -1,0 +1,10 @@
+./miniVilles/metier/Carte.java
+./miniVilles/metier/Etablissement.java
+./miniVilles/metier/Monument.java
+./miniVilles/metier/Joueur.java
+./miniVilles/metier/Pioche.java
+
+./miniVilles/ihm/IHMConsole.java
+
+./miniVilles/GestionJeu.java
+
