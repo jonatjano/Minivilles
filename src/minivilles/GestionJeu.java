@@ -6,9 +6,11 @@ import minivilles.metier.*;
 
 public class GestionJeu
 {
-	Pioche 		pioche;
-	Joueur[] 	tabJoueur;
-	int 		banque;
+	private static int 	MAX_VAL = 6;
+
+	private Pioche 		pioche;
+	private Joueur[] 	tabJoueur;
+	private int 		banque;
 
 
 	public GestionJeu (int nbJoueur)
@@ -27,6 +29,11 @@ public class GestionJeu
 	{
 		for (Joueur j : this.tabJoueur)
 			System.out.println(j);
+	}
+
+	public int lancerDe (int nbDe)
+	{
+		return (int) (Math.random() * (MAX_VAL - 1)) + 1;
 	}
 
 

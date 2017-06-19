@@ -47,6 +47,6 @@ public class Joueur
 
 	public String toString ()
 	{
-		return String.format("%-20ds -> %4d", this.prenom, this.monnaie);
+		return String.format("%-20s -> %4d", this.prenom, this.monnaie);
 	}
 }
