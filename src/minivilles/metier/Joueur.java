@@ -31,16 +31,16 @@ public class Joueur
 		this.monnaie = monnaie;
 	}
 
-	//Accesseurs
+	/* GETTER */
 
-	public String getPrenom(){return this.prenom;}
-	public ArrayList<Carte> getMonuments(){return this.monuments;}
-	public ArrayList<Carte> getEtablissements(){return this.etablissements;}
-	public int getMonnaie(){return this.monnaie;}
+	public String getPrenom ()								{return this.prenom;}
+	public ArrayList<Carte> getMonuments ()					{return this.monuments;}
+	public ArrayList<Carte> getEtablissements ()			{return this.etablissements;}
+	public int getMonnaie ()								{return this.monnaie;}
 
-	//Définisseurs
+	/* SETTER */
 
-	public void setMonnaie(int valeur){this.monnaie+=valeur;}
-	public void ajouterMonument(Carte monument){this.monuments.add(monument);}
-	public void ajouterEtablissement(Carte etablissement){this.monuments.add(etablissement);}
+	public void setMonnaie (int valeur)						{this.monnaie+=valeur;}
+	public void ajouterMonument (Carte monument)			{this.monuments.add(monument);}
+	public void ajouterEtablissement (Carte etablissement)	{this.monuments.add(etablissement);}
 }
