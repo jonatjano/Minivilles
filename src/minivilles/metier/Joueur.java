@@ -30,6 +30,13 @@ public class Joueur
 		this.monnaie = monnaie;
 	}
 
+	public void actionCartes(Joueur joueur, int des)
+	{
+		for (Etablissement e : this.etablissements) {
+			e.action(joueur, des, this);
+		}
+	}
+
 	public int getNbDes() { return this.monuments.get(0).estConstruit() ? 2 : 1;}
 
 	/* GETTER */

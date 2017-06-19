@@ -7,4 +7,11 @@ public class EtablissementBleu extends Etablissement
 	{
 		super(nom, type, String.format("Recevez %d pièce%s de la banque", puissance, (puissance == 1) ? "" : "s"), false, coutPiece, valActivation);
 	}
+
+	public void action(Joueur j, int des, Joueur possesseur)
+	{
+		if (canActivate(des)) {
+			possesseur.addMonnaie(puissance);
+		}
+	}
 }

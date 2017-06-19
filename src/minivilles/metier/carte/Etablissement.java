@@ -19,5 +19,6 @@ public abstract class Etablissement extends Carte
 		    this.valActivation.add(valActivation[i]);
 	}
 
-	public ArrayList<Integer> 	getvalActivation ()	{ return this.valActivation;		}
+	public abstract void action(Joueur j, int des, Joueur possesseur);
+	private boolean canActivate(int des) { for (Integer i : valActivation) {if (i == des) {	return true;}} return false; }
 }
