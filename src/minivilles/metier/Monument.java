@@ -19,6 +19,6 @@ public class Monument
 
 		sRet += "";
 
-		return sRet;
+		return super.toString() + sRet;
 	}
 }

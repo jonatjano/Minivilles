@@ -10,7 +10,7 @@ public class Pioche
 	public Pioche ()
 	{
 		cartes 		= new Carte[12];	// 12 (+ 3)
-		nbCartes	= new int[];
+		nbCartes	= new int[12];
 	}
 
 	public String toString ()

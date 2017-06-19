@@ -13,7 +13,7 @@ public class GestionJeu
 
 	public GestionJeu (int nbJoueur)
 	{
-		if (this.nbJoueur > 0 && this.nbJoueur <= 4)
+		if (nbJoueur > 0 && nbJoueur <= 4)
 		{
 			this.pioche = new Pioche();
 
@@ -30,7 +30,7 @@ public class GestionJeu
 	}
 
 
-	public static main (String[] args)
+	public static void main (String[] args)
 	{
 		GestionJeu gestion = new GestionJeu(2);
 		gestion.lancer();

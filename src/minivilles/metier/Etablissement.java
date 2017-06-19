@@ -25,8 +25,8 @@ public abstract class Carte
 	{
 		String sRet = "";
 
-		sRet +=
+		sRet += "";
 
-		return sRet;
+		return super.toString() + sRet;
 	}
 }

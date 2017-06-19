@@ -1,6 +1,7 @@
 package minivilles.metier;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class Joueur
@@ -16,10 +17,10 @@ public class Joueur
 	{
 		this.prenom = prenom;
 		this.monuments = new ArrayList<Carte>();
-		this.etablissements = new ArrayList<Carte>( Arrays.asList(new Carte[] {	new Monument("Tour Radio", 22),
-																				new Monument("Gare", 4)
-																				new Monument("Centre Commercial", 10),
-																				new Monument("Parc d'Attractions", 16)}) );
+		this.etablissements = new ArrayList<Carte>( Arrays.asList(new Carte[] {	new Monument("Tour Radio", "", 22),
+																				new Monument("Gare", "", 4),
+																				new Monument("Centre Commercial", "", 10),
+																				new Monument("Parc d'Attractions", "", 16) }) );
 		this.monnaie = 3;
 	}
 
