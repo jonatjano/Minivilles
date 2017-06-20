@@ -1,4 +1,5 @@
 package minivilles.metier.carte;
+import java.util.ArrayList;
 
 import minivilles.metier.Joueur;
 
@@ -29,7 +30,7 @@ public class EtablissementVert extends Etablissement
 			else {
 				ArrayList<Etablissement> etabs = possesseur.getEtablissements();
 				int nbType = 0;
-				for ( Etablissement e : etabs )) { if (e.getType().equals( typePuissance )) { nbType++; } }
+				for ( Etablissement e : etabs ) { if (e.getType().equals( typePuissance )) { nbType++; } }
 				possesseur.addMonnaie(puissance * nbType);
 			}
 		}
