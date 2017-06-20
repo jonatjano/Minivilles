@@ -1,13 +1,16 @@
 package minivilles.metier.carte;
 
+import minivilles.metier.Joueur;
 
 public class EtablissementVert extends Etablissement
 {
+	private int puissance;
 	private String typePuissance;
 
 	public EtablissementVert (String nom, String type, int puissance, int coutPiece, int... valActivation)
 	{
 		super(nom, type, String.format("Recevez %d pièce%s de la banque", puissance, (puissance == 1) ? "" : "s"), false, coutPiece, valActivation);
+		this.puissance = puissance;
 		this.typePuissance = null;
 	}
 

@@ -3,7 +3,7 @@ package minivilles.metier.carte;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.Map;
-
+import minivilles.metier.Joueur;
 
 public abstract class Etablissement extends Carte
 {
@@ -20,5 +20,5 @@ public abstract class Etablissement extends Carte
 	}
 
 	public abstract void action(Joueur j, int des, Joueur possesseur);
-	private boolean canActivate(int des) { for (Integer i : valActivation) {if (i == des) {	return true;}} return false; }
+	public boolean canActivate(int des) { for (Integer i : valActivation) {if (i == des) {	return true;}} return false; }
 }
