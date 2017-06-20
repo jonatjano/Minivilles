@@ -1,12 +1,14 @@
 package minivilles.ihm;
 
-import minivilles.metier.*;
-import minivilles.util.Utility;
-import minivilles.*;
-import minivilles.metier.carte.Etablissement;
-import minivilles.metier.carte.Carte;
-import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Scanner;
+
+import minivilles.*;
+import minivilles.metier.*;
+import minivilles.metier.carte.Carte;
+import minivilles.metier.carte.Etablissement;
+import minivilles.metier.carte.Monument;
+import minivilles.util.Utility;
 
 
 public class IHMConsole
@@ -116,13 +118,14 @@ public class IHMConsole
 			System.out.println( String.format("\n\n\t--- Tour de %s ---", joueurActuel.getPrenom()) );
 
 			// Seulement pendant la première boucle, les dés sont lancés
+			int valDeTot = 0;
+
 			if (cpt == 0)
 			{
 				// Choix du nombre de dé
 				nbDe 	= this.displayChoixDe( 1, joueurActuel.getNbDes() );
 				valDe 	= this.controler.lancerDe( nbDe );
 
-				int valDeTot = 0;
 				for (int val : valDe)
 					valDeTot += val;
 
@@ -212,7 +215,7 @@ public class IHMConsole
 				{
 					ind = sc.nextLine();
 					c 	= joueurActuel.construireMonument( Integer.parseInt(ind) - 1 );
-					
+
 					if (c == null)
 					{
 						System.out.println("\tErreur : Argent insuffisant / Déjà construit");
@@ -221,21 +224,21 @@ public class IHMConsole
 					else
 					{
 						String[][] tabAffichageMonument = Monument.getStringAffichage(c.getNom());
-						
+
 						for (int i =tabAffichageMonument.length-1; i >=0 ; i--)
-						{	
-							Contoleur.clearConsole();
+						{
+							Controleur.clearConsole();
 							String sTemp = "";
 							for (int j=tabAffichageMonument.length-1; j > i ; j--)
 								sTemp += String.format("\t%s\n",String.join("",tabAffichageMonument[j]));
-							
+
 							sTemp = String.format("\033[%dA", tabAffichageMonument.length + 4 - i) + sTemp;
 							System.out.println(sTemp);
 							Utility.waitForSeconds(0.2);
 						}
 						Controleur.clearConsole();
 					}
-					
+
 				}
 				catch (Exception ex)//IndexOutOfBoundsException ex)
 				{

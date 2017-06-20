@@ -16,7 +16,7 @@ public class EtablissementBleu extends Etablissement
 	{
 		int pow = this.puissance;
 
-		if ( ( this.type.equals("Restauration") || this.type.equals("Commerce") ) && possesseur.hasCentreComm() ) { pow++; }
+		if ( ( this.getType().equals("Restauration") || this.getType().equals("Commerce") ) && possesseur.hasCentreComm() ) { pow++; }
 
 		if (canActivate(des)) {
 			possesseur.addMonnaie(pow);

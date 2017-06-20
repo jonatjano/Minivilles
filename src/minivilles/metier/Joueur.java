@@ -44,7 +44,7 @@ public class Joueur
 		return 1;
 	}
 
-	public int hasCentreComm() {
+	public boolean hasCentreComm() {
 		for (Monument m : this.monuments)
 			if (m.getNom().equals("Centre Commercial"))
 				return m.estConstruit();
