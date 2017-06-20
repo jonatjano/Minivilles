@@ -45,17 +45,24 @@ public class IHMConsole
 		String 	ans = "";
 		do
 		{
-			System.out.print("Nom du joueur :  ");
-			names.add( sc.nextLine() );
+			String name = "";
+			do
+			{
+				System.out.print( String.format("%d - Nom du joueur :  ", (cpt + 1)) );
+				name = sc.nextLine();
 
-			if (cpt >= 1 && cpt != 3)
+				if ( name == null || name.matches("") )		System.out.println("\tErreur : Nom invalide");
+			} while ( name == null || name.matches("") );
+			names.add( name );
+
+			cpt++;
+			if (cpt >= 3 && cpt < 4)
 			{
 				{
 					System.out.print("-> Voulez-vous rajouter un joueur ? (o/n)  ");
 					ans = sc.nextLine();
 				} while ( !ans.matches("o|n") );
 			}
-			cpt++;
 		} while ( !ans.matches("n") && cpt != 4);
 
 		return names;
