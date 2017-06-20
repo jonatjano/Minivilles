@@ -18,12 +18,8 @@ public class Monument extends Carte
 
 	/* toString */
 
-	public String toString ()
+	public String getEtat()
 	{
-		String sRet = "";
-
-		sRet += "";
-
-		return super.toString() + sRet;
+		return this.estConstruit ? "construit" : "pas fini ";
 	}
 }

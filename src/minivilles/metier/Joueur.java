@@ -57,7 +57,7 @@ public class Joueur
 		return false;
 	}
 
-	public void addEtablissement (Etablissement et)			{ this.etablissements.add(et);				}
+	public void addEtablissement (Etablissement et)			{ this.etablissements.add(et);	}
 
 	/* toString */
 
@@ -70,15 +70,15 @@ public class Joueur
 	{
 		//return String.format( "%s", this.etablissements.stream().map(Etablissement::toStringNom).collect(Collectors.joining(" | ")) );
 		String sRet = "\t";
-		
+
 		ArrayList<Etablissement> arTemp = new ArrayList<Etablissement>(etablissements);
-		
+
 		int i=0;
 		while ( arTemp.size() !=0 )
 		{
 			int nb=0;
 			Carte cTemp = arTemp.get(0);
-			
+
 			int j=0;
 			while ( j < arTemp.size() )
 			{
@@ -89,10 +89,10 @@ public class Joueur
 				}
 				else
 					j++;
-			}	
-			
+			}
+
 			sRet += String.format( "%s (x%d)", cTemp.toStringNom(), nb);
-			
+
 			if (arTemp.size() != 0)
 			{
 				if (i%4 == 3)	sRet += "\n\t";
