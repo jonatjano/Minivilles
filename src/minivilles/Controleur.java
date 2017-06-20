@@ -42,8 +42,13 @@ public class Controleur
 
 	public void nouvellePartie (ArrayList<String> names)
 	{
-		GestionJeu gj = new GestionJeu(this.ihm, names);
-		gj.lancer(0);
+		boolean bool = true;
+
+		do
+		{
+			GestionJeu gj = new GestionJeu(this.ihm, names);
+			bool = gj.lancer(0);
+		} while (bool);
 	}
 
 	public int[] lancerDe (int nbDe)
