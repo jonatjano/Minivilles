@@ -16,6 +16,8 @@ public class Monument extends Carte
 
 	public boolean estConstruit() { return this.estConstruit; }
 
+	public void construction() { this.estConstruit = true; }
+
 	public String getEtat()
 	{
 		return this.estConstruit ? "Construit" : "Pas fini ";

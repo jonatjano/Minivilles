@@ -59,6 +59,14 @@ public class Joueur
 
 	public void addEtablissement (Etablissement et)			{ this.etablissements.add(et);	}
 
+	public Monument construireMonument (int id)
+	throws IndexOutOfBoundsException
+	{
+		Monument m = this.monuments.get(i);
+		if ( m != null && !m.estConstruit() ) { m.construction(); return m; }
+		return null;
+	}
+
 	/* toString */
 
 	public String toString ()
