@@ -58,17 +58,16 @@ public class Controleur
 		
 		// try 				{ System.console().reader().reset(); }
 		// catch (Exception e) {}
-		
-		System.out.println("\u001B[H\u001B[2J");
 
-		// if ( System.getProperty("os.name").startsWith("Windows") )
-		// {
-		// 	try
-		// 	{
-		// 		Runtime.getRuntime().exec("cls");
-		// 	}
-		// 	catch (Exception e) {}
-		// }
+		if ( System.getProperty("os.name").startsWith("Windows") )
+		{
+			ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "cls");
+			try 				{ pb.inheritIO().start().waitFor(); }
+			catch (Exception e) { e.printStackTrace();				}
+		}
+		else
+			//System.out.println("\u001B[H\u001B[2J");
+			System.out.println("\033c");
 	}
 
 	public static void goBack (int i)//(int i, int toErase, String line)
