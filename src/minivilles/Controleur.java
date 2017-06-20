@@ -47,13 +47,18 @@ public class Controleur
 	/**
 	  * Nettoie la console pour n'importe quel système d'exploitation
 	  */
-	public static void clearConsole()
+	public static void clearConsole ()
 	{
 	    for(int i = 0; i < 50; i++)
 		{
 			System.out.print( String.format("\033[%dA", 1) ); 	// Avance le curseur de n lignes
 			System.out.print( "\033[K" ); 						// Efface la ligne entièrement
 		}
+	}
+
+	public static void goBack (int i)
+	{
+		System.out.print( String.format("\033[%dA", i) ); 		// Avance le curseur de n lignes
 	}
 
 

@@ -76,8 +76,11 @@ public class Pioche
 			{
 				sRet += String.format( "%2d ~ %s (%2d P) x %d", i+1, this.cartes[i].toStringNom(), this.cartes[i].getCoutPiece(), this.nbCartes[i] );
 
-				if (cpt%3 == 2)	sRet += "\n";
-				else 			sRet += " | ";
+				if ( i != this.cartes.length - 1 )
+				{
+					if (cpt%3 == 2)	sRet += "\n";
+					else 			sRet += " | ";
+				}
 				cpt++;
 			}
 		}

@@ -69,7 +69,7 @@ public class Joueur
 	public String toStringCartes ()
 	{
 		//return String.format( "%s", this.etablissements.stream().map(Etablissement::toStringNom).collect(Collectors.joining(" | ")) );
-		String sRet = "";
+		String sRet = "\t";
 		
 		ArrayList<Etablissement> arTemp = new ArrayList<Etablissement>(etablissements);
 		
@@ -91,10 +91,13 @@ public class Joueur
 					j++;
 			}	
 			
-			sRet += String.format( "%s (x%d)", cTemp.toStringNom(),nb);
+			sRet += String.format( "%s (x%d)", cTemp.toStringNom(), nb);
 			
-			if (i%4 == 3)	sRet += "\n";
-			else			sRet += " | ";
+			if (arTemp.size() != 0)
+			{
+				if (i%4 == 3)	sRet += "\n\t";
+				else			sRet += " | ";
+			}
 			i++;
 		}
 

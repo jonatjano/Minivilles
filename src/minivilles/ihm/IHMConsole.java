@@ -61,9 +61,12 @@ public class IHMConsole
 			cpt++;
 			if (cpt >= 2 && cpt < 4)
 			{
+				do
 				{
 					System.out.print("-> Voulez-vous rajouter un joueur ? (o/n)  ");
 					ans = sc.nextLine();
+
+					if ( !ans.matches("o|n") )	System.out.println("\tErreur : Saisie incorrecte");
 				} while ( !ans.matches("o|n") );
 			}
 		} while ( !ans.matches("n") && cpt != 4);
@@ -75,45 +78,52 @@ public class IHMConsole
 	{
 		this.controler.clearConsole();
 		System.out.println( String.format("\t\t--- Tour n°%2d ---\n", numTour) );
-		System.out.println( String.format("%s", pioche.toStringNom()) );
+		System.out.println( String.format("Pioche :\n%s", pioche.toStringNom()) );
 	}
 
-	public void displayTourJoueur (Pioche pioche, Joueur[] tabJ, Joueur joueur, int lancerDe)
+	public void displayTourJoueur (int numTour, Pioche pioche, Joueur[] tabJ, Joueur joueurActuel, int lancerDe)
 	{
 		Scanner sc = new Scanner(System.in);
 
 
-		System.out.println( String.format("\n\t--- Tour de %s ---\n. %-15s (%3d)   -> %d", joueur.getPrenom(), joueur.getPrenom(), joueur.getMonnaie(), lancerDe) );
-		System.out.println( String.format("%s", joueur.toStringCartes()) );
+		// Affichage du nouveau tour
+		this.displayNouveauTour(pioche, numTour);
 
-		//for (Joueur autreJ : tabJ)
-		// {
-		//	
-		// }
+		// Affichage des mains des joueurs
+		System.out.println("\n\nMain des joueurs :");
+		for (Joueur autreJ : tabJ)
+		{
+			System.out.println( String.format(". %-15s (%3dP)", autreJ.getPrenom(), autreJ.getMonnaie()) );
+			System.out.println( String.format("%s", autreJ.toStringCartes()) );
+		}
+
+		System.out.println( String.format("\n\n\t--- Tour de %s ---\n\n. Lancer de dé : %d", joueurActuel.getPrenom(), lancerDe) );
 
 		/* Demande de construction */
 		String ans = "";
-		while ( !ans.matches("n|o") )
+		do
 		{
 			System.out.print( "-> Voulez-vous construire un établissement ? (o/n)  ");
 			ans = sc.nextLine();
-		}
+
+			if (!ans.matches("n|o") ) this.controler.goBack(1);
+		} while ( !ans.matches("n|o") );
 
 		/* Choix du bâtiment à construire */
 		if ( ans.equals("o") )
 		{
-			ArrayList<Etablissement> etablissements = joueur.getEtablissements();
+			ArrayList<Etablissement> etablissements = joueurActuel.getEtablissements();
 
-			System.out.println("\n   Lequel ?");
+			System.out.println("\n   Lequel ? (Parmi la liste ci-dessous)");
 			System.out.println( pioche.toStringNom() );
 
 			Etablissement e = null;
 			while ( e == null )
 			{
-				System.out.print("-> Entrez l'index : ");
+				System.out.print("\n-> Entrez l'index : ");
 				try
 				{
-					e = pioche.achatEtablissement( Integer.parseInt(sc.nextLine()) - 1, joueur);
+					e = pioche.achatEtablissement( Integer.parseInt(sc.nextLine()) - 1, joueurActuel);
 					if (e == null)	System.out.println("\tErreur : Argent insuffisant");
 				}
 				catch (Exception ex)//IndexOutOfBoundsException ex)
@@ -123,7 +133,7 @@ public class IHMConsole
 			}
 
 			System.out.println("-> '" + e.getNom() + "' ajouté !");
-			joueur.addEtablissement(e);
+			joueurActuel.addEtablissement(e);
 		}
 	}
 
