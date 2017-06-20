@@ -227,12 +227,17 @@ public class IHMConsole
 				if (c != null)
 				{
 					System.out.println("\t-> '" + c.getNom() + "' construit(e) !");
-					Utility.waitForSeconds(0.75f);
+					Utility.waitForSeconds(0.75f);						
 				}
 			}
 		cpt++;
 
 		} while ( !ans.matches("-1") && (!ind.matches("[0-9]+") || c == null)  );	// Tant que la réponse n'est pas 'n' ET (que l'indice n'est pas un chiffre (l'index) OU que l'établissement n'est pas nul)
+	}
+
+	public boolean displayFinPartie ()
+	{
+		return false;
 	}
 
 	public int displayChoixDe (int min, int max)

@@ -14,6 +14,7 @@ public class GestionJeu
 	private int 		nbJoueur;
 	private Joueur[] 	tabJoueur;
 	private int 		banque;
+	private Joueur 		joueurGagnant;
 	private Joueur 		joueurActuel;
 
 
@@ -30,11 +31,12 @@ public class GestionJeu
 		this.joueurActuel = null;
 	}
 
-	public void lancer (int indexFirstPlayer)
+	public boolean lancer (int indexFirstPlayer)
 	{
 		int cptTour = 0;
 		int cpt 	= indexFirstPlayer;
-		while (true)
+
+		while (this.joueurGagnant == null)
 		{
 			// Nouveau tour
 			if (cpt == indexFirstPlayer)
@@ -46,6 +48,21 @@ public class GestionJeu
 			//Utility.waitForSeconds(1.5f);
 
 			cpt++; cpt = cpt%nbJoueur;
+
+			// Vérifie si un joueur a gagné
+			for (Joueur j : tabJoueur)
+				if ( j.aGagne() )
+					this.joueurGagnant = j;
 		}
+
+		// Affiche la cérémonie du gagnant
+		boolean aRecommence = false;
+		if (this.joueurGagnant != null)
+		{
+			aRecommence = this.ihm.displayFinPartie();
+			return aRecommence;
+		}
+		else
+			return aRecommence;
 	}
 }
