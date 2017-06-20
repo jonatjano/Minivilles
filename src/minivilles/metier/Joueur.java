@@ -71,21 +71,30 @@ public class Joueur
 		//return String.format( "%s", this.etablissements.stream().map(Etablissement::toStringNom).collect(Collectors.joining(" | ")) );
 		String sRet = "";
 		
+		ArrayList<Etablissement> arTemp = new ArrayList<Etablissement>(etablissements);
+		
 		int i=0;
-		int nb=1;
-		while ( i < this.etablissements.size() )
+		while ( arTemp.size() !=0 )
 		{
-			if ( i+1 < this.etablissements.size() && this.etablissements.get(i).equals(this.etablissements.get(i+1)) )
-				nb++;
-			else
-			{
-				sRet += String.format( "%s (x%d)", this.etablissements.get(i).toStringNom(),nb);
-				nb = 1;
-			}
-
-			if (i%4 == 3)	sRet += "\n";
-			else if (nb == 1)			sRet += " | ";
+			int nb=0;
+			Carte cTemp = arTemp.get(0);
 			
+			int j=0;
+			while ( j < arTemp.size() )
+			{
+				if (arTemp.get(j).equals(cTemp))
+				{
+					arTemp.remove(j);
+					nb++;
+				}
+				else
+					j++;
+			}	
+			
+			sRet += String.format( "%s (x%d)", cTemp.toStringNom(),nb);
+			
+			if (i%4 == 3)	sRet += "\n";
+			else			sRet += " | ";
 			i++;
 		}
 
