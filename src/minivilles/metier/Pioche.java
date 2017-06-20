@@ -39,8 +39,10 @@ public class Pioche
 	}
 
 	public Etablissement achatEtablissement (int id, Joueur j)
+	throws IndexOutOfBoundsException
 	{
-		if (id >= 0 && id < Pioche.NB && this.nbCartes[id] > 0)
+		if (id < 0 || id >= Pioche.NB || this.nbCartes[id] <= 0)	throw new IndexOutOfBoundsException("Erreur : Index incorrect");
+		else
 		{
 			if (j.addMonnaie(- this.cartes[id].getCoutPiece())) {
 				this.nbCartes[id]--;

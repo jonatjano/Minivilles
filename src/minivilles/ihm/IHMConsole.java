@@ -98,8 +98,9 @@ public class IHMConsole
 				try
 				{
 					e = pioche.achatEtablissement( Integer.parseInt(sc.nextLine()) - 1, joueur);
+					if (e == null)	System.out.println("\tErreur : Argent insuffisant");
 				}
-				catch (Exception ex)
+				catch (Exception ex)//IndexOutOfBoundsException ex)
 				{
 					System.out.println("\tErreur : Index invalide");
 				}
