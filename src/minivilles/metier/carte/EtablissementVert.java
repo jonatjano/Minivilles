@@ -22,6 +22,16 @@ public class EtablissementVert extends Etablissement
 
 	public void action(Joueur j, int des, Joueur possesseur)
 	{
-		System.out.println("\nTODO EtablissementVert.action()\n");
+		if (canActivate(des)) {
+			if (typePuissance == null) {
+				possesseur.addMonnaie(puissance);
+			}
+			else {
+				ArrayList<Etablissement> etabs = possesseur.getEtablissements();
+				int nbType = 0;
+				for ( Etablissement e : etabs )) { if (e.getType().equals( typePuissance )) { nbType++; } }
+				possesseur.addMonnaie(puissance * nbType);
+			}
+		}
 	}
 }
