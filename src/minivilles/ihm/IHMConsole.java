@@ -212,12 +212,30 @@ public class IHMConsole
 				{
 					ind = sc.nextLine();
 					c 	= joueurActuel.construireMonument( Integer.parseInt(ind) - 1 );
-
+					
 					if (c == null)
 					{
 						System.out.println("\tErreur : Argent insuffisant / Déjà construit");
 						Utility.waitForSeconds(0.75f);
 					}
+					else
+					{
+						String[][] tabAffichageMonument = Monument.getStringAffichage(c.getNom());
+						
+						for (int i =tabAffichageMonument.length-1; i >=0 ; i--)
+						{	
+							Contoleur.clearConsole();
+							String sTemp = "";
+							for (int j=tabAffichageMonument.length-1; j > i ; j--)
+								sTemp += String.format("\t%s\n",String.join("",tabAffichageMonument[j]));
+							
+							sTemp = String.format("\033[%dA", tabAffichageMonument.length + 4 - i) + sTemp;
+							System.out.println(sTemp);
+							Utility.waitForSeconds(0.2);
+						}
+						Controleur.clearConsole();
+					}
+					
 				}
 				catch (Exception ex)//IndexOutOfBoundsException ex)
 				{
