@@ -125,7 +125,6 @@ public class IHMConsole
 				// Choix du nombre de dé
 				nbDe 	= this.displayChoixDe( 1, joueurActuel.getNbDes() );
 				valDe 	= this.controler.lancerDe( nbDe );
-
 				for (int val : valDe)
 					valDeTot += val;
 
@@ -134,8 +133,11 @@ public class IHMConsole
 				for ( int i = 0; i < tabJ.length; i++ )
 					if ( tabJ[i] == joueurActuel ) { idJoueurActuel = i; }
 
-				for ( int i = idJoueurActuel - 1; i != idJoueurActuel; i-- ) {
-					if (i < 0) { i = tabJ.length - 1; }
+				for ( int i = idJoueurActuel - 1; i != idJoueurActuel; i-- )
+				{
+					//~MODULO PUTAIN CA MARCHE PAS
+					i = i%tabJ.length;
+					// if (i < 0) { i = tabJ.length - 1; }
 					tabJ[i].actionCartes( joueurActuel,  valDeTot);
 				}
 			}
@@ -258,7 +260,7 @@ public class IHMConsole
 					}
 
 					System.out.println("\t-> '" + c.getNom() + "' construit(e) !");
-					Utility.waitForSeconds(3f);
+					Utility.waitForSeconds(1.5f);
 				}
 			}
 		cpt++;
