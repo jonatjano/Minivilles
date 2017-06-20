@@ -9,14 +9,17 @@ import java.util.ArrayList;
 
 public class IHMConsole
 {
-	public IHMConsole ()
-	{
+	Controleur controler;
 
+
+	public IHMConsole (Controleur controler)
+	{
+		this.controler = controler;
 	}
 
 	public String displayMenu ()
 	{
-		System.out.println(	"~ MENU PRINCIPAL ~\n"		+
+		System.out.println(	"~ MENU PRINCIPAL ~\n\n"	+
 							" 1 : Nouvelle partie\n" 	+
 							"-1 : Quitter\n"				);
 
@@ -32,7 +35,7 @@ public class IHMConsole
 
 		return ans;
 	}
-
+	// .*[.[^0-9]].*
 	public ArrayList<String> displayChoixJoueurs ()
 	{
 		System.out.println(	"~ CHOIX DES JOUEURS ~\n" );
@@ -48,15 +51,15 @@ public class IHMConsole
 			String name = "";
 			do
 			{
-				System.out.print( String.format("%d - Nom du joueur :  ", (cpt + 1)) );
+				System.out.print( String.format("%2d - Nom du joueur :  ", (cpt + 1)) );
 				name = sc.nextLine();
 
-				if ( name == null || name.matches("") )		System.out.println("\tErreur : Nom invalide");
+				if ( name == null || name.matches("") )		System.out.println("\t\tErreur : Nom invalide");
 			} while ( name == null || name.matches("") );
 			names.add( name );
 
 			cpt++;
-			if (cpt >= 3 && cpt < 4)
+			if (cpt >= 2 && cpt < 4)
 			{
 				{
 					System.out.print("-> Voulez-vous rajouter un joueur ? (o/n)  ");
@@ -68,19 +71,25 @@ public class IHMConsole
 		return names;
 	}
 
-	public void displayTour (Pioche pioche, int numTour)
+	public void displayNouveauTour (Pioche pioche, int numTour)
 	{
-		System.out.println( String.format("\n\n\t--- Tour n°%2d ---\n", numTour) );
-		System.out.println( pioche.toStringNom() );
+		this.controler.clearConsole();
+		System.out.println( String.format("\t\t--- Tour n°%2d ---\n", numTour) );
+		System.out.println( String.format("%s", pioche.toStringNom()) );
 	}
 
-	public void displayJoueur (Pioche pioche, Joueur joueur, int lancerDe)
+	public void displayTourJoueur (Pioche pioche, Joueur[] tabJ, Joueur joueur, int lancerDe)
 	{
 		Scanner sc = new Scanner(System.in);
 
 
-		System.out.println( String.format("\n\n%-15s (%3d)   -> %d", joueur.getPrenom(), joueur.getMonnaie(), lancerDe) );
-		System.out.println( joueur.toStringCartes() );
+		System.out.println( String.format("\n\t--- Tour de %s ---\n. %-15s (%3d)   -> %d", joueur.getPrenom(), joueur.getPrenom(), joueur.getMonnaie(), lancerDe) );
+		System.out.println( String.format("%s", joueur.toStringCartes()) );
+
+		//for (Joueur autreJ : tabJ)
+		// {
+		//	
+		// }
 
 		/* Demande de construction */
 		String ans = "";

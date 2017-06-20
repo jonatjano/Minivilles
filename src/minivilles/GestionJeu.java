@@ -41,7 +41,7 @@ public class GestionJeu
 			// Nouveau tour
 			if (cpt == indexFirstPlayer)
 			{
-				this.ihm.displayTour(this.pioche, ++cptTour);
+				this.ihm.displayNouveauTour(this.pioche, ++cptTour);
 			}
 
 			this.joueurActuel = this.tabJoueur[cpt];
@@ -52,7 +52,7 @@ public class GestionJeu
 			for ( Joueur j : this.tabJoueur ) {
 				j.actionCartes( this.joueurActuel, valDe );
 			}
-			this.ihm.displayJoueur( this.pioche, this.joueurActuel, valDe );
+			this.ihm.displayTourJoueur( this.pioche, this.tabJoueur, this.joueurActuel, valDe );
 			//Utility.waitForSeconds(1.5f);
 
 			cpt++; cpt = cpt%nbJoueur;
