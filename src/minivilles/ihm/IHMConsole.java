@@ -1,6 +1,7 @@
 package minivilles.ihm;
 
 import minivilles.metier.*;
+import minivilles.util.Utility;
 import minivilles.*;
 import minivilles.metier.carte.Etablissement;
 import java.util.Scanner;
@@ -54,8 +55,9 @@ public class IHMConsole
 				System.out.print( String.format("%2d - Nom du joueur :  ", (cpt + 1)) );
 				name = sc.nextLine();
 
-				if ( name == null || name.matches("") )		System.out.println("\t\tErreur : Nom invalide");
-			} while ( name == null || name.matches("") );
+				if 		( name == null || !name.matches(".*[a-zA-Z].*") )		System.out.println( "\t\tErreur : Nom invalide" );
+				else if ( name.length() > 20 )									System.out.println( "\t\tErreur : Longuer invalide (entre 1 et 20)" );
+			} while ( name == null || !name.matches(".*[a-zA-Z].*") || name.length() > 20 );
 			names.add( name );
 
 			cpt++;
@@ -78,7 +80,7 @@ public class IHMConsole
 	{
 		this.controler.clearConsole();
 		System.out.println( String.format("\t\t--- Tour n°%2d ---\n", numTour) );
-		System.out.println( String.format("Pioche :\n%s", pioche.toStringNom()) );
+		System.out.println( String.format(" - Pioche :\n%s", pioche.toStringNom()) );
 	}
 
 	public void displayTourJoueur (int numTour, Pioche pioche, Joueur[] tabJ, Joueur joueurActuel, int lancerDe)
@@ -86,27 +88,32 @@ public class IHMConsole
 		Scanner sc = new Scanner(System.in);
 
 
-		// Affichage du nouveau tour
-		this.displayNouveauTour(pioche, numTour);
-
-		// Affichage des mains des joueurs
-		System.out.println("\n\nMain des joueurs :");
-		for (Joueur autreJ : tabJ)
-		{
-			System.out.println( String.format(". %-15s (%3dP)", autreJ.getPrenom(), autreJ.getMonnaie()) );
-			System.out.println( String.format("%s", autreJ.toStringCartes()) );
-		}
-
-		System.out.println( String.format("\n\n\t--- Tour de %s ---\n\n. Lancer de dé : %d", joueurActuel.getPrenom(), lancerDe) );
-
-		/* Demande de construction */
+		// S'il y a une erreur au niveau de la saisie, on réaffiche tout
 		String ans = "";
 		do
 		{
-			System.out.print( "-> Voulez-vous construire un établissement ? (o/n)  ");
+			// Affichage du nouveau tour
+			this.displayNouveauTour(pioche, numTour);
+
+			// Affichage des mains des joueurs
+			System.out.println("\n\n - Main des joueurs :");
+			for (Joueur autreJ : tabJ)
+			{
+				System.out.println( String.format(". %-20s (%3dP)", autreJ.getPrenom(), autreJ.getMonnaie()) );
+				System.out.println( String.format("%s", autreJ.toStringCartes()) );
+			}
+			System.out.println( String.format("\n\n\t--- Tour de %s ---\n\n. Lancer de dé : %d", joueurActuel.getPrenom(), lancerDe) );
+
+			/* Demande de construction */
+			System.out.print( "-> Voulez-vous construire un établissement ? (o/n)  " );
 			ans = sc.nextLine();
 
-			if (!ans.matches("n|o") ) this.controler.goBack(1);
+			if (!ans.matches("n|o") )
+			{
+				// System.out.println("\tErreur : Saisie incorrecte");//this.controler.goBack(1, ans.length(), str);
+				// Utility.waitForSeconds(0.75f);
+				this.controler.goBack();
+			}
 		} while ( !ans.matches("n|o") );
 
 		/* Choix du bâtiment à construire */
