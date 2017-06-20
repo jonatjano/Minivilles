@@ -89,9 +89,15 @@ public class IHMConsole
 
 
 		// S'il y a une erreur au niveau de la saisie, on réaffiche tout
-		String ans = "";
+		String 			ans = "",
+						ind = "";
+		boolean estChoisi	= false;
+		Etablissement 	e 	= null;
 		do
 		{
+			// Affichage de début de tour
+			// if ( !ans.matches("o|n") )
+			// {
 			// Affichage du nouveau tour
 			this.displayNouveauTour(pioche, numTour);
 
@@ -106,42 +112,69 @@ public class IHMConsole
 
 			/* Demande de construction */
 			System.out.print( "-> Voulez-vous construire un établissement ? (o/n)  " );
-			ans = sc.nextLine();
 
-			if (!ans.matches("n|o") )
+
+			if ( !estChoisi )
 			{
-				// System.out.println("\tErreur : Saisie incorrecte");//this.controler.goBack(1, ans.length(), str);
-				// Utility.waitForSeconds(0.75f);
-				this.controler.goBack();
+				ans = sc.nextLine();
+
+				if 		( !ans.matches("n|o") )
+				{
+					System.out.println("\tErreur : Saisie incorrecte");//this.controler.goBack(1, ans.length(), str);
+					Utility.waitForSeconds(0.75f);
+					this.controler.goBack(2);
+				}
+				else if ( ans.equals("o") )
+					estChoisi = true;
 			}
-		} while ( !ans.matches("n|o") );
+			else
+				System.out.println();
 
-		/* Choix du bâtiment à construire */
-		if ( ans.equals("o") )
-		{
-			ArrayList<Etablissement> etablissements = joueurActuel.getEtablissements();
 
-			System.out.println("\n   Lequel ? (Parmi la liste ci-dessous)");
-			System.out.println( pioche.toStringNom() );
-
-			Etablissement e = null;
-			while ( e == null )
+			// S'il a été choisi de construire un établissement
+			if ( estChoisi )
 			{
+				ArrayList<Etablissement> etablissements = joueurActuel.getEtablissements();
+
+				System.out.println("\n   Lequel (Parmi la liste ci-dessous) ?  (NB : '-1' pour revenir en arrière)");
+				System.out.println( pioche.toStringNom() );
+
+
 				System.out.print("\n-> Entrez l'index : ");
 				try
 				{
-					e = pioche.achatEtablissement( Integer.parseInt(sc.nextLine()) - 1, joueurActuel);
-					if (e == null)	System.out.println("\tErreur : Argent insuffisant");
+					ind = sc.nextLine();
+					e 	= pioche.achatEtablissement( Integer.parseInt(ind) - 1, joueurActuel);
+					
+					if (e == null)
+					{
+						System.out.println("\tErreur : Argent insuffisant");
+						Utility.waitForSeconds(0.75f);
+					}
 				}
 				catch (Exception ex)//IndexOutOfBoundsException ex)
 				{
-					System.out.println("\tErreur : Index invalide");
+					if ( ind.equals("-1") )											// Si le choix a été de retourner en arrière...
+						estChoisi = false;											// Le choix du bâtiment à construire est réinitialisé
+					else
+					{
+						System.out.println("\tErreur : Index invalide");
+						Utility.waitForSeconds(0.75f);
+					}
+					ind = "";
+				}
+
+				if (e != null)
+				{
+					System.out.println("\t-> '" + e.getNom() + "' ajouté !");
+					Utility.waitForSeconds(0.75f);
+					joueurActuel.addEtablissement(e);
 				}
 			}
+		} while ( !ans.matches("n") && (!ind.matches("[0-9]+") || e == null)  );	// Tant que la réponse n'est pas 'n' ET (que l'indice n'est pas un chiffre (l'index) OU que l'établissement n'est pas nul)
 
-			System.out.println("-> '" + e.getNom() + "' ajouté !");
-			joueurActuel.addEtablissement(e);
-		}
+
+		
 	}
 
 	public int displayChoixDe (int min, int max)

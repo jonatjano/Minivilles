@@ -47,6 +47,7 @@ public class Controleur
 	/**
 	  * Nettoie la console pour n'importe quel système d'exploitation
 	  */
+	// Avec plusieurs façons de faire
 	public static void clearConsole ()
 	{
 	 //    for(int i = 0; i < 50; i++)
@@ -59,13 +60,25 @@ public class Controleur
 		// catch (Exception e) {}
 		
 		System.out.println("\u001B[H\u001B[2J");
+
+		// if ( System.getProperty("os.name").startsWith("Windows") )
+		// {
+		// 	try
+		// 	{
+		// 		Runtime.getRuntime().exec("cls");
+		// 	}
+		// 	catch (Exception e) {}
+		// }
 	}
 
-	public static void goBack ()//(int i, int toErase, String line)
+	public static void goBack (int i)//(int i, int toErase, String line)
 	{
 		// System.out.print( String.format("\033[%dA", i) ); 		// Avance le curseur de n lignes
 		// System.out.print( line + new String(new char[toErase]).replace("\0", " ") + "\n" );
 		// System.out.print( String.format("\033[%dA", i) ); 		// Avance le curseur de n lignes
+
+		System.out.print( String.format("\033[%dA", i) ); 		// Avance le curseur de n lignes
+		System.out.print( "\033[2K" );
 	}
 
 
