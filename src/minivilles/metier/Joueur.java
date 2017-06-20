@@ -51,6 +51,13 @@ public class Joueur
 		return false;
 	}
 
+	public boolean hasParc() {
+		for (Monument m : this.monuments)
+			if (m.getNom().equals("Parc d'Attractions"))
+				return m.estConstruit();
+		return false;
+	}
+
 	/* GETTER */
 
 	public String 					getPrenom ()					{ return this.prenom;				}

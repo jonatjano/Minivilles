@@ -96,7 +96,7 @@ public class IHMConsole
 		}
 	}
 
-	public void displayTourJoueur (int numTour, Pioche pioche, Joueur[] tabJ, Joueur joueurActuel)
+	public int[] displayTourJoueur (int numTour, Pioche pioche, Joueur[] tabJ, Joueur joueurActuel)
 	{
 		Scanner sc = new Scanner(System.in);
 		String 			ans = "",
@@ -130,8 +130,14 @@ public class IHMConsole
 					valDeTot += val;
 
 				// Action des cartes du joueur en fonction du lancé de dé
-				for ( Joueur j : tabJ )
-					j.actionCartes( joueurActuel,  valDeTot);
+				int idJoueurActuel = 0;
+				for ( int i = 0; i < tabJ.length; i++ )
+					if ( tabJ[i] == joueurActuel ) { idJoueurActuel = i; }
+
+				for ( int i = idJoueurActuel - 1; i != idJoueurActuel; i-- ) {
+					if (i < 0) { i = tabJ.length - 1; }
+					tabJ[i].actionCartes( joueurActuel,  valDeTot);
+				}
 			}
 			if ( 1 == joueurActuel.getNbDes() )
 				System.out.print("\n\n");
@@ -250,7 +256,7 @@ public class IHMConsole
 						System.out.println(sTemp);
 						Utility.waitForSeconds(0.75);
 					}
-					
+
 					System.out.println("\t-> '" + c.getNom() + "' construit(e) !");
 					Utility.waitForSeconds(3f);
 				}
@@ -258,6 +264,7 @@ public class IHMConsole
 		cpt++;
 
 		} while ( !ans.matches("-1") && (!ind.matches("[0-9]+") || c == null)  );	// Tant que la réponse n'est pas 'n' ET (que l'indice n'est pas un chiffre (l'index) OU que l'établissement n'est pas nul)
+		return valDe;
 	}
 
 	public boolean displayFinPartie ()

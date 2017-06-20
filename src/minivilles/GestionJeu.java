@@ -43,11 +43,13 @@ public class GestionJeu
 				cptTour++;
 
 			this.joueurActuel = this.tabJoueur[cpt];
-			
-			this.ihm.displayTourJoueur( cptTour, this.pioche, this.tabJoueur, this.joueurActuel );
+
+			int[] valDe = this.ihm.displayTourJoueur( cptTour, this.pioche, this.tabJoueur, this.joueurActuel );
 			//Utility.waitForSeconds(1.5f);
 
-			cpt++; cpt = cpt%nbJoueur;
+			if (!this.joueurActuel.hasParc() || ( valDe.length == 2 && this.joueurActuel.hasParc() && valDe[0] == valDe[1] ) ) {
+				cpt++; cpt = cpt%nbJoueur;
+			}
 
 			// Vérifie si un joueur a gagné
 			for (Joueur j : tabJoueur)

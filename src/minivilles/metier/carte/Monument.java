@@ -30,7 +30,7 @@ public class Monument extends Carte
 	}
 
 	/* toString */
-	
+
 	public static String[][] getStringAffichage(String nom)
 	{
 		switch(nom)
@@ -46,16 +46,16 @@ public class Monument extends Carte
 									  {"(","-","-","-","-","O","O","O","-","-","-","-","-","-","-","-","-","-","-","O","O","O","-","-","-","-","-","-","-","-","-","-","-"},
 									  {"=","=","=","=","=","=","=","=","=","=","=","=","=","=","=","=","=","=","=","=","=","=","=","=","=","=","=","=","=","=","=","=","="}
 									 };
-			
+
 			case "Centre Commercial":
 				return null;
-			
+
 			case "Parc d'Attractions":
 				return null;
-			
+
 			case "Tour Radio":
 				return null;
-			
+
 		}
 		return null;
 	}
