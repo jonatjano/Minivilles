@@ -30,7 +30,7 @@ public class Joueur
 		this.monnaie = monnaie;
 	}
 
-	public void actionCartes(Joueur joueur, int des)
+	public void actionCartes (Joueur joueur, int des)
 	{
 		for (Etablissement e : this.etablissements) {
 			e.action(joueur, des, this);
@@ -62,8 +62,14 @@ public class Joueur
 	public Monument construireMonument (int id)
 	throws IndexOutOfBoundsException
 	{
-		Monument m = this.monuments.get(i);
-		if ( m != null && !m.estConstruit() ) { m.construction(); return m; }
+		Monument m = this.monuments.get(id);
+
+		if ( m != null && !m.estConstruit() )
+		{
+			m.construction();
+			return m;
+		}
+
 		return null;
 	}
 
@@ -112,13 +118,13 @@ public class Joueur
 
 		/* AFFICHAGE DES MONUMENTS */
 		sRet += "\n";
-		this.toStringMonuments("\t");
+		sRet += this.toStringMonuments();
 
 
 		return sRet;
 	}
 
-	public String toStringMonuments (String space)
+	public String toStringMonuments ()
 	{
 		String 	sRet 	= "\t~ MONUMENTS\n\t";
 
@@ -130,6 +136,29 @@ public class Joueur
 			{
 				if (k%2 == 1)	sRet += "\n\t";
 				else			sRet += " | ";
+			}
+		}
+
+		return sRet;
+	}
+
+	public String toStringMonumentsNonAchetes ()
+	{
+		String 	sRet 	= "\t~ MONUMENTS\n\t";
+
+		int i = 0;
+		for (Monument monument : this.monuments)
+		{
+			if ( !monument.estConstruit() )
+			{
+				sRet += String.format( "%2d ~ %s (%2dP)", (i+1), monument.toStringNom(), monument.getCoutPiece() );
+
+				if (i != this.monuments.size() - 1)
+				{
+					if (i%2 == 1)	sRet += "\n\t";
+					else			sRet += " | ";
+				}
+				i++;
 			}
 		}
 

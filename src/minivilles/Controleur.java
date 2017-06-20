@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 public class Controleur
 {
+	private static int 	MAX_VAL = 6;
+	
 	private IHMConsole ihm;
 	
 
@@ -42,6 +44,11 @@ public class Controleur
 	{
 		GestionJeu gj = new GestionJeu(this.ihm, names);
 		gj.lancer(0);
+	}
+
+	public int lancerDe (int nbDe)
+	{
+		return (int) (Math.random() * MAX_VAL * nbDe) + 1;
 	}
 
 	/**

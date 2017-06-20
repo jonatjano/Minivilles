@@ -77,36 +77,61 @@ public class IHMConsole
 		return names;
 	}
 
-	public void displayNouveauTour (Pioche pioche, int numTour)
+	public void displayNouveauTour (Pioche pioche, Joueur[] tabJ, int numTour)
 	{
 		this.controler.clearConsole();
+
 		System.out.println( String.format("\t\t--- Tour n°%2d ---\n", numTour) );
 		System.out.println( String.format(" - Pioche :\n%s", pioche.toStringNom()) );
+
+
+		// Affichage des mains des joueurs
+		System.out.println("\n\n - Main des joueurs :");
+		for (Joueur autreJ : tabJ)
+		{
+			System.out.println( String.format(". %-20s (%3dP)", autreJ.getPrenom(), autreJ.getMonnaie()) );
+			System.out.println( String.format("%s", autreJ.toStringCartes()) );
+		}
 	}
 
-	public void displayTourJoueur (int numTour, Pioche pioche, Joueur[] tabJ, Joueur joueurActuel, int lancerDe)
+	public void displayTourJoueur (int numTour, Pioche pioche, Joueur[] tabJ, Joueur joueurActuel)
 	{
 		Scanner sc = new Scanner(System.in);
-
-
-		// S'il y a une erreur au niveau de la saisie, on réaffiche tout
 		String 			ans = "",
 						ind = "";
 		Carte 			c 	= null;
+		int 			nbDe 	= 0,
+						valDe 	= 0;
+
+
+		int 			cpt = 0;
 		/* AFFICHAGE */
+		// S'il y a une erreur au niveau de la saisie, on réaffiche tout
 		do
 		{
 			// Affichage du nouveau tour
-			this.displayNouveauTour(pioche, numTour);
+			this.displayNouveauTour(pioche, tabJ, numTour);
+			
 
-			// Affichage des mains des joueurs
-			System.out.println("\n\n - Main des joueurs :");
-			for (Joueur autreJ : tabJ)
+			System.out.println( String.format("\n\n\t--- Tour de %s ---", joueurActuel.getPrenom()) );
+
+			// Seulement pendant la première boucle, les dés sont lancés
+			if (cpt == 0)
 			{
-				System.out.println( String.format(". %-20s (%3dP)", autreJ.getPrenom(), autreJ.getMonnaie()) );
-				System.out.println( String.format("%s", autreJ.toStringCartes()) );
+				// Choix du nombre de dé
+				nbDe 	= this.displayChoixDe( 1, joueurActuel.getNbDes() );
+				valDe 	= this.controler.lancerDe( nbDe );
+				
+
+				// Action des cartes du joueur en fonction du lancé de dé
+				for ( Joueur j : tabJ )
+					j.actionCartes( joueurActuel, valDe );
 			}
-			System.out.println( String.format("\n\n\t--- Tour de %s ---\n\n. Lancer de dé : %d", joueurActuel.getPrenom(), lancerDe) );
+			if ( 1 == joueurActuel.getNbDes() )
+				System.out.print("\n\n");
+			
+
+			System.out.println( String.format("\n. Lancer de dé : %d", valDe) );
 
 			/* Demande de construction */
 			System.out.print( 	"-> Que voulez-vous faire ?\n" 										+ 
@@ -172,18 +197,18 @@ public class IHMConsole
 			if ( ans.matches("2") )
 			{
 				System.out.println("\n   Lequel (Parmi la liste ci-dessous) ?  (NB : '-1' pour revenir en arrière)");
-				System.out.println( joueurActuel.toStringMonuments("") );
+				System.out.println( joueurActuel.toStringMonumentsNonAchetes() );
 
 
 				System.out.print("\n-> Entrez l'index : ");
 				try
 				{
 					ind = sc.nextLine();
-					c 	= pioche.achatEtablissement( Integer.parseInt(ind) - 1, joueurActuel);
+					c 	= joueurActuel.construireMonument( Integer.parseInt(ind) - 1 );
 					
 					if (c == null)
 					{
-						System.out.println("\tErreur : Argent insuffisant");
+						System.out.println("\tErreur : Argent insuffisant / Déjà construit");
 						Utility.waitForSeconds(0.75f);
 					}
 				}
@@ -201,14 +226,13 @@ public class IHMConsole
 
 				if (c != null)
 				{
-					System.out.println("\t-> '" + c.getNom() + "' ajouté !");
+					System.out.println("\t-> '" + c.getNom() + "' construit(e) !");
 					Utility.waitForSeconds(0.75f);
 				}
 			}
+		cpt++;
+
 		} while ( !ans.matches("-1") && (!ind.matches("[0-9]+") || c == null)  );	// Tant que la réponse n'est pas 'n' ET (que l'indice n'est pas un chiffre (l'index) OU que l'établissement n'est pas nul)
-
-
-		
 	}
 
 	public int displayChoixDe (int min, int max)
@@ -220,7 +244,7 @@ public class IHMConsole
 		{
 			do
 			{
-				System.out.print("-> Combien de dés voulez-vous utiliser ? (De '" + min + "' à '" + max + "') ");
+				System.out.print("\n-> Combien de dés voulez-vous utiliser ? (De '" + min + "' à '" + max + "') ");
 				ans = sc.nextLine();
 
 				if 		( !ans.matches("[0-9]+") || ans.matches("0*") )						System.out.println("\tErreur : Saisie incorrecte");

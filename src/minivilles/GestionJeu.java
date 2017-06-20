@@ -9,8 +9,6 @@ import java.util.ArrayList;
 
 public class GestionJeu
 {
-	private static int 	MAX_VAL = 6;
-
 	private IHMConsole	ihm;
 	private Pioche 		pioche;
 	private int 		nbJoueur;
@@ -43,22 +41,11 @@ public class GestionJeu
 				cptTour++;
 
 			this.joueurActuel = this.tabJoueur[cpt];
-
-			//~ CHANGER L'ORDRE
-			int nbDe = this.ihm.displayChoixDe( 1, this.joueurActuel.getNbDes() );
-			int valDe = this.lancerDe( nbDe );
-			for ( Joueur j : this.tabJoueur ) {
-				j.actionCartes( this.joueurActuel, valDe );
-			}
-			this.ihm.displayTourJoueur( cptTour, this.pioche, this.tabJoueur, this.joueurActuel, valDe );
+			
+			this.ihm.displayTourJoueur( cptTour, this.pioche, this.tabJoueur, this.joueurActuel );
 			//Utility.waitForSeconds(1.5f);
 
 			cpt++; cpt = cpt%nbJoueur;
 		}
-	}
-
-	public int lancerDe (int nbDe)
-	{
-		return (int) (Math.random() * MAX_VAL * nbDe) + 1;
 	}
 }

@@ -14,13 +14,21 @@ public class Monument extends Carte
 		this.estConstruit = false;
 	}
 
-	public boolean estConstruit() { return this.estConstruit; }
+	public void construction () { this.estConstruit = true; }
 
-	public void construction() { this.estConstruit = true; }
+	/* GETTER */
 
+	public boolean estConstruit () { return this.estConstruit; }
 	public String getEtat()
 	{
 		return this.estConstruit ? "Construit" : "Pas fini ";
+	}
+
+	/* SETTER */
+
+	public void setEtat (boolean bool)
+	{
+		this.estConstruit = bool;
 	}
 
 	/* toString */
