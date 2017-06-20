@@ -3,4 +3,4 @@ lecture du sujet jusqu'a 10h00
 
 Partie 1 : 
 
-. [^[0-9]]+
+.*[.[^0-9]].*
