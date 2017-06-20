@@ -23,15 +23,19 @@ public class EtablissementVert extends Etablissement
 
 	public void action(Joueur j, int des, Joueur possesseur)
 	{
+		int pow = this.puissance;
+
+		if ( ( this.type.equals("Restauration") || this.type.equals("Commerce") ) && possesseur.hasCentreComm() ) { pow++; }
+
 		if (canActivate(des)) {
 			if (typePuissance == null) {
-				possesseur.addMonnaie(puissance);
+				possesseur.addMonnaie(pow);
 			}
 			else {
 				ArrayList<Etablissement> etabs = possesseur.getEtablissements();
 				int nbType = 0;
 				for ( Etablissement e : etabs ) { if (e.getType().equals( typePuissance )) { nbType++; } }
-				possesseur.addMonnaie(puissance * nbType);
+				possesseur.addMonnaie(pow * nbType);
 			}
 		}
 	}

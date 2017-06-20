@@ -14,12 +14,16 @@ public class EtablissementRouge extends Etablissement
 
 	public void action(Joueur j, int des, Joueur possesseur)
 	{
+		int pow = this.puissance;
+
+		if ( ( this.type.equals("Restauration") || this.type.equals("Commerce") ) && possesseur.hasCentreComm() ) { pow++; }
+
 		if (canActivate(des)) {
 			System.out.println("activation de " + getNom());
 			int mon = j.getMonnaie();
-			if (mon >= puissance) {
-				j.addMonnaie(- puissance);
-				possesseur.addMonnaie(puissance);
+			if (mon >= pow) {
+				j.addMonnaie(- pow);
+				possesseur.addMonnaie(pow);
 			}
 			else {
 				j.addMonnaie(- mon);
