@@ -9,9 +9,9 @@ import java.util.ArrayList;
 public class Controleur
 {
 	private static int 	MAX_VAL = 6;
-	
+
 	private IHMConsole ihm;
-	
+
 
 	public Controleur ()
 	{
@@ -22,7 +22,7 @@ public class Controleur
 	{
 		String 				choix = "";
 		ArrayList<String> 	names = null;
-		do 
+		do
 		{
 			this.clearConsole();
 			choix = this.ihm.displayMenu();
@@ -35,7 +35,7 @@ public class Controleur
 					break;
 			}
 		} while ( !choix.matches("-1") && names == null );
-		
+
 		if (names != null && names.size() != 0)
 			this.nouvellePartie(names);
 	}
@@ -46,9 +46,13 @@ public class Controleur
 		gj.lancer(0);
 	}
 
-	public int lancerDe (int nbDe)
+	public int[] lancerDe (int nbDe)
 	{
-		return (int) (Math.random() * MAX_VAL * nbDe) + 1;
+		int[] ret = new int[nbDe];
+		for (int i = 0; i < nbDe; i++) {
+			ret[i] = (int) (Math.random() * MAX_VAL) + 1;
+		}
+		return ret;
 	}
 
 	/**
@@ -62,7 +66,7 @@ public class Controleur
 		// 	System.out.print( String.format("\033[%dA", 1) ); 	// Avance le curseur de n lignes
 		// 	System.out.print( "\033[K" ); 						// Efface la ligne entièrement
 		// }
-		
+
 		// try 				{ System.console().reader().reset(); }
 		// catch (Exception e) {}
 

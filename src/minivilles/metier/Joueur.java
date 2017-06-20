@@ -19,13 +19,14 @@ public class Joueur
 	public Joueur(String prenom, int monnaie)
 	{
 		this.prenom = prenom;
-		this.monuments 		= new ArrayList<Monument>( Arrays.asList(new Monument[] {	new Monument("Tour Radio", "", 22),
-																						new Monument("Gare", "", 4),
+		this.monuments 		= new ArrayList<Monument>( Arrays.asList(new Monument[] {	new Monument("Gare", "", 4),
 																						new Monument("Centre Commercial", "", 10),
-																						new Monument("Parc d'Attractions", "", 16) }) );
+																						new Monument("Parc d'Attractions", "", 16),
+																						new Monument("Tour Radio", "", 22) }) );
 
 		this.etablissements = new ArrayList<Etablissement>( Arrays.asList(new Etablissement[] { new EtablissementBleu("Champs de blé", 	"Culture", 	1, 1, 1),
 																								new EtablissementVert("Boulangerie", 	"Commerce", 1, 1, 2,3) }) );
+
 		this.monnaie = monnaie;
 	}
 
@@ -36,7 +37,12 @@ public class Joueur
 		}
 	}
 
-	public int getNbDes() { return this.monuments.get(0).estConstruit() ? 2 : 1;}
+	public int getNbDes() {
+		for (Monument m : this.monuments)
+			if (m.getNom().equals("Gare"))
+				return m.estConstruit() ? 2 : 1;
+		return 1;
+	}
 
 	/* GETTER */
 
@@ -63,13 +69,21 @@ public class Joueur
 	{
 		Monument m = this.monuments.get(id);
 
-		if ( m != null && !m.estConstruit() )
+		if ( m != null && !m.estConstruit() && m.getCoutPiece() <= this.monnaie)
 		{
 			m.construction();
 			return m;
 		}
 
 		return null;
+	}
+
+	public boolean aGagne()
+	{
+		return 	this.monuments.get(0).estConstruit() &&
+				this.monuments.get(1).estConstruit() &&
+				this.monuments.get(2).estConstruit() &&
+				this.monuments.get(3).estConstruit();
 	}
 
 	/* toString */
@@ -146,21 +160,19 @@ public class Joueur
 		String 	sRet 	= "\t~ MONUMENTS\n\t";
 
 		int i = 0;
-		int k = 0;
 		for (Monument monument : this.monuments)
 		{
 			if ( !monument.estConstruit() )
 			{
 				sRet += String.format( "%2d ~ %s (%2dP)", (i+1), monument.toStringNom(), monument.getCoutPiece() );
 
-				if (k != this.monuments.size() - 1)
+				if (i != this.monuments.size() - 1)
 				{
-					if (k%2 == 1)	sRet += "\n\t";
+					if (i%2 == 1)	sRet += "\n\t";
 					else			sRet += " | ";
 				}
-				k++;
+				i++;
 			}
-			i++;
 		}
 
 		return sRet;

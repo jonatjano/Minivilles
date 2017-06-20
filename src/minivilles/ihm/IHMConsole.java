@@ -100,8 +100,8 @@ public class IHMConsole
 		String 			ans = "",
 						ind = "";
 		Carte 			c 	= null;
-		int 			nbDe 	= 0,
-						valDe 	= 0;
+		int 			nbDe 	= 0;
+		int[]			valDe 	= new int[1];
 
 
 		int 			cpt = 0;
@@ -111,7 +111,7 @@ public class IHMConsole
 		{
 			// Affichage du nouveau tour
 			this.displayNouveauTour(pioche, tabJ, numTour);
-			
+
 
 			System.out.println( String.format("\n\n\t--- Tour de %s ---", joueurActuel.getPrenom()) );
 
@@ -121,20 +121,27 @@ public class IHMConsole
 				// Choix du nombre de dé
 				nbDe 	= this.displayChoixDe( 1, joueurActuel.getNbDes() );
 				valDe 	= this.controler.lancerDe( nbDe );
-				
+
+				int valDeTot = 0;
+				for (int val : valDe)
+					valDeTot += val;
 
 				// Action des cartes du joueur en fonction du lancé de dé
 				for ( Joueur j : tabJ )
-					j.actionCartes( joueurActuel, valDe );
+					j.actionCartes( joueurActuel,  valDeTot);
 			}
 			if ( 1 == joueurActuel.getNbDes() )
 				System.out.print("\n\n");
-			
 
-			System.out.println( String.format("\n. Lancer de dé : %d", valDe) );
+			if (valDe.length == 1) {
+				System.out.println( String.format("\n. Lancer de dé : %d", valDeTot) );
+			}
+			else {
+				System.out.println( String.format("\n. Lancer de dé : %d (%d + %d)", valDeTot, valDe[0], valDe[1] ) );
+			}
 
 			/* Demande de construction */
-			System.out.print( 	"-> Que voulez-vous faire ?\n" 										+ 
+			System.out.print( 	"-> Que voulez-vous faire ?\n" 										+
 								"   ( 1 : Etablissement ;  2 : Monument ; -1 : Ne rien construire)  " 		);
 
 
@@ -166,7 +173,7 @@ public class IHMConsole
 				{
 					ind = sc.nextLine();
 					c 	= pioche.achatEtablissement( Integer.parseInt(ind) - 1, joueurActuel);
-					
+
 					if (c == null)
 					{
 						System.out.println("\tErreur : Argent insuffisant");
@@ -205,7 +212,7 @@ public class IHMConsole
 				{
 					ind = sc.nextLine();
 					c 	= joueurActuel.construireMonument( Integer.parseInt(ind) - 1 );
-					
+
 					if (c == null)
 					{
 						System.out.println("\tErreur : Argent insuffisant / Déjà construit");
@@ -227,7 +234,7 @@ public class IHMConsole
 				if (c != null)
 				{
 					System.out.println("\t-> '" + c.getNom() + "' construit(e) !");
-					Utility.waitForSeconds(0.75f);						
+					Utility.waitForSeconds(0.75f);
 				}
 			}
 		cpt++;
@@ -255,10 +262,10 @@ public class IHMConsole
 				if 		( !ans.matches("[0-9]+") || ans.matches("0*") )						System.out.println("\tErreur : Saisie incorrecte");
 				else if ( Integer.parseInt(ans) < min || Integer.parseInt(ans) > max )		System.out.println("\tErreur : Chiffre hors des limites");
 			} while ( !ans.matches("[0-9]+") || ans.matches("0*") || Integer.parseInt(ans) < min || Integer.parseInt(ans) > max );
-			
+
 			return Integer.parseInt(ans);
 		}
-		
+
 		return min;
 	}
 }
