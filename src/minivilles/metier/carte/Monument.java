@@ -57,6 +57,7 @@ public class Monument extends Carte
 				return null;
 			
 		}
+		return null;
 	}
 
 	public String toStringNom ()
