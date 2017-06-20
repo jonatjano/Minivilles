@@ -16,10 +16,15 @@ public class Monument extends Carte
 
 	public boolean estConstruit() { return this.estConstruit; }
 
-	/* toString */
-
 	public String getEtat()
 	{
-		return this.estConstruit ? "construit" : "pas fini ";
+		return this.estConstruit ? "Construit" : "Pas fini ";
+	}
+
+	/* toString */
+
+	public String toStringNom ()
+	{
+		return String.format( "%-18.18s", this.getNom() );
 	}
 }

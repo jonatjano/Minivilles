@@ -69,17 +69,18 @@ public class Joueur
 	public String toStringCartes ()
 	{
 		//return String.format( "%s", this.etablissements.stream().map(Etablissement::toStringNom).collect(Collectors.joining(" | ")) );
-		String sRet = "\t";
+		String sRet = "\t~ ETABLISSEMENTS\n\t";
 
+
+		/* AFICHAGE DES ETABLISSEMENTS */
 		ArrayList<Etablissement> arTemp = new ArrayList<Etablissement>(etablissements);
-
-		int i=0;
+		int i = 0;
 		while ( arTemp.size() !=0 )
 		{
-			int nb=0;
+			int nb = 0;
 			Carte cTemp = arTemp.get(0);
 
-			int j=0;
+			int j = 0;
 			while ( j < arTemp.size() )
 			{
 				if (arTemp.get(j).equals(cTemp))
@@ -99,6 +100,29 @@ public class Joueur
 				else			sRet += " | ";
 			}
 			i++;
+		}
+
+		/* AFFICHAGE DES MONUMENTS */
+		sRet += "\n";
+		this.toStringMonuments("\t");
+
+
+		return sRet;
+	}
+
+	public String toStringMonuments (String space)
+	{
+		String 	sRet 	= "\t~ MONUMENTS\n\t";
+
+		for (int k = 0; k < this.monuments.size(); k++)
+		{
+			sRet += String.format( "%s (%s)", this.monuments.get(k).toStringNom(), this.monuments.get(k).getEtat() );
+
+			if (k != this.monuments.size() - 1)
+			{
+				if (k%2 == 1)	sRet += "\n\t";
+				else			sRet += " | ";
+			}
 		}
 
 		return sRet;

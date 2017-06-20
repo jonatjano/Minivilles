@@ -1,2 +1,0 @@
-affichage de la main du jour en mode : "|CHAMP DE BLé | Boulangerie (x3) |" a la place de "|CHAMP DE BLé | Boulangerie | Boulangerie | Boulangerie |"
-affichage de la main de tous les joueur a tout les tour a la place de just la main du courant.

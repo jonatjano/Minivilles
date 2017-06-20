@@ -4,7 +4,6 @@ import minivilles.metier.*;
 import minivilles.util.Utility;
 import minivilles.*;
 import minivilles.metier.carte.Etablissement;
-import minivilles.metier.carte.Carte;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -92,7 +91,8 @@ public class IHMConsole
 		// S'il y a une erreur au niveau de la saisie, on réaffiche tout
 		String 			ans = "",
 						ind = "";
-		Carte 			c 	= null;
+		boolean estChoisi	= false;
+		Etablissement 	e 	= null;
 		/* AFFICHAGE */
 		do
 		{
@@ -110,28 +110,31 @@ public class IHMConsole
 
 			/* Demande de construction */
 			System.out.print( 	"-> Que voulez-vous faire ?\n" 										+ 
-								"   ( 1 : Etablissement ;  2 : Monument ; -1 : Ne rien construire)  " 		);
+								"( 1 : Etablissement ;  2 : Monument ; -1 : Ne rien construire)  " 		);
 
 
-
-			if ( !ans.matches("1|2|-1") )
+			if ( !estChoisi )
 			{
 				ans = sc.nextLine();
 
-				if 		( !ans.matches("1|2|-1") )
+				if 		( !ans.matches("n|o") )
 				{
 					System.out.println("\tErreur : Saisie incorrecte");//this.controler.goBack(1, ans.length(), str);
 					Utility.waitForSeconds(0.75f);
 					this.controler.goBack(2);
 				}
+				else if ( ans.equals("o") )
+					estChoisi = true;
 			}
 			else
 				System.out.println();
 
 
-			/* CONSTRUCTION ETABLISSEMENT */
-			if ( ans.matches("1") )
+			// S'il a été choisi de construire un établissement
+			if ( estChoisi )
 			{
+				ArrayList<Etablissement> etablissements = joueurActuel.getEtablissements();
+
 				System.out.println("\n   Lequel (Parmi la liste ci-dessous) ?  (NB : '-1' pour revenir en arrière)");
 				System.out.println( pioche.toStringNom() );
 
@@ -140,9 +143,9 @@ public class IHMConsole
 				try
 				{
 					ind = sc.nextLine();
-					c 	= pioche.achatEtablissement( Integer.parseInt(ind) - 1, joueurActuel);
+					e 	= pioche.achatEtablissement( Integer.parseInt(ind) - 1, joueurActuel);
 					
-					if (c == null)
+					if (e == null)
 					{
 						System.out.println("\tErreur : Argent insuffisant");
 						Utility.waitForSeconds(0.75f);
@@ -151,7 +154,7 @@ public class IHMConsole
 				catch (Exception ex)//IndexOutOfBoundsException ex)
 				{
 					if ( ind.equals("-1") )											// Si le choix a été de retourner en arrière...
-						ans = "";													// Le choix du bâtiment à construire est réinitialisé
+						estChoisi = false;											// Le choix du bâtiment à construire est réinitialisé
 					else
 					{
 						System.out.println("\tErreur : Index invalide");
@@ -160,52 +163,14 @@ public class IHMConsole
 					ind = "";
 				}
 
-				if (c != null)
+				if (e != null)
 				{
-					System.out.println("\t-> '" + c.getNom() + "' ajouté !");
+					System.out.println("\t-> '" + e.getNom() + "' ajouté !");
 					Utility.waitForSeconds(0.75f);
-					joueurActuel.addEtablissement((Etablissement) c);
+					joueurActuel.addEtablissement(e);
 				}
 			}
-
-			/* CONSTRUCTION MONUMENT */
-			if ( ans.matches("2") )
-			{
-				System.out.println("\n   Lequel (Parmi la liste ci-dessous) ?  (NB : '-1' pour revenir en arrière)");
-				System.out.println( joueurActuel.toStringMonuments("") );
-
-
-				System.out.print("\n-> Entrez l'index : ");
-				try
-				{
-					ind = sc.nextLine();
-					c 	= pioche.achatEtablissement( Integer.parseInt(ind) - 1, joueurActuel);
-					
-					if (c == null)
-					{
-						System.out.println("\tErreur : Argent insuffisant");
-						Utility.waitForSeconds(0.75f);
-					}
-				}
-				catch (Exception ex)//IndexOutOfBoundsException ex)
-				{
-					if ( ind.equals("-1") )											// Si le choix a été de retourner en arrière...
-						ans = "";													// Le choix du bâtiment à construire est réinitialisé
-					else
-					{
-						System.out.println("\tErreur : Index invalide");
-						Utility.waitForSeconds(0.75f);
-					}
-					ind = "";
-				}
-
-				if (c != null)
-				{
-					System.out.println("\t-> '" + c.getNom() + "' ajouté !");
-					Utility.waitForSeconds(0.75f);
-				}
-			}
-		} while ( !ans.matches("-1") && (!ind.matches("[0-9]+") || c == null)  );	// Tant que la réponse n'est pas 'n' ET (que l'indice n'est pas un chiffre (l'index) OU que l'établissement n'est pas nul)
+		} while ( !ans.matches("n") && (!ind.matches("[0-9]+") || e == null)  );	// Tant que la réponse n'est pas 'n' ET (que l'indice n'est pas un chiffre (l'index) OU que l'établissement n'est pas nul)
 
 
 		
