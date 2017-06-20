@@ -79,7 +79,7 @@ public class IHMConsole
 		String ans = "";
 		while ( !ans.matches("n|o") )
 		{
-			System.out.print( "-> Voulez-vous construire un établissement ? (o/n)   ");
+			System.out.print( "-> Voulez-vous construire un établissement ? (o/n)  ");
 			ans = sc.nextLine();
 		}
 
