@@ -70,13 +70,23 @@ public class Joueur
 	{
 		//return String.format( "%s", this.etablissements.stream().map(Etablissement::toStringNom).collect(Collectors.joining(" | ")) );
 		String sRet = "";
-
-		for (int i = 0; i < this.etablissements.size(); i++)
+		
+		int i=0;
+		int nb=1;
+		while ( i < this.etablissements.size() )
 		{
-			sRet += String.format( "%s", this.etablissements.get(i).toStringNom() );
+			if ( i+1 < this.etablissements.size() && this.etablissements.get(i).equals(this.etablissements.get(i+1)) )
+				nb++;
+			else
+			{
+				sRet += String.format( "%s (x%d)", this.etablissements.get(i).toStringNom(),nb);
+				nb = 1;
+			}
 
 			if (i%4 == 3)	sRet += "\n";
-			else 			sRet += " | ";
+			else if (nb == 1)			sRet += " | ";
+			
+			i++;
 		}
 
 		return sRet;

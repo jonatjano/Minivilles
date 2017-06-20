@@ -13,7 +13,7 @@ public class Controleur
 
 	public Controleur ()
 	{
-		this.ihm = new IHMConsole();
+		this.ihm = new IHMConsole( this );
 	}
 
 	public void lancer ()
@@ -22,11 +22,13 @@ public class Controleur
 		ArrayList<String> 	names = null;
 		do 
 		{
+			this.clearConsole();
 			choix = this.ihm.displayMenu();
 
 			switch (choix)
 			{
 				case "1":
+					this.clearConsole();
 					names = this.ihm.displayChoixJoueurs();
 					break;
 			}
@@ -41,6 +43,19 @@ public class Controleur
 		GestionJeu gj = new GestionJeu(this.ihm, names);
 		gj.lancer(0);
 	}
+
+	/**
+	  * Nettoie la console pour n'importe quel système d'exploitation
+	  */
+	public static void clearConsole()
+	{
+	    for(int i = 0; i < 50; i++)
+		{
+			System.out.print( String.format("\033[%dA", 1) ); 	// Avance le curseur de n lignes
+			System.out.print( "\033[K" ); 						// Efface la ligne entièrement
+		}
+	}
+
 
 	public static void main (String[] args)
 	{
