@@ -16,7 +16,7 @@ public class GestionJeu
 	private int 		nbJoueur;
 	private Joueur[] 	tabJoueur;
 	private int 		banque;
-	private Joueur 		joueur;
+	private Joueur 		joueurActuel;
 
 
 	public GestionJeu (IHMConsole ihm, ArrayList<String> names)
@@ -24,12 +24,12 @@ public class GestionJeu
 		this.ihm 		= ihm;
 		this.pioche 	= new Pioche();
 		this.nbJoueur 	= names.size();
-		
+
 		this.tabJoueur = new Joueur[this.nbJoueur];
 		for (int i = 0; i < nbJoueur; i++)
 			tabJoueur[i] = new Joueur(names.get(i), 20);	// 3
 
-		this.joueur = null;
+		this.joueurActuel = null;
 	}
 
 	public void lancer (int indexFirstPlayer)
@@ -44,11 +44,15 @@ public class GestionJeu
 				this.ihm.displayTour(this.pioche, ++cptTour);
 			}
 
-			this.joueur = this.tabJoueur[cpt];
+			this.joueurActuel = this.tabJoueur[cpt];
 
 			//~ CHANGER L'ORDRE
-			int nbDe = this.ihm.displayChoixDe( 1, this.joueur.getNbDes() );
-			this.ihm.displayJoueur( this.pioche, this.joueur, this.lancerDe(nbDe) );
+			int nbDe = this.ihm.displayChoixDe( 1, this.joueurActuel.getNbDes() );
+			int valDe = this.lancerDe( nbDe );
+			for ( Joueur j : this.tabJoueur ) {
+				j.actionCartes( this.joueurActuel, valDe );
+			}
+			this.ihm.displayJoueur( this.pioche, this.joueurActuel, valDe );
 			//Utility.waitForSeconds(1.5f);
 
 			cpt++; cpt = cpt%nbJoueur;
