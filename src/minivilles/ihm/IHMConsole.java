@@ -1,7 +1,8 @@
 package minivilles.ihm;
 
-import java.util.ArrayList;
+
 import java.util.Scanner;
+import java.util.ArrayList;
 
 import minivilles.*;
 import minivilles.metier.*;
@@ -39,7 +40,7 @@ public class IHMConsole
 
 		return ans;
 	}
-	// .*[.[^0-9]].*
+
 	public ArrayList<String> displayChoixJoueurs ()
 	{
 		System.out.println(	"~ CHOIX DES JOUEURS ~\n" );
@@ -57,10 +58,10 @@ public class IHMConsole
 			{
 				System.out.print( String.format("%2d - Nom du joueur :  ", (cpt + 1)) );
 				name = sc.nextLine();
-
 				if 		( name == null || !name.matches(".*[a-zA-Z].*") )		System.out.println( "\t\tErreur : Nom invalide" );
 				else if ( name.length() > 20 )									System.out.println( "\t\tErreur : Longuer invalide (entre 1 et 20)" );
-			} while ( name == null || !name.matches(".*[a-zA-Z].*") || name.length() > 20 );
+				else if ( Utility.containsIgnoreCase(names,name))				System.out.println( "\t\tErreur : Un nom identique existe déjà" );
+			} while ( name == null || !name.matches(".*[a-zA-Z].*") || name.length() > 20 || Utility.containsIgnoreCase(names,name));
 			names.add( name );
 
 			cpt++;

@@ -1,5 +1,7 @@
 package minivilles.util;
 
+import java.util.ArrayList;
+
 
 public class Utility
 {
@@ -16,4 +18,15 @@ public class Utility
 
 		return val;
 	}
+
+	public static boolean containsIgnoreCase (ArrayList<String> ar, String s)
+	{
+		for ( String sTemp : ar)
+			if ( sTemp.equalsIgnoreCase(s) )
+				return true;
+				
+		return false;
+	}
+	
+	
 }
