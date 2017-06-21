@@ -39,4 +39,6 @@ public class EtablissementVert extends Etablissement
 			}
 		}
 	}
+
+	public String getColor() { return "Vert"; }
 }

@@ -31,4 +31,6 @@ public class EtablissementRouge extends Etablissement
 			}
 		}
 	}
+
+	public String getColor() { return "Rouge"; }
 }
