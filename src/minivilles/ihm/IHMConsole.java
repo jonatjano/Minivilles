@@ -302,8 +302,24 @@ public class IHMConsole
 		return valDe;
 	}
 
-	public boolean displayFinPartie ()
+	public boolean displayFinPartie (Joueur j, int nbTour)
 	{
+		// String ans = "";
+		// do
+		// {
+		// } while ();
+		// return bool;
+
+		this.controler.clearConsole();
+
+		System.out.println( "~ NOUS AVONS UN GAGNANT !" );
+		System.out.println( String.format("\nBravo à %s pour sa victoire en %d tours !", j.getPrenom(), nbTour) );
+		System.out.println( "Félicitations !" );
+		System.out.println( "\n\tAppuyez sur une touche..." );
+
+		try					{ System.in.read(); }
+		catch (Exception e)	{}
+
 		return false;
 	}
 
