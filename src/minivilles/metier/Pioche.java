@@ -53,6 +53,15 @@ public class Pioche
 		return null;
 	}
 
+	public Etablissement[] getCartes()
+	{
+		Etablissement[] ret = new Etablissement[this.cartes.length];
+		for (int i = 0; i < this.cartes.length; i++) {
+			ret[i] = this.cartes[i];
+		}
+		return ret;
+	}
+
 	/* toString */
 
 	public String toString ()
@@ -92,9 +101,9 @@ public class Pioche
 	{
 		String sRet = "";
 
-		for (Etablissement e : this.cartes)
+		for (int i = 0; i < this.cartes.length; i++)
 		{
-			sRet += e.toString() + "\n";
+			sRet += this.cartes[i].toString() + "\n\n";
 		}
 
 		return sRet;

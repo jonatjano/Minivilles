@@ -300,14 +300,7 @@ public class IHMConsole
 
 			if ( choix.matches("3") )
 			{
-				Controleur.clearConsole();
-				Utility.waitForSeconds(0.25f);
-				System.out.println(pioche.toStringCartes());
-
-				System.out.println( "\n\tAppuyez sur une touche..." );
-				try					{ System.in.read(); }
-				catch (Exception e)	{}
-				Controleur.clearConsole();
+				printCartes(pioche);
 			}
 
 		} while ( (ans.equals("") && !choix.equals("-1")) || ans.equals("-1")  );
@@ -328,7 +321,7 @@ public class IHMConsole
 		System.out.println( "~ NOUS AVONS UN GAGNANT !" );
 		System.out.println( String.format("\nBravo à %s pour sa victoire en %d tours !", j.getPrenom(), nbTour) );
 		System.out.println( "Félicitations !" );
-		System.out.println( "\n\tAppuyez sur une touche..." );
+		System.out.println( "\n\tAppuyez sur une entrer..." );
 
 		try					{ System.in.read(); }
 		catch (Exception e)	{}
@@ -356,5 +349,37 @@ public class IHMConsole
 		}
 
 		return min;
+	}
+
+	public void printCartes (Pioche pioche)
+	{
+		Controleur.clearConsole();
+		Utility.waitForSeconds(0.25f);
+		Scanner pause = new Scanner(System.in);
+
+		Etablissement[] cartes = pioche.getCartes();
+
+		for (int i = 0; i < cartes.length / 2; i++)
+		{
+			System.out.println(cartes[i].toString() + "\n");
+		}
+		System.out.println( "\n\tAppuyez sur entrer pour voir la suite..." );
+		try					{ System.in.read(); }
+		catch (Exception e)	{}
+
+		Controleur.clearConsole();
+
+		Utility.waitForSeconds(0.25f);
+		for (int i = cartes.length / 2; i < cartes.length; i++)
+		{
+			System.out.println(cartes[i].toString() + "\n");
+		}
+
+		System.out.println( "\n\tAppuyez sur une entrer pour voir la suite..." );
+		try					{ System.in.skip(1); System.in.read(); }
+		catch (Exception e)	{}
+
+		Utility.waitForSeconds(0.25f);
+		Controleur.clearConsole();
 	}
 }
