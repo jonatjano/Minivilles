@@ -1,7 +1,12 @@
 package minivilles.ihm;
 
+import minivilles.Controleur;
+import minivilles.metier.*;
+import minivilles.metier.carte.*;
+import java.util.ArrayList;
 
-public abstract abstract class IHM
+
+public abstract class Ihm
 {
 	protected Controleur controler;
 
@@ -10,5 +15,5 @@ public abstract abstract class IHM
 	public abstract String 				displayNouveauTour (Pioche pioche, Joueur[] tabJ, int numTour);
 	public abstract int[] 				displayTourJoueur (int numTour, int indexFirstPlayer, Pioche pioche, Joueur[] tabJ, Joueur joueurActuel);
 	public abstract boolean 			displayFinPartie (Joueur j, int nbTour);
-	public abstract abstract int 		displayChoixDe (int min, int max);
+	public abstract int 				displayChoixDe (int min, int max);
 }

@@ -1,5 +1,6 @@
 package minivilles;
 
+import minivilles.ihm.Ihm;
 import minivilles.ihm.*;
 import minivilles.metier.*;
 import minivilles.util.Utility;
@@ -18,7 +19,7 @@ public class GestionJeu
 	private Joueur 		joueurActuel;
 
 
-	public GestionJeu (IHMConsole ihm, ArrayList<String> names)
+	public GestionJeu (Ihm ihm, ArrayList<String> names)
 	{
 		this.ihm 		= ihm;
 		this.pioche 	= new Pioche();

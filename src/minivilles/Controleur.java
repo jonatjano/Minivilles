@@ -1,5 +1,6 @@
 package minivilles;
 
+import minivilles.ihm.Ihm;
 import minivilles.ihm.*;
 import minivilles.metier.*;
 import minivilles.metier.carte.Monument;

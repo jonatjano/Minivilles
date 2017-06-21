@@ -4,6 +4,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 import minivilles.*;
+import minivilles.ihm.Ihm;
 import minivilles.metier.*;
 import minivilles.metier.carte.Carte;
 import minivilles.metier.carte.Etablissement;
