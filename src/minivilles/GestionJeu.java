@@ -26,7 +26,7 @@ public class GestionJeu
 
 		this.tabJoueur = new Joueur[this.nbJoueur];
 		for (int i = 0; i < nbJoueur; i++)
-			tabJoueur[i] = new Joueur(names.get(i), 20);	// 3
+			tabJoueur[i] = new Joueur(names.get(i), 60);	// 3
 
 		this.joueurActuel = null;
 	}
@@ -44,7 +44,7 @@ public class GestionJeu
 
 			this.joueurActuel = this.tabJoueur[cpt];
 
-			int[] valDe = this.ihm.displayTourJoueur( cptTour, this.pioche, this.tabJoueur, this.joueurActuel );
+			int[] valDe = this.ihm.displayTourJoueur( cptTour, indexFirstPlayer, this.pioche, this.tabJoueur, this.joueurActuel );
 			//Utility.waitForSeconds(1.5f);
 
 			if (!this.joueurActuel.hasParc() || ( valDe.length == 2 && this.joueurActuel.hasParc() && valDe[0] == valDe[1] ) ) {

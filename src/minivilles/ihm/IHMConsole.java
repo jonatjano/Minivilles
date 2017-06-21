@@ -96,19 +96,20 @@ public class IHMConsole
 		}
 	}
 
-	public int[] displayTourJoueur (int numTour, Pioche pioche, Joueur[] tabJ, Joueur joueurActuel)
+	public int[] displayTourJoueur (int numTour, int indexFirstPlayer, Pioche pioche, Joueur[] tabJ, Joueur joueurActuel)
 	{
 		Scanner sc = new Scanner(System.in);
 		String 			ans = "",
 						ind = "";
 		Carte 			c 	= null;
-		int 			nbDe 	= 0;
-		int[]			valDe 	= new int[1];
+		int 			nbDe 		= 0,
+						valDeTot 	= 0;
+		int[]			valDe 		= new int[1];
 
 
-		int 			cpt = 0;
 		/* AFFICHAGE */
 		// S'il y a une erreur au niveau de la saisie, on réaffiche tout
+		int 			cpt = 0;
 		do
 		{
 			// Affichage du nouveau tour
@@ -118,7 +119,7 @@ public class IHMConsole
 			System.out.println( String.format("\n\n\t--- Tour de %s ---", joueurActuel.getPrenom()) );
 
 			// Seulement pendant la première boucle, les dés sont lancés
-			int valDeTot = 0;
+			
 
 			if (cpt == 0)
 			{
@@ -130,16 +131,12 @@ public class IHMConsole
 
 				// Action des cartes du joueur en fonction du lancé de dé
 				int idJoueurActuel = 0;
-				for ( int i = 0; i < tabJ.length; i++ )
+				for (int i = 0; i < tabJ.length; i++)
 					if ( tabJ[i] == joueurActuel ) { idJoueurActuel = i; }
 
-				for ( int i = idJoueurActuel - 1; i != idJoueurActuel; i-- )
-				{
-					//~MODULO PUTAIN CA MARCHE PAS
-					i = i%tabJ.length;
-					// if (i < 0) { i = tabJ.length - 1; }
-					tabJ[i].actionCartes( joueurActuel,  valDeTot);
-				}
+				// Active les actions pour les joueurs en commençant par le premier et en allant dans le sens inverse des aiguilles d'une montre
+				for (int i = 0; i < tabJ.length; i++) //int i = idJoueurActuel - 1; i != idJoueurActuel; i-- )
+					tabJ[ Utility.posModulo(indexFirstPlayer - i, tabJ.length) ].actionCartes( joueurActuel,  valDeTot);
 			}
 			if ( 1 == joueurActuel.getNbDes() )
 				System.out.print("\n\n");
@@ -152,8 +149,9 @@ public class IHMConsole
 			}
 
 			/* Demande de construction */
-			System.out.print( 	"-> Que voulez-vous faire ?\n" 										+
-								"   ( 1 : Etablissement ;  2 : Monument ; -1 : Ne rien construire)  " 		);
+			System.out.print( 	"-> Que voulez-vous faire ?\n" 											+
+								"   ( 1 : Etablissement ;  2 : Monument ; -1 : Ne rien construire\n"	+
+								"     3 : Glossaire des cartes (avec effet)                       )  "		);
 
 
 
@@ -245,9 +243,9 @@ public class IHMConsole
 
 				if (c != null)
 				{
-					String[][] tabAffichageMonument = Monument.getStringAffichage(c.getNom());
+					String[][] tabAffichageMonument = Monument.getStringAffichage( c.getNom() );
 
-					for (int i =tabAffichageMonument.length-1; i >=0 ; i--)
+					for (int i = tabAffichageMonument.length - 1; i >= 0; i--)
 					{
 						Controleur.clearConsole();
 						String sTemp = "";

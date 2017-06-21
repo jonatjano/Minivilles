@@ -2,6 +2,7 @@ package minivilles;
 
 import minivilles.ihm.*;
 import minivilles.metier.*;
+import minivilles.metier.carte.Monument;
 import minivilles.util.Utility;
 import java.util.ArrayList;
 
@@ -75,6 +76,8 @@ public class Controleur
 		// try 				{ System.console().reader().reset(); }
 		// catch (Exception e) {}
 
+		// System.out.println("\u001B[H\u001B[2J");
+
 		if ( System.getProperty("os.name").startsWith("Windows") )
 		{
 			ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "cls");
@@ -82,8 +85,9 @@ public class Controleur
 			catch (Exception e) { e.printStackTrace();				}
 		}
 		else
-			//System.out.println("\u001B[H\u001B[2J");
 			System.out.println("\033c");
+
+		String[][] sos = Monument.getStringAffichage("Gare");
 	}
 
 	public static void goBack (int i)//(int i, int toErase, String line)
