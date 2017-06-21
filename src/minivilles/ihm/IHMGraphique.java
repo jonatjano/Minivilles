@@ -1,6 +1,5 @@
 package minivilles.ihm;
 
-
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -306,7 +305,6 @@ public class IHMGraphique extends Ihm
 				catch (Exception e)	{}
 				Controleur.clearConsole();
 			}
-
 		} while ( (ans.equals("") && !choix.equals("-1")) || ans.equals("-1")  );
 
 		return valDe;
@@ -319,7 +317,6 @@ public class IHMGraphique extends Ihm
 		// {
 		// } while ();
 		// return bool;
-
 		this.controler.clearConsole();
 
 		System.out.println( "~ NOUS AVONS UN GAGNANT !" );
