@@ -18,7 +18,7 @@ public class EtablissementRouge extends Etablissement
 
 		if ( ( this.getType().equals("Restauration") || this.getType().equals("Commerce") ) && possesseur.hasCentreComm() ) { pow++; }
 
-		if (canActivate(des)) {
+		if (canActivate(des) && j != possesseur) {
 			System.out.println("activation de " + getNom());
 			int mon = j.getMonnaie();
 			if (mon >= pow) {
@@ -31,4 +31,6 @@ public class EtablissementRouge extends Etablissement
 			}
 		}
 	}
+
+	public String getColor() { return "Rouge"; }
 }

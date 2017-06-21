@@ -32,8 +32,18 @@ public class Joueur
 
 	public void actionCartes (Joueur joueur, int des)
 	{
+		// activation des etablissements rouges
 		for (Etablissement e : this.etablissements) {
-			e.action(joueur, des, this);
+			if ( e.getColor().equals("Rouge") ) {
+				e.action(joueur, des, this);
+			}
+		}
+
+		// activation des autres etablissements
+		for (Etablissement e : this.etablissements) {
+			if ( !e.getColor().equals("Rouge") ) {
+				e.action(joueur, des, this);
+			}
 		}
 	}
 

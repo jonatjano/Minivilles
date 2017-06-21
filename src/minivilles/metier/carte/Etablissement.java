@@ -20,5 +20,6 @@ public abstract class Etablissement extends Carte
 	}
 
 	public abstract void action(Joueur j, int des, Joueur possesseur);
+	public abstract String getColor();
 	public boolean canActivate(int des) { for (Integer i : valActivation) {if (i == des) {	return true;}} return false; }
 }

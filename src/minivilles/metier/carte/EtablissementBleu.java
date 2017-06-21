@@ -22,4 +22,6 @@ public class EtablissementBleu extends Etablissement
 			possesseur.addMonnaie(pow);
 		}
 	}
+
+	public String getColor() { return "Bleu"; }
 }
