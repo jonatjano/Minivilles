@@ -50,6 +50,8 @@ public class Controleur
 			GestionJeu gj = new GestionJeu(this.ihm, names);
 			bool = gj.lancer(0);
 		} while (bool);
+
+		this.lancer();
 	}
 
 	public int[] lancerDe (int nbDe)
