@@ -1,16 +1,16 @@
-./src/miniVilles/metier/carte/Carte.java
-./src/miniVilles/metier/carte/Etablissement.java
-./src/miniVilles/metier/carte/EtablissementBleu.java
-./src/miniVilles/metier/carte/EtablissementVert.java
-./src/miniVilles/metier/carte/EtablissementRouge.java
-./src/miniVilles/metier/carte/Monument.java
+./src/minivilles/metier/carte/Carte.java
+./src/minivilles/metier/carte/Etablissement.java
+./src/minivilles/metier/carte/EtablissementBleu.java
+./src/minivilles/metier/carte/EtablissementVert.java
+./src/minivilles/metier/carte/EtablissementRouge.java
+./src/minivilles/metier/carte/Monument.java
 
-./src/miniVilles/metier/Joueur.java
-./src/miniVilles/metier/Pioche.java
+./src/minivilles/metier/Joueur.java
+./src/minivilles/metier/Pioche.java
 
-./src/miniVilles/ihm/IHMConsole.java
+./src/minivilles/ihm/IHMConsole.java
 
-./src/miniVilles/Controleur.java
-./src/miniVilles/GestionJeu.java
+./src/minivilles/Controleur.java
+./src/minivilles/GestionJeu.java
 
-./src/miniVilles/util/Utility.java
+./src/minivilles/util/Utility.java
