@@ -80,197 +80,225 @@ public class IHMConsole
 		return names;
 	}
 
-	public void displayNouveauTour (Pioche pioche, Joueur[] tabJ, int numTour)
+	public String displayNouveauTour (Pioche pioche, Joueur[] tabJ, int numTour)
 	{
-		this.controler.clearConsole();
+		String sRet = "";
 
-		System.out.println( String.format("\t\t--- Tour n°%2d ---\n", numTour) );
-		System.out.println( String.format(" - Pioche :\n%s", pioche.toStringNom()) );
+		sRet += String.format("\t\t--- Tour n°%2d ---\n", numTour);
+		sRet += String.format("\n - Pioche :\n%s", pioche.toStringNom());
 
 
 		// Affichage des mains des joueurs
-		System.out.println("\n\n - Main des joueurs :");
+		sRet += "\n\n - Main des joueurs :";
 		for (Joueur autreJ : tabJ)
 		{
-			System.out.println( String.format(". %-20s (%3dP)", autreJ.getPrenom(), autreJ.getMonnaie()) );
-			System.out.println( String.format("%s", autreJ.toStringCartes()) );
+			sRet += String.format("\n. %-20s (%3dP)", autreJ.getPrenom(), autreJ.getMonnaie());
+			sRet += String.format("\n%s", autreJ.toStringCartes());
 		}
+
+		return sRet;
 	}
 
 	public int[] displayTourJoueur (int numTour, int indexFirstPlayer, Pioche pioche, Joueur[] tabJ, Joueur joueurActuel)
 	{
-		Scanner sc = new Scanner(System.in);
-		String 			ans = "",
-						ind = "";
-		Carte 			c 	= null;
-		int 			nbDe 		= 0,
-						valDeTot 	= 0;
-		int[]			valDe 		= new int[1];
+		Scanner sc 	= new Scanner(System.in);
+		String 	ans 	= "",
+				choix 	= "";
+		Carte 	c 	= null;
+		int 	nbDe 		= 0,
+				valDeTot 	= 0;
+		int[]	valDe 		= new int[1];
+		String toDisplay = "";
+		toDisplay += this.displayNouveauTour(pioche, tabJ, numTour);
+		toDisplay += String.format("\n\n\t--- Tour de %s ---", joueurActuel.getPrenom());
 
 
-		/* AFFICHAGE */
-		// S'il y a une erreur au niveau de la saisie, on réaffiche tout
-		int 			cpt = 0;
-		do
+		this.controler.clearConsole();
+		System.out.println( toDisplay );
+
+		/* LANCEMENT n°1 */
+		// Choix du nombre de dé
+		nbDe 	= this.displayChoixDe( 1, joueurActuel.getNbDes() );
+		valDe 	= this.controler.lancerDe( nbDe );
+
+		valDeTot = 0;
+		for (int val : valDe)
+			valDeTot += val;
+
+		boolean peutRelancer = false;
+		if ( joueurActuel.hasTourRadio() )
 		{
-			// Affichage du nouveau tour
-			this.displayNouveauTour(pioche, tabJ, numTour);
-
-
-			System.out.println( String.format("\n\n\t--- Tour de %s ---", joueurActuel.getPrenom()) );
-
-			// Seulement pendant la première boucle, les dés sont lancés
-
-
-			if (cpt == 0)
+			do
 			{
-				boolean peutRelancer = joueurActuel.hasTourRadio();
-				// Choix du nombre de dé
+				this.controler.clearConsole();
+				System.out.println( toDisplay );
+				if (valDe.length == 1)		System.out.println( String.format( "\n. Lancer de dé : %d", valDeTot ) );
+				else 						System.out.println( String.format( "\n. Lancer de dé : %d (%d + %d)", valDeTot, valDe[0], valDe[1] ) );
 
-				nbDe 	= this.displayChoixDe( 1, joueurActuel.getNbDes() );
-				valDe 	= this.controler.lancerDe( nbDe );
-				for (int val : valDe)
-					valDeTot += val;
-
-				if (peuxRelancer) {
-					System.out.println("Voulez-vous relancer le(s) dés ? (o/n)");
-				}
-				// Action des cartes du joueur en fonction du lancé de dé
-				int idJoueurActuel = 0;
-				for (int i = 0; i < tabJ.length; i++)
-					if ( tabJ[i] == joueurActuel )
-						idJoueurActuel = i;
-
-				// Active les actions pour les joueurs en commençant par le premier et en allant dans le sens inverse des aiguilles d'une montre
-				for (int i = 0; i < tabJ.length; i++) //int i = idJoueurActuel - 1; i != idJoueurActuel; i-- )
-					tabJ[ Utility.posModulo(idJoueurActuel - i - 1, tabJ.length) ].actionCartes( joueurActuel,  valDeTot);
-			}
-			if ( 1 == joueurActuel.getNbDes() )
-				System.out.print("\n\n");
-
-			if (valDe.length == 1) {
-				System.out.println( String.format("\n. Lancer de dé : %d", valDeTot) );
-			}
-			else {
-				System.out.println( String.format("\n. Lancer de dé : %d (%d + %d)", valDeTot, valDe[0], valDe[1] ) );
-			}
-
-			/* Demande de construction */
-			System.out.print( 	"-> Que voulez-vous faire ?\n" 											+
-								"   ( 1 : Etablissement ;  2 : Monument ; -1 : Ne rien construire\n"	+
-								"     3 : Glossaire des cartes (avec effet)                       )  "		);
-
-
-
-			if ( !ans.matches("1|2|-1") )
-			{
+				System.out.print("Voulez-vous relancer le(s) dés ? (o/n)  ");
 				ans = sc.nextLine();
 
-				if 		( !ans.matches("1|2|-1") )
+				if ( !ans.matches("o|n") )
 				{
-					System.out.println("\tErreur : Saisie incorrecte");//this.controler.goBack(1, ans.length(), str);
+					System.out.println("\tErreur : Saisie incorrecte");
 					Utility.waitForSeconds(0.75f);
-					this.controler.goBack(2);
 				}
-			}
-			else
-				System.out.println();
+			} while ( !ans.matches("o|n") );
+		}
+
+		/* LANCEMENT n°2 (Ou pas) */
+		if ( ans.matches("o") )
+		{
+			this.controler.clearConsole();
+			System.out.println( toDisplay );
+
+			// Choix du nombre de dé
+			nbDe 	= this.displayChoixDe( 1, joueurActuel.getNbDes() );
+			valDe 	= this.controler.lancerDe( nbDe );
+
+			valDeTot = 0;
+			for (int val : valDe)
+				valDeTot += val;
+		}
+
+		// Action des cartes du joueur en fonction du lancé de dé
+		int idJoueurActuel = 0;
+		for (int i = 0; i < tabJ.length; i++)
+			if ( tabJ[i] == joueurActuel )
+				idJoueurActuel = i;
+
+		// Une fois que le lancer est définitif...
+		// Active les actions pour les joueurs en commençant par le premier et en allant dans le sens inverse des aiguilles d'une montre
+		for (int i = 0; i < tabJ.length; i++) //int i = idJoueurActuel - 1; i != idJoueurActuel; i-- )
+			tabJ[ Utility.posModulo(idJoueurActuel - i - 1, tabJ.length) ].actionCartes( joueurActuel,  valDeTot);
+
+
+		toDisplay += "\n\n";
+		if (valDe.length == 1)		toDisplay += String.format( "\n. Lancer de dé : %d", valDeTot );
+		else 						toDisplay += String.format( "\n. Lancer de dé : %d (%d + %d)", valDeTot, valDe[0], valDe[1] );
+
+
+		/* Demande de construction */
+		toDisplay +=	"\n-> Que voulez-vous faire ?\n" 										+
+						"   ( 1 : Etablissement ;  2 : Monument ; -1 : Ne rien construire\n"	+
+						"     3 : Glossaire des cartes (avec effet)                       )  ";
+		do
+		{
+			choix = ""; c = null;
+			do
+			{
+				this.controler.clearConsole();
+				System.out.print( toDisplay );
+				
+				choix = sc.nextLine();
+
+				if ( !choix.matches("1|2|-1") )
+				{
+					System.out.println("\tErreur : Saisie incorrecte");
+					Utility.waitForSeconds(0.75f);
+				}
+			} while ( !choix.matches("1|2|-1") );
 
 
 			/* CONSTRUCTION ETABLISSEMENT */
-			if ( ans.matches("1") )
+			ans = "";
+			if ( choix.matches("1") )
 			{
-				System.out.println("\n   Lequel (Parmi la liste ci-dessous) ?  (NB : '-1' pour revenir en arrière)");
-				System.out.println( pioche.toStringNom() );
-
-
-				System.out.print("\n-> Entrez l'index : ");
-				try
+				ans = "";
+				do
 				{
-					ind = sc.nextLine();
-					c 	= pioche.achatEtablissement( Integer.parseInt(ind) - 1, joueurActuel);
+					this.controler.clearConsole();
+					System.out.println( toDisplay );
 
-					if (c == null)
+					System.out.println("\n   Lequel (Parmi la liste ci-dessous) ?  (NB : '-1' pour revenir en arrière)");
+					System.out.println( pioche.toStringNom() );
+
+					try
 					{
-						System.out.println("\tErreur : Argent insuffisant");
-						Utility.waitForSeconds(0.75f);
-					}
-				}
-				catch (Exception ex)//IndexOutOfBoundsException ex)
-				{
-					if ( ind.equals("-1") )											// Si le choix a été de retourner en arrière...
-						ans = "";													// Le choix du bâtiment à construire est réinitialisé
-					else
-					{
-						System.out.println("\tErreur : Index invalide");
-						Utility.waitForSeconds(0.75f);
-					}
-					ind = "";
-				}
+						System.out.print("\n-> Entrez l'index : ");
+						ans = sc.nextLine();
+						c 	= pioche.achatEtablissement( Integer.parseInt(ans) - 1, joueurActuel);
 
-				if (c != null)
-				{
-					System.out.println("\t-> '" + c.getNom() + "' ajouté !");
-					Utility.waitForSeconds(0.75f);
-					joueurActuel.addEtablissement((Etablissement) c);
-				}
+						if (c == null)
+						{
+							System.out.println("\tErreur : Argent insuffisant");
+							Utility.waitForSeconds(0.75f);
+						}
+					}
+					catch (Exception ex)//IndexOutOfBoundsException ex)
+					{
+						if ( !ans.equals("-1") )
+						{
+							System.out.println("\tErreur : Index invalide");
+							Utility.waitForSeconds(0.75f);
+						}
+					}
+
+					if (c != null)
+					{
+						System.out.println("\t-> '" + c.getNom() + "' ajouté !");
+						Utility.waitForSeconds(0.75f);
+						joueurActuel.addEtablissement((Etablissement) c);
+					}
+				} while ( !ans.equals("-1") && c == null );
 			}
 
 			/* CONSTRUCTION MONUMENT */
-			if ( ans.matches("2") )
+			if ( choix.matches("2") )
 			{
-				System.out.println("\n   Lequel (Parmi la liste ci-dessous) ?  (NB : '-1' pour revenir en arrière)");
-				System.out.println( joueurActuel.toStringMonumentsNonAchetes() );
-
-
-				System.out.print("\n-> Entrez l'index : ");
-				try
+				do
 				{
-					ind = sc.nextLine();
-					c 	= joueurActuel.construireMonument( Integer.parseInt(ind) - 1 );
+					this.controler.clearConsole();
+					System.out.println( toDisplay );
 
-					if (c == null)
+					System.out.println("\n   Lequel (Parmi la liste ci-dessous) ?  (NB : '-1' pour revenir en arrière)");
+					System.out.println( joueurActuel.toStringMonumentsNonAchetes() );
+					
+					try
 					{
-						System.out.println("\tErreur : Argent insuffisant / Déjà construit");
-						Utility.waitForSeconds(0.75f);
+						System.out.print("\n-> Entrez l'index : ");
+						ans = sc.nextLine();
+						c 	= joueurActuel.construireMonument( Integer.parseInt(ans) - 1 );
+
+						if (c == null)
+						{
+							System.out.println("\tErreur : Argent insuffisant / Déjà construit");
+							Utility.waitForSeconds(0.75f);
+						}
+
+					}
+					catch (Exception ex)//IndexOutOfBoundsException ex)
+					{
+						if ( !ans.equals("-1") )
+						{
+							System.out.println("\tErreur : Index invalide");
+							Utility.waitForSeconds(0.75f);
+						}
 					}
 
-				}
-				catch (Exception ex)//IndexOutOfBoundsException ex)
-				{
-					if ( ind.equals("-1") )											// Si le choix a été de retourner en arrière...
-						ans = "";													// Le choix du bâtiment à construire est réinitialisé
-					else
+					if (c != null)
 					{
-						System.out.println("\tErreur : Index invalide");
-						Utility.waitForSeconds(0.75f);
+						String[][] tabAffichageMonument = Monument.getStringAffichage( c.getNom() );
+
+						for (int i = tabAffichageMonument.length - 1; i >= 0; i--)
+						{
+							Controleur.clearConsole();
+							String sTemp = "";
+							for (int j=tabAffichageMonument.length-1; j >= i ; j--)
+								sTemp = String.format("\t%s\n",String.join("",tabAffichageMonument[j])) + sTemp;
+
+							sTemp = String.format("\033[%dB", 4 + i) + sTemp;
+							System.out.println(sTemp);
+							Utility.waitForSeconds(0.30);
+						}
+
+						System.out.println("\t-> '" + c.getNom() + "' construit(e) !");
+						Utility.waitForSeconds(1.25f);
 					}
-					ind = "";
-				}
-
-				if (c != null)
-				{
-					String[][] tabAffichageMonument = Monument.getStringAffichage( c.getNom() );
-
-					for (int i = tabAffichageMonument.length - 1; i >= 0; i--)
-					{
-						Controleur.clearConsole();
-						String sTemp = "";
-						for (int j=tabAffichageMonument.length-1; j >= i ; j--)
-							sTemp = String.format("\t%s\n",String.join("",tabAffichageMonument[j])) + sTemp;
-
-						sTemp = String.format("\033[%dB", 4 + i) + sTemp;
-						System.out.println(sTemp);
-						Utility.waitForSeconds(0.75);
-					}
-
-					System.out.println("\t-> '" + c.getNom() + "' construit(e) !");
-					Utility.waitForSeconds(1.5f);
-				}
+				} while ( !ans.equals("-1") && c == null );
 			}
-		cpt++;
+		} while ( (ans.equals("") && !choix.equals("-1")) || ans.equals("-1")  );
 
-		} while ( !ans.matches("-1") && (!ind.matches("[0-9]+") || c == null)  );	// Tant que la réponse n'est pas 'n' ET (que l'indice n'est pas un chiffre (l'index) OU que l'établissement n'est pas nul)
 		return valDe;
 	}
 

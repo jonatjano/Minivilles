@@ -90,14 +90,12 @@ public class Controleur
 		String[][] sos = Monument.getStringAffichage("Gare");
 	}
 
-	public static void goBack (int i)//(int i, int toErase, String line)
+	public static void goBack (int i, int toErase, String line)//(int i, int toErase, String line)
 	{
-		// System.out.print( String.format("\033[%dA", i) ); 		// Avance le curseur de n lignes
-		// System.out.print( line + new String(new char[toErase]).replace("\0", " ") + "\n" );
-		// System.out.print( String.format("\033[%dA", i) ); 		// Avance le curseur de n lignes
-
 		System.out.print( String.format("\033[%dA", i) ); 		// Avance le curseur de n lignes
-		System.out.print( "\033[2K" );
+		System.out.print( line + new String(new char[toErase]).replace("\0", " ") + "\n" );
+		System.out.print( String.format("\033[%dA", 1) ); 		// Avance le curseur de n lignes
+		System.out.print( line );
 	}
 
 
