@@ -173,19 +173,19 @@ public class Joueur
 	{
 		String 	sRet 	= "\t~ MONUMENTS\n\t";
 
-		int i = 0;
-		for (Monument monument : this.monuments)
+		int k = 0;
+		for (int i = 0; i < this.monuments.size(); i++)
 		{
-			if ( !monument.estConstruit() )
+			if ( !this.monuments.get(i).estConstruit() )
 			{
-				sRet += String.format( "%2d ~ %s (%2dP)", (i+1), monument.toStringNom(), monument.getCoutPiece() );
+				sRet += String.format( "%2d ~ %s (%2dP)", (i+1), this.monuments.get(i).toStringNom(), this.monuments.get(i).getCoutPiece() );
 
-				if (i != this.monuments.size() - 1)
+				if (k != this.monuments.size() - 1)
 				{
-					if (i%2 == 1)	sRet += "\n\t";
+					if (k%2 == 1)	sRet += "\n\t";
 					else			sRet += " | ";
 				}
-				i++;
+				k++;
 			}
 		}
 
