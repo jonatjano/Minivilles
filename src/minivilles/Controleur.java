@@ -11,12 +11,13 @@ public class Controleur
 {
 	private static int 	MAX_VAL = 6;
 
-	private IHMConsole ihm;
+	private Ihm ihm;
 
 
 	public Controleur ()
 	{
-		this.ihm = new IHMConsole( this );
+		// this.ihm = new IHMConsole( this );
+		this.ihm = new IHMGraphique( this );
 	}
 
 	public void lancer ()

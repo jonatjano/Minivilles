@@ -12,9 +12,9 @@ import minivilles.metier.carte.Monument;
 import minivilles.util.Utility;
 
 
-public class IHMConsole extends Ihm
+public class IHMGraphique extends Ihm
 {
-	public IHMConsole (Controleur controler)
+	public IHMGraphique (Controleur controler)
 	{
 		this.controler = controler;
 	}

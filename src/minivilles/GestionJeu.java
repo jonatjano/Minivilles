@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class GestionJeu
 {
-	private IHMConsole	ihm;
+	private Ihm 		ihm;
 	private Pioche 		pioche;
 	private int 		nbJoueur;
 	private Joueur[] 	tabJoueur;
@@ -26,7 +26,7 @@ public class GestionJeu
 
 		this.tabJoueur = new Joueur[this.nbJoueur];
 		for (int i = 0; i < nbJoueur; i++)
-			tabJoueur[i] = new Joueur(names.get(i), 666);	// 3
+			tabJoueur[i] = new Joueur(names.get(i), 3);	// 3
 
 		this.joueurActuel = null;
 	}
