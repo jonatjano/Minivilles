@@ -33,23 +33,23 @@ public class GestionJeu
 
 	public boolean lancer (int indexFirstPlayer)
 	{
+		boolean aUnDouble = false;
 		int cptTour = 0;
 		int cpt 	= indexFirstPlayer;
 
 		while (this.joueurGagnant == null)
 		{
 			// Nouveau tour
-			if (cpt == indexFirstPlayer)
+			if (cpt == indexFirstPlayer && !aUnDouble)
 				cptTour++;
 
 			this.joueurActuel = this.tabJoueur[cpt];
-
 			int[] valDe = this.ihm.displayTourJoueur( cptTour, indexFirstPlayer, this.pioche, this.tabJoueur, this.joueurActuel );
-			//Utility.waitForSeconds(1.5f);
 
-			if (!this.joueurActuel.hasParc() || ( valDe.length == 2 && this.joueurActuel.hasParc() && valDe[0] == valDe[1] ) ) {
+			aUnDouble = valDe.length == 2 && this.joueurActuel.hasParc() && valDe[0] == valDe[1];
+			if ( !aUnDouble )
 				cpt++; cpt = cpt%nbJoueur;
-			}
+			
 
 			// Vérifie si un joueur a gagné
 			for (Joueur j : tabJoueur)
