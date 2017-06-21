@@ -27,7 +27,7 @@ public class EtablissementVert extends Etablissement
 
 		if ( ( this.getType().equals("Restauration") || this.getType().equals("Commerce") ) && possesseur.hasCentreComm() ) { pow++; }
 
-		if (canActivate(des)) {
+		if (canActivate(des) && j == possesseur) {
 			if (typePuissance == null) {
 				possesseur.addMonnaie(pow);
 			}
