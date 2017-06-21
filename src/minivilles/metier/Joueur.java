@@ -58,6 +58,13 @@ public class Joueur
 		return false;
 	}
 
+	public boolean hasTourRadio() {
+		for (Monument m : this.monuments)
+			if (m.getNom().equals("Tour Radio"))
+				return m.estConstruit();
+		return false;
+	}
+
 	/* GETTER */
 
 	public String 					getPrenom ()					{ return this.prenom;				}
@@ -83,7 +90,7 @@ public class Joueur
 	{
 		Monument m = this.monuments.get(id);
 
-		if ( m != null && !m.estConstruit() && m.getCoutPiece() <= this.monnaie)
+		if ( m != null && !m.estConstruit() && this.addMonnaie( -m.getCoutPiece() ))
 		{
 			m.construction();
 			return m;

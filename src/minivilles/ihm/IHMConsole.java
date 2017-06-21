@@ -120,16 +120,21 @@ public class IHMConsole
 			System.out.println( String.format("\n\n\t--- Tour de %s ---", joueurActuel.getPrenom()) );
 
 			// Seulement pendant la première boucle, les dés sont lancés
-			
+
 
 			if (cpt == 0)
 			{
+				boolean peutRelancer = joueurActuel.hasTourRadio();
 				// Choix du nombre de dé
+
 				nbDe 	= this.displayChoixDe( 1, joueurActuel.getNbDes() );
 				valDe 	= this.controler.lancerDe( nbDe );
 				for (int val : valDe)
 					valDeTot += val;
 
+				if (peuxRelancer) {
+					System.out.println("Voulez-vous relancer le(s) dés ? (o/n)");
+				}
 				// Action des cartes du joueur en fonction du lancé de dé
 				int idJoueurActuel = 0;
 				for (int i = 0; i < tabJ.length; i++)
