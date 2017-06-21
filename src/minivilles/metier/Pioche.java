@@ -87,4 +87,16 @@ public class Pioche
 
 		return sRet;
 	}
+
+	public String toStringCartes ()
+	{
+		String sRet = "";
+
+		for (Etablissement e : this.cartes)
+		{
+			sRet += e.toString() + "\n";
+		}
+
+		return sRet;
+	}
 }

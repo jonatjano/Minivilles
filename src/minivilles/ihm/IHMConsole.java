@@ -189,15 +189,15 @@ public class IHMConsole
 			{
 				this.controler.clearConsole();
 				System.out.print( toDisplay );
-				
+
 				choix = sc.nextLine();
 
-				if ( !choix.matches("1|2|-1") )
+				if ( !choix.matches("1|2|3|-1") )
 				{
 					System.out.println("\tErreur : Saisie incorrecte");
 					Utility.waitForSeconds(0.75f);
 				}
-			} while ( !choix.matches("1|2|-1") );
+			} while ( !choix.matches("1|2|3|-1") );
 
 
 			/* CONSTRUCTION ETABLISSEMENT */
@@ -253,7 +253,7 @@ public class IHMConsole
 
 					System.out.println("\n   Lequel (Parmi la liste ci-dessous) ?  (NB : '-1' pour revenir en arrière)");
 					System.out.println( joueurActuel.toStringMonumentsNonAchetes() );
-					
+
 					try
 					{
 						System.out.print("\n-> Entrez l'index : ");
@@ -297,6 +297,19 @@ public class IHMConsole
 					}
 				} while ( !ans.equals("-1") && c == null );
 			}
+
+			if ( choix.matches("3") )
+			{
+				Controleur.clearConsole();
+				Utility.waitForSeconds(0.25f);
+				System.out.println(pioche.toStringCartes());
+
+				System.out.println( "\n\tAppuyez sur une touche..." );
+				try					{ System.in.read(); }
+				catch (Exception e)	{}
+				Controleur.clearConsole();
+			}
+
 		} while ( (ans.equals("") && !choix.equals("-1")) || ans.equals("-1")  );
 
 		return valDe;

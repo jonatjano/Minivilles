@@ -48,10 +48,10 @@ public abstract class Carte
 	{
 		String sRet = "";
 
-		sRet += String.format( "--- %-15s ---\nType : %s\nCoûts : %s\nDescription :\n%s", 	this.nom,
-																							this.coutPiece,
-																							this.type,
-																							this.description );
+		sRet += String.format( "--- %-27s --- Type : %-12s --- Coûts : %s\nDescription : %s", 	this.nom,
+																								this.type,
+																								this.coutPiece,
+																								this.description );
 
 		return sRet;
 	}
