@@ -3,6 +3,7 @@
 ./src/minivilles/metier/carte/EtablissementBleu.java
 ./src/minivilles/metier/carte/EtablissementVert.java
 ./src/minivilles/metier/carte/EtablissementRouge.java
+./src/minivilles/metier/carte/EtablissementMauve.java
 ./src/minivilles/metier/carte/Monument.java
 
 ./src/minivilles/metier/Joueur.java
