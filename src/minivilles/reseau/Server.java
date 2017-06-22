@@ -44,14 +44,14 @@ public class Server
 			Socket sock;
 			stop = false;
 			while (!stop) {
-				sock = serv.accept();
 				try {
+					sock = serv.accept();
 					InputStream is = sock.getInputStream();
 					OutputStream os = sock.getOutputStream();
 					clientList.add(new ServerClient(sock, is, os));
 				}
 				catch (Exception e) {
-					sock.close();
+					try {sock.close();} catch (Exception e) {}
 				}
 			}
 		}
