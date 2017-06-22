@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import minivilles.*;
 import minivilles.ihm.Ihm;
+import minivilles.ihm.gui.*;
 import minivilles.metier.*;
 import minivilles.metier.carte.Carte;
 import minivilles.metier.carte.Etablissement;
@@ -14,28 +15,19 @@ import minivilles.util.Utility;
 
 public class IHMGraphique extends Ihm
 {
+	MainFrame frame;
+
+
 	public IHMGraphique (Controleur controler)
 	{
-		this.controler = controler;
+		this.controler 	= controler;
+		this.frame 		= new MainFrame();
 	}
 
 	public String displayMenu ()
 	{
-		System.out.println(	"~ MENU PRINCIPAL ~\n\n"	+
-							" 1 : Nouvelle partie\n" 	+
-							"-1 : Quitter\n"				);
-
-		Scanner sc = new Scanner (System.in);
-		String ans = "";
-		do
-		{
-			System.out.print("Choix : ");
-			ans = sc.nextLine();
-
-			if ( !ans.matches("-1|1") )	System.out.println("\tErreur : Paramètre incorrect");
-		} while ( !ans.matches("-1|1") );
-
-		return ans;
+		this.frame.openPage( new MainMenu(frame) );
+		return "";
 	}
 
 	public ArrayList<String> displayChoixJoueurs ()

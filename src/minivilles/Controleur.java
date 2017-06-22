@@ -29,7 +29,7 @@ public class Controleur
 		{
 			this.clearConsole();
 			choix = this.ihm.displayMenu();
-
+			
 			switch (choix)
 			{
 				case "1":

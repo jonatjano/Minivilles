@@ -8,6 +8,9 @@
 ./src/minivilles/metier/Joueur.java
 ./src/minivilles/metier/Pioche.java
 
+./src/minivilles/ihm/gui/MainFrame.java
+./src/minivilles/ihm/gui/MainMenu.java
+
 ./src/minivilles/ihm/Ihm.java
 ./src/minivilles/ihm/IHMConsole.java
 ./src/minivilles/ihm/IHMGraphique.java
