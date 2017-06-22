@@ -30,7 +30,7 @@ public class Joueur
 		this.monnaie = monnaie;
 	}
 
-	public void actionCartes (Joueur joueur, int des)
+	public void actionCartes (Joueur joueur, int des, Joueur[] tabJ)
 	{
 		// activation des etablissements rouges
 		for (Etablissement e : this.etablissements) {
@@ -38,10 +38,16 @@ public class Joueur
 				e.action(joueur, des, this);
 			}
 		}
+		
+		for (Etablissement e : this.etablissements) {
+			if ( e.getColor().equals("Mauve") ) {
+				((EtablissementMauve)e).action(joueur, des, this, tabJ);
+			}
+		}
 
 		// activation des autres etablissements
 		for (Etablissement e : this.etablissements) {
-			if ( !e.getColor().equals("Rouge") ) {
+			if ( !e.getColor().equals("Rouge") && !e.getColor().equals("Mauve")) {
 				e.action(joueur, des, this);
 			}
 		}
@@ -72,6 +78,20 @@ public class Joueur
 		for (Monument m : this.monuments)
 			if (m.getNom().equals("Tour Radio"))
 				return m.estConstruit();
+		return false;
+	}
+	
+	public boolean hasChaineDeTelevision() {
+		for (Etablissement e : this.etablissements)
+			if (e.getNom().equals("Chaîne de télévision"))
+				return true;
+		return false;
+	}
+	
+	public boolean hasCentreAffaire() {
+		for (Etablissement e : this.etablissements)
+			if (e.getNom().equals("Centre d'affaires"))
+				return true;
 		return false;
 	}
 

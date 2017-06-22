@@ -169,7 +169,7 @@ public class IHMConsole extends Ihm
 		// Une fois que le lancer est définitif...
 		// Active les actions pour les joueurs en commençant par le premier et en allant dans le sens inverse des aiguilles d'une montre
 		for (int i = 0; i < tabJ.length; i++) //int i = idJoueurActuel - 1; i != idJoueurActuel; i-- )
-			tabJ[ Utility.posModulo(idJoueurActuel - i - 1, tabJ.length) ].actionCartes( joueurActuel,  valDeTot);
+			tabJ[ Utility.posModulo(idJoueurActuel - i - 1, tabJ.length) ].actionCartes( joueurActuel,  valDeTot, tabJ);
 
 
 		toDisplay += "\n\n";
