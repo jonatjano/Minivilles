@@ -7,26 +7,53 @@ import javax.swing.*;
 
 public class ChoixJoueursLine extends JPanel implements ActionListener
 {
-	private JButton addB;
+	private ChoixJoueursMenu	parent;
+	private JLabel				indexL;
+	private JButton 			addB;
+	private JTextField			nameTF;
 
 
-	public ChoixJoueursLine (boolean bool)
+	public ChoixJoueursLine (ChoixJoueursMenu parent, int index)
 	{
-		this.addB 	= new JButton("Le bouton");
+		this.parent = parent;
+		this.setLayout( new GridLayout(1, 3) );
+
+
+		this.indexL = new JLabel("J" + index + " : ");
+		this.add( indexL );
+
+		this.nameTF = new JTextField();
+		this.nameTF.setEnabled(false);
+		this.add( nameTF );
+
+		this.addB 	= new JButton("Ajouter");
 		this.addB.addActionListener( this );
 		this.add( addB );
 
 
         this.setVisible(true);
-        this.addB.setVisible(bool);
+        this.addB.setVisible(true);
+	}
+
+	public String getText ()
+	{
+		return this.nameTF.getText();
+	}
+
+	public void toggleTextField ()
+	{
+		this.nameTF.setEnabled( !this.nameTF.isEnabled() );
+		if ( !this.nameTF.isEnabled() )
+			this.nameTF.setText("");
 	}
 
 	public void actionPerformed (ActionEvent e)
 	{
-		// if 		( e.getSource() == this.launchB )
-		// 	this.frame.getControler().getIhm().displayChoixJoueurs();
-		// else if ( e.getSource() == this.quittB )
-		// 	System.exit(0);
+		if 		( e.getSource() == this.addB )
+		{
+			e.setSource(this);
+			this.parent.actionPerformed( e );
+		}
 	}
 }
 

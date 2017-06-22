@@ -21,7 +21,7 @@ public class IHMConsole extends Ihm
 
 	public void displayMenu ()
 	{
-		this.clearConsole();
+		Ihm.clearConsole();
 		System.out.println(	"~ MENU PRINCIPAL ~\n\n"	+
 							" 1 : Nouvelle partie\n" 	+
 							"-1 : Quitter\n"				);
@@ -41,7 +41,7 @@ public class IHMConsole extends Ihm
 
 	public void displayChoixJoueurs ()
 	{
-		this.clearConsole();
+		Ihm.clearConsole();
 		System.out.println(	"~ CHOIX DES JOUEURS ~\n" );
 
 		Scanner sc = new Scanner (System.in);
@@ -79,6 +79,15 @@ public class IHMConsole extends Ihm
 		this.controler.reponseChoixJoueurs( names );
 	}
 
+	public void displayDebutPartie (Joueur[] tabJ)
+	{
+		Ihm.clearConsole();
+		// Affichage de début de partie (optionnel)
+		// A voir par la suite
+		// System.out.println("Appuyez sur Entrée pour commencer...");
+		// System.in.read();
+	}
+
 	public String displayNouveauTour (Pioche pioche, Joueur[] tabJ, int numTour)
 	{
 		String sRet = "";
@@ -112,7 +121,7 @@ public class IHMConsole extends Ihm
 		toDisplay += String.format("\n\n\t--- Tour de %s ---", joueurActuel.getPrenom());
 
 
-		this.clearConsole();
+		Ihm.clearConsole();
 		System.out.println( toDisplay );
 
 		/* LANCEMENT n°1 */
@@ -129,7 +138,7 @@ public class IHMConsole extends Ihm
 		{
 			do
 			{
-				this.clearConsole();
+				Ihm.clearConsole();
 				System.out.println( toDisplay );
 				if (valDe.length == 1)		System.out.println( String.format( "\n. Lancer de dé : %d", valDeTot ) );
 				else 						System.out.println( String.format( "\n. Lancer de dé : %d (%d + %d)", valDeTot, valDe[0], valDe[1] ) );
@@ -148,7 +157,7 @@ public class IHMConsole extends Ihm
 		/* LANCEMENT n°2 (Ou pas) */
 		if ( ans.matches("o") )
 		{
-			this.clearConsole();
+			Ihm.clearConsole();
 			System.out.println( toDisplay );
 
 			// Choix du nombre de dé
@@ -186,7 +195,7 @@ public class IHMConsole extends Ihm
 			choix = ""; c = null;
 			do
 			{
-				this.clearConsole();
+				Ihm.clearConsole();
 				System.out.print( toDisplay );
 				choix = sc.nextLine();
 
@@ -205,7 +214,7 @@ public class IHMConsole extends Ihm
 				ans = "";
 				do
 				{
-					this.clearConsole();
+					Ihm.clearConsole();
 					System.out.println( toDisplay );
 
 					System.out.println("\n   Lequel (Parmi la liste ci-dessous) ?  (NB : '-1' pour revenir en arrière)");
@@ -246,7 +255,7 @@ public class IHMConsole extends Ihm
 			{
 				do
 				{
-					this.clearConsole();
+					Ihm.clearConsole();
 					System.out.println( toDisplay );
 
 					System.out.println("\n   Lequel (Parmi la liste ci-dessous) ?  (NB : '-1' pour revenir en arrière)");
@@ -314,7 +323,7 @@ public class IHMConsole extends Ihm
 		// } while ();
 		// return bool;
 
-		this.clearConsole();
+		Ihm.clearConsole();
 
 		System.out.println( "~ NOUS AVONS UN GAGNANT !" );
 		System.out.println( String.format("\nBravo à %s pour sa victoire en %d tours !", j.getPrenom(), nbTour) );

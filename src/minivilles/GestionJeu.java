@@ -42,6 +42,7 @@ public class GestionJeu
 		this.joueurActuel		= this.tabJoueur[ this.indexFirstPlayer ];
 		this.nbBoucle 			= this.indexFirstPlayer;
 
+		this.ihm.displayDebutPartie( this.tabJoueur );
 		this.ihm.displayTourJoueur( 1, this.indexFirstPlayer, this.pioche, this.tabJoueur, this.joueurActuel );
 	}
 

@@ -8,7 +8,7 @@ import javax.swing.*;
 public class MainMenu extends JPanel implements ActionListener
 {
 	private MainFrame 	frame;
-	private JButton 	quittB, launchB,joinB;
+	private JButton 	quittB, launchB, joinB;
 
 
 	public MainMenu (MainFrame frame)

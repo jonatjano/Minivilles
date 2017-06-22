@@ -12,7 +12,7 @@ public abstract class Ihm
 
 	public abstract void 				displayMenu ();
 	public abstract void			 	displayChoixJoueurs ();
-	public abstract String 				displayNouveauTour (Pioche pioche, Joueur[] tabJ, int numTour);
+	public abstract void 				displayDebutPartie (Joueur[] tabJ);
 	public abstract void 				displayTourJoueur (int numTour, int indexFirstPlayer, Pioche pioche, Joueur[] tabJ, Joueur joueurActuel);
 	public abstract void 				displayFinPartie (Joueur j, int nbTour);
 	public abstract int 				displayChoixDe (int min, int max);

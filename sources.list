@@ -8,13 +8,16 @@
 ./src/minivilles/metier/Joueur.java
 ./src/minivilles/metier/Pioche.java
 
-./src/minivilles/reseau/ServerMinivilles.java
-./src/minivilles/reseau/ClientMinivilles.java
+./src/minivilles/reseau/Server.java
+./src/minivilles/reseau/Client.java
 
 ./src/minivilles/ihm/gui/MainFrame.java
 ./src/minivilles/ihm/gui/MainMenu.java
 ./src/minivilles/ihm/gui/ChoixJoueursMenu.java
 ./src/minivilles/ihm/gui/ChoixJoueursLine.java
+./src/minivilles/ihm/gui/PartiePanel.java
+
+./src/minivilles/ihm/gui/JCanvas.java
 
 ./src/minivilles/ihm/Ihm.java
 ./src/minivilles/ihm/IHMConsole.java
