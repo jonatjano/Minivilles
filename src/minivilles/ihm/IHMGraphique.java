@@ -298,7 +298,7 @@ public class IHMGraphique extends Ihm
 		} while ( (ans.equals("") && !choix.equals("-1")) || ans.equals("-1")  );
 	}
 
-	public boolean displayFinPartie (Joueur j, int nbTour)
+	public void displayFinPartie (Joueur j, int nbTour)
 	{
 		// String ans = "";
 		// do
@@ -314,8 +314,6 @@ public class IHMGraphique extends Ihm
 
 		try					{ System.in.read(); }
 		catch (Exception e)	{}
-
-		return false;
 	}
 
 	public int displayChoixDe (int min, int max)

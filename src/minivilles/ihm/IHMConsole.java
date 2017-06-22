@@ -306,7 +306,7 @@ public class IHMConsole extends Ihm
 		this.controler.reponseTourJoueur( numTour, valDe );
 	}
 
-	public boolean displayFinPartie (Joueur j, int nbTour)
+	public void displayFinPartie (Joueur j, int nbTour)
 	{
 		// String ans = "";
 		// do
