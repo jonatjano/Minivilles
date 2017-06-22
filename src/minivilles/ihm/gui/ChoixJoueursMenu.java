@@ -18,7 +18,7 @@ public class ChoixJoueursMenu extends JPanel implements ActionListener
 	public ChoixJoueursMenu (MainFrame frame)
 	{
 		this.frame = frame;
-		int maxJ = ServerMinivilles.MAX_J;
+		int maxJ = Server.MAX_J;
 		this.setLayout( new GridLayout(maxJ + 2, 1) );
 
 		this.lines		= new ChoixJoueursLine[ maxJ ];
