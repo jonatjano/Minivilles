@@ -27,5 +27,26 @@ public class Client
 		this.sock = sock;
 		this.is = is;
 		this.os = os;
+
+		Scanner scis = new Scanner(is);
+
+		while (scis.hasNextLine()) {
+			String msg = scis.nextLine();
+			actionOnMsg(msg);
+		}
+	}
+
+	public void sendMsg(String msg)
+	{
+		try {
+			os.write((msg + "\n").getBytes("UTF-8"));
+			os.flush();
+		}
+		catch (Exception e) {}
+	}
+
+	private void actionOnMsg(String msg)
+	{
+		System.out.println("TODO : Client.java line 50");
 	}
 }
