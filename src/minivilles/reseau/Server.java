@@ -41,7 +41,7 @@ public class Server
 
 		public void run()
 		{
-			Socket sock;
+			Socket sock = null;
 			stop = false;
 			while (!stop) {
 				try {
@@ -51,7 +51,7 @@ public class Server
 					clientList.add(new ServerClient(sock, is, os));
 				}
 				catch (Exception e) {
-					try {sock.close();} catch (Exception e) {}
+					try {sock.close();} catch (Exception ex) {}
 				}
 			}
 		}
