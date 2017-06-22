@@ -74,8 +74,7 @@ public class Server
 
 			while (scis.hasNextLine()) {
 				String msg = scis.nextLine();
-				System.out.println("TODO : ServerMinivilles#ServerClient.ServerClient() line 75");
-				//actionOnMsg(msg);
+				actionOnMsg(msg);
 			}
 		}
 
@@ -87,5 +86,10 @@ public class Server
 			}
 			catch (Exception e) {}
 		}
+	}
+
+	private void actionOnMsg(String msg)
+	{
+		System.out.println("TODO : Client.java line 50");
 	}
 }
