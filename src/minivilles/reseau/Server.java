@@ -4,6 +4,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.LinkedList;
+import java.util.Scanner;
 
 public class Server
 {
@@ -40,7 +42,7 @@ public class Server
 		public void run()
 		{
 			Socket sock;
-			stop = true;
+			stop = false;
 			while (!stop) {
 				sock = serv.accept();
 				try {
