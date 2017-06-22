@@ -21,7 +21,7 @@ public class IHMGraphique extends Ihm
 	public IHMGraphique (Controleur controler)
 	{
 		this.controler 	= controler;
-		this.frame 		= new MainFrame();
+		this.frame 		= new MainFrame( this.controler );
 	}
 
 	public void displayMenu ()
@@ -31,39 +31,7 @@ public class IHMGraphique extends Ihm
 
 	public void displayChoixJoueurs ()
 	{
-		System.out.println(	"~ CHOIX DES JOUEURS ~\n" );
-
-		Scanner sc = new Scanner (System.in);
-		ArrayList<String> names = new ArrayList<String>();
-
-
-		int 	cpt = 0;
-		String 	ans = "";
-		do
-		{
-			String name = "";
-			do
-			{
-				System.out.print( String.format("%2d - Nom du joueur :  ", (cpt + 1)) );
-				name = sc.nextLine();
-				if 		( name == null || !name.matches(".*[a-zA-Z].*") )		System.out.println( "\t\tErreur : Nom invalide" );
-				else if ( name.length() > 20 )									System.out.println( "\t\tErreur : Longuer invalide (entre 1 et 20)" );
-				else if ( Utility.containsIgnoreCase(names,name))				System.out.println( "\t\tErreur : Un nom identique existe déjà" );
-			} while ( name == null || !name.matches(".*[a-zA-Z].*") || name.length() > 20 || Utility.containsIgnoreCase(names,name));
-			names.add( name );
-
-			cpt++;
-			if (cpt >= 2 && cpt < 4)
-			{
-				do
-				{
-					System.out.print("-> Voulez-vous rajouter un joueur ? (o/n)  ");
-					ans = sc.nextLine();
-
-					if ( !ans.matches("o|n") )	System.out.println("\tErreur : Saisie incorrecte");
-				} while ( !ans.matches("o|n") );
-			}
-		} while ( !ans.matches("n") && cpt != 4);
+		this.frame.openPage(  new ChoixJoueursMenu(frame) );
 	}
 
 	public String displayNouveauTour (Pioche pioche, Joueur[] tabJ, int numTour)
