@@ -18,8 +18,8 @@ public class Controleur
 
 	public Controleur ()
 	{
-		// this.ihm = new IHMConsole( this );
-		this.ihm = new IHMGraphique( this );
+		this.ihm = new IHMConsole( this );
+		// this.ihm = new IHMGraphique( this );
 	}
 
 	public void lancer ()

@@ -1,69 +1,24 @@
-package minivilles;
+package minivilles.ihm;
 
-import minivilles.ihm.Ihm;
-import minivilles.ihm.*;
+import minivilles.Controleur;
+import minivilles.GestionJeu;
 import minivilles.metier.*;
-import minivilles.metier.carte.Monument;
-import minivilles.util.Utility;
+import minivilles.metier.carte.*;
 import java.util.ArrayList;
 
 
-public class Controleur
+public abstract class Ihm
 {
-	private static int 	MAX_VAL = 6;
+	protected Controleur controler;
 
-	private Ihm ihm;
-
-
-	public Controleur ()
-	{
-		// this.ihm = new IHMConsole( this );
-		this.ihm = new IHMGraphique( this );
-	}
-
-	public void lancer ()
-	{
-		String 				choix = "";
-		ArrayList<String> 	names = null;
-		do
-		{
-			this.clearConsole();
-			choix = this.ihm.displayMenu();
-
-			switch (choix)
-			{
-				case "1":
-					this.clearConsole();
-					names = this.ihm.displayChoixJoueurs();
-					break;
-			}
-		} while ( !choix.matches("-1") && names == null );
-
-		if (names != null && names.size() != 0)
-			this.nouvellePartie(names);
-	}
-
-	public void nouvellePartie (ArrayList<String> names)
-	{
-		boolean bool = true;
-
-		do
-		{
-			GestionJeu gj = new GestionJeu(this.ihm, names);
-			bool = gj.lancer(0);
-		} while (bool);
-
-		this.lancer();
-	}
-
-	public int[] lancerDe (int nbDe)
-	{
-		int[] ret = new int[nbDe];
-		for (int i = 0; i < nbDe; i++) {
-			ret[i] = (int) (Math.random() * MAX_VAL) + 1;
-		}
-		return ret;
-	}
+	public abstract void 				displayMenu ();
+	public abstract void			 	displayChoixJoueurs ();
+	public abstract void 				displayDebutPartie (GestionJeu gj);
+	public abstract void 				displayTourJoueur (GestionJeu gj);
+	public abstract void 				displayFinPartie (Joueur j, int nbTour);
+	public abstract int 				displayChoixDe (int min, int max);
+	public abstract Joueur				displaychoixJoueur(String demande, String err, Joueur[] tabJ);
+	public abstract Etablissement 		displaychoixJoueur(String demande, String err, Etablissement[] tabE);
 
 	/**
 	  * Nettoie la console pour n'importe quel système d'exploitation
@@ -100,12 +55,5 @@ public class Controleur
 		System.out.print( line + new String(new char[toErase]).replace("\0", " ") + "\n" );
 		System.out.print( String.format("\033[%dA", 1) ); 		// Avance le curseur de n lignes
 		System.out.print( line );
-	}
-
-
-	public static void main (String[] args)
-	{
-		Controleur controleur = new Controleur();
-		controleur.lancer();
 	}
 }
