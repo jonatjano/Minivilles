@@ -5,12 +5,12 @@ import java.awt.*;
 import javax.swing.*;
 
 
-public class ChoixJoueursLine extends JPanel implements;
+public class ChoixJoueursLine extends JPanel implements ActionListener
 {
 	private JButton addB;
 
 
-	public ChoixJoueursLine (MainFrame frame, boolean bool)
+	public ChoixJoueursLine (boolean bool)
 	{
 		this.addB 	= new JButton("Le bouton");
 		this.addB.addActionListener( this );
@@ -21,13 +21,13 @@ public class ChoixJoueursLine extends JPanel implements;
         this.addB.setVisible(bool);
 	}
 
-	// public void actionPerformed (ActionEvent e)
-	// {
-	// 	if 		( e.getSource() == this.launchB )
-	// 		this.frame.getControler().getIhm().displayChoixJoueurs();
-	// 	else if ( e.getSource() == this.quittB )
-	// 		System.exit(0);
-	// }
+	public void actionPerformed (ActionEvent e)
+	{
+		// if 		( e.getSource() == this.launchB )
+		// 	this.frame.getControler().getIhm().displayChoixJoueurs();
+		// else if ( e.getSource() == this.quittB )
+		// 	System.exit(0);
+	}
 }
 
 

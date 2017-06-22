@@ -1,5 +1,6 @@
 package minivilles.ihm.gui;
 
+import minivilles.reseau.*;
 import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
@@ -15,8 +16,8 @@ public class ChoixJoueursMenu extends JPanel
 	{
 		this.frame = frame;
 
-		this.lines		= new ChoixJoueursLine[ ServeurMinivilles.MAX_J ];
-		this.line[0] 	= new ChoixJoueursLine();
+		this.lines		= new ChoixJoueursLine[ ServerMinivilles.MAX_J ];
+		this.lines[0] 	= new ChoixJoueursLine(true);
 
         this.setVisible(true);
 	}
