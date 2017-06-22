@@ -1,6 +1,7 @@
 package minivilles.metier;
 
 import minivilles.metier.carte.*;
+import minivilles.ihm.Ihm;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -30,7 +31,7 @@ public class Joueur
 		this.monnaie = monnaie;
 	}
 
-	public void actionCartes (Joueur joueur, int des, Joueur[] tabJ)
+	public void actionCartes (Joueur joueur, int des, Joueur[] tabJ, Ihm ihm)
 	{
 		// activation des etablissements rouges
 		for (Etablissement e : this.etablissements) {
@@ -38,10 +39,10 @@ public class Joueur
 				e.action(joueur, des, this);
 			}
 		}
-		
+
 		for (Etablissement e : this.etablissements) {
 			if ( e.getColor().equals("Mauve") ) {
-				((EtablissementMauve)e).action(joueur, des, this, tabJ);
+				((EtablissementMauve)e).action(joueur, des, this, tabJ, ihm);
 			}
 		}
 
@@ -80,14 +81,14 @@ public class Joueur
 				return m.estConstruit();
 		return false;
 	}
-	
+
 	public boolean hasChaineDeTelevision() {
 		for (Etablissement e : this.etablissements)
 			if (e.getNom().equals("Chaîne de télévision"))
 				return true;
 		return false;
 	}
-	
+
 	public boolean hasCentreAffaire() {
 		for (Etablissement e : this.etablissements)
 			if (e.getNom().equals("Centre d'affaires"))

@@ -178,7 +178,7 @@ public class IHMConsole extends Ihm
 		// Une fois que le lancer est définitif...
 		// Active les actions pour les joueurs en commençant par le premier et en allant dans le sens inverse des aiguilles d'une montre
 		for (int i = 0; i < tabJ.length; i++) //int i = idJoueurActuel - 1; i != idJoueurActuel; i-- )
-			tabJ[ Utility.posModulo(idJoueurActuel - i - 1, tabJ.length) ].actionCartes( joueurActuel,  valDeTot, tabJ);
+			tabJ[ Utility.posModulo(idJoueurActuel - i - 1, tabJ.length) ].actionCartes( joueurActuel,  valDeTot, tabJ, this);
 
 
 		toDisplay += "\n\n";
@@ -356,6 +356,54 @@ public class IHMConsole extends Ihm
 		}
 
 		return min;
+	}
+
+	public Joueur displaychoixJoueur(String demande, String err, Joueur[] tabJ)
+	{
+		if ( err != null )
+			System.out.println(err);
+
+		String ans = "";
+		Scanner sc = new Scanner(System.in);
+		do
+		{
+			System.out.println(demande);
+			for (int i = 0;i < tabJ.length ;i++ )
+			{
+				System.out.println(i+" -" + tabJ[i].toString());
+				ans = sc.nextLine();
+			}
+			if (!ans.matches("[0-9]+") || ans.matches("0*"))													System.out.println("Ce n'est pas un nombre");
+			if (ans.matches("[0-9]+") && ( Integer.parseInt(ans) >= 0 || Integer.parseInt(ans) < tabJ.length))	System.out.println("Indice invalide");
+		} while(!ans.matches("[0-9]+") || ans.matches("0*") ||
+				Integer.parseInt(ans) >= 0 || Integer.parseInt(ans) < tabJ.length);
+
+		return tabJ[Integer.parseInt(ans)];
+
+	}
+
+	public Etablissement displaychoixJoueur(String demande, String err, Etablissement[] tabE)
+	{
+		if ( err != null )
+			System.out.println(err);
+
+		String ans = "";
+		Scanner sc = new Scanner(System.in);
+		do
+		{
+			System.out.println(demande);
+			for (int i = 0;i < tabE.length ;i++ )
+			{
+				System.out.println(i+" -" + tabE[i].toString());
+				ans = sc.nextLine();
+			}
+			if (!ans.matches("[0-9]+") || ans.matches("0*"))						System.out.println("Ce n'est pas un nombre");
+			if (ans.matches("[0-9]+") && ( Integer.parseInt(ans) >= 0 || Integer.parseInt(ans) < tabE.length))	System.out.println("Indice invalide");
+		} while(!ans.matches("[0-9]+") || ans.matches("0*") ||
+				Integer.parseInt(ans) >= 0 || Integer.parseInt(ans) < tabE.length);
+
+		return tabE[Integer.parseInt(ans)];
+
 	}
 
 	public void printCartes (Pioche pioche)

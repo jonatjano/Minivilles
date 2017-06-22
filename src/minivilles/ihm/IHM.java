@@ -16,6 +16,8 @@ public abstract class Ihm
 	public abstract void 				displayTourJoueur (int numTour, int indexFirstPlayer, Pioche pioche, Joueur[] tabJ, Joueur joueurActuel);
 	public abstract void 				displayFinPartie (Joueur j, int nbTour);
 	public abstract int 				displayChoixDe (int min, int max);
+	public abstract Joueur				displaychoixJoueur(String demande, String err, Joueur[] tabJ);
+	public abstract Etablissement 		displaychoixJoueur(String demande, String err, Etablissement[] tabE);
 
 	/**
 	  * Nettoie la console pour n'importe quel système d'exploitation
