@@ -19,7 +19,7 @@ public class IHMConsole extends Ihm
 		this.controler = controler;
 	}
 
-	public String displayMenu ()
+	public void displayMenu ()
 	{
 		this.clearConsole();
 		System.out.println(	"~ MENU PRINCIPAL ~\n\n"	+
@@ -36,10 +36,10 @@ public class IHMConsole extends Ihm
 			if ( !ans.matches("-1|1") )	System.out.println("\tErreur : Paramètre incorrect");
 		} while ( !ans.matches("-1|1") );
 
-		return ans;
+		this.controler.reponseMenu( ans );
 	}
 
-	public ArrayList<String> displayChoixJoueurs ()
+	public void displayChoixJoueurs ()
 	{
 		this.clearConsole();
 		System.out.println(	"~ CHOIX DES JOUEURS ~\n" );
@@ -76,7 +76,7 @@ public class IHMConsole extends Ihm
 			}
 		} while ( !ans.matches("n") && cpt != 4);
 
-		return names;
+		this.controler.reponseChoixJoueurs( names );
 	}
 
 	public String displayNouveauTour (Pioche pioche, Joueur[] tabJ, int numTour)
@@ -98,7 +98,7 @@ public class IHMConsole extends Ihm
 		return sRet;
 	}
 
-	public int[] displayTourJoueur (int numTour, int indexFirstPlayer, Pioche pioche, Joueur[] tabJ, Joueur joueurActuel)
+	public void displayTourJoueur (int numTour, int indexFirstPlayer, Pioche pioche, Joueur[] tabJ, Joueur joueurActuel)
 	{
 		Scanner sc 	= new Scanner(System.in);
 		String 	ans 	= "",
@@ -188,10 +188,9 @@ public class IHMConsole extends Ihm
 			{
 				this.clearConsole();
 				System.out.print( toDisplay );
-
 				choix = sc.nextLine();
 
-				if ( !choix.matches("1|2|3|-1") )
+				if ( !choix.matches("1|2|3|-1") )//&& !choix.equals("") )
 				{
 					System.out.println("\tErreur : Saisie incorrecte");
 					Utility.waitForSeconds(0.75f);
@@ -304,7 +303,7 @@ public class IHMConsole extends Ihm
 
 		} while ( (ans.equals("") && !choix.equals("-1")) || ans.equals("-1")  );
 
-		return valDe;
+		this.controler.reponseTourJoueur( numTour, valDe );
 	}
 
 	public boolean displayFinPartie (Joueur j, int nbTour)
@@ -320,12 +319,12 @@ public class IHMConsole extends Ihm
 		System.out.println( "~ NOUS AVONS UN GAGNANT !" );
 		System.out.println( String.format("\nBravo à %s pour sa victoire en %d tours !", j.getPrenom(), nbTour) );
 		System.out.println( "Félicitations !" );
-		System.out.println( "\n\tAppuyez sur une entrer..." );
+		System.out.println( "\n\tAppuyez sur Entrée..." );
 
 		try					{ System.in.read(); }
 		catch (Exception e)	{}
 
-		return false;
+		this.controler.lancer();
 	}
 
 	public int displayChoixDe (int min, int max)
@@ -362,7 +361,7 @@ public class IHMConsole extends Ihm
 		{
 			System.out.println(cartes[i].toString() + "\n");
 		}
-		System.out.println( "\n\tAppuyez sur entrer pour voir la suite..." );
+		System.out.println( "\n\tAppuyez sur Entrée pour voir la suite..." );
 		try					{ System.in.read(); }
 		catch (Exception e)	{}
 
@@ -374,7 +373,7 @@ public class IHMConsole extends Ihm
 			System.out.println(cartes[i].toString() + "\n");
 		}
 
-		System.out.println( "\n\tAppuyez sur une entrer pour voir la suite..." );
+		System.out.println( "\n\tAppuyez sur une Entrée pour voir la suite..." );
 		try					{ System.in.skip(1); System.in.read(); }
 		catch (Exception e)	{}
 

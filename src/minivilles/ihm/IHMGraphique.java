@@ -24,13 +24,12 @@ public class IHMGraphique extends Ihm
 		this.frame 		= new MainFrame();
 	}
 
-	public String displayMenu ()
+	public void displayMenu ()
 	{
 		this.frame.openPage( new MainMenu(frame) );
-		return "";
 	}
 
-	public ArrayList<String> displayChoixJoueurs ()
+	public void displayChoixJoueurs ()
 	{
 		System.out.println(	"~ CHOIX DES JOUEURS ~\n" );
 
@@ -65,8 +64,6 @@ public class IHMGraphique extends Ihm
 				} while ( !ans.matches("o|n") );
 			}
 		} while ( !ans.matches("n") && cpt != 4);
-
-		return names;
 	}
 
 	public String displayNouveauTour (Pioche pioche, Joueur[] tabJ, int numTour)
@@ -88,7 +85,7 @@ public class IHMGraphique extends Ihm
 		return sRet;
 	}
 
-	public int[] displayTourJoueur (int numTour, int indexFirstPlayer, Pioche pioche, Joueur[] tabJ, Joueur joueurActuel)
+	public void displayTourJoueur (int numTour, int indexFirstPlayer, Pioche pioche, Joueur[] tabJ, Joueur joueurActuel)
 	{
 		Scanner sc 	= new Scanner(System.in);
 		String 	ans 	= "",
@@ -299,8 +296,6 @@ public class IHMGraphique extends Ihm
 				Ihm.clearConsole();
 			}
 		} while ( (ans.equals("") && !choix.equals("-1")) || ans.equals("-1")  );
-
-		return valDe;
 	}
 
 	public boolean displayFinPartie (Joueur j, int nbTour)

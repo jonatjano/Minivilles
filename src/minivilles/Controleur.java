@@ -12,7 +12,8 @@ public class Controleur
 {
 	private static int 	MAX_VAL = 6;
 
-	private Ihm ihm;
+	private Ihm 		ihm;
+	private GestionJeu 	gj;
 
 
 	public Controleur ()
@@ -23,42 +24,39 @@ public class Controleur
 
 	public void lancer ()
 	{
-		String 				choix = "";
-		ArrayList<String> 	names = null;
-
 		this.ihm.displayMenu();
 	}
 
 
-	public void reponseMenu (int choix)
+	public void reponseMenu (String choix)
 	{
-		if ( !choix.matches("1|-1") ) { return ; }
-
+		ArrayList<String> 	names = null;
 		switch (choix)
 		{
 			case "1":
-				names = this.ihm.displayChoixJoueurs();
+				this.ihm.displayChoixJoueurs();
 				break;
 		}
+		if ( !choix.matches("1|-1") )	this.ihm.displayMenu();
+	}
 
-		if ( !choix.matches("-1") && names == null ) {lancer()};
-
-		if (names != null && names.size() != 0)
-			this.nouvellePartie(names);	
+	public void reponseChoixJoueurs (ArrayList<String> names)
+	{
+		if (names != null && names.size() != 0)		this.nouvellePartie(names);
+		else										this.ihm.displayChoixJoueurs();
 	}
 
 	public void nouvellePartie (ArrayList<String> names)
 	{
-		boolean bool = true;
-
-		do
-		{
-			GestionJeu gj = new GestionJeu(this.ihm, names);
-			bool = gj.lancer(0);
-		} while (bool);
-
-		this.lancer();
+		this.gj = new GestionJeu(this.ihm, names);
+		this.gj.lancer();
 	}
+
+	public void reponseTourJoueur (int numTour, int[] valDe)
+	{
+		this.gj.resultatTour( numTour, valDe );
+	}
+	
 
 	public int[] lancerDe (int nbDe)
 	{
