@@ -5,7 +5,7 @@ import minivilles.metier.carte.*;
 
 public class Pioche
 {
-	public final static int NB = 12;
+	public final static int NB = 15;
 
 	private Etablissement[] cartes;
 	private int[] 			nbCartes;
@@ -18,24 +18,31 @@ public class Pioche
 
 		this.nbCartes	= new int[Pioche.NB];
 		for (int i = 0; i < this.nbCartes.length; i++)
-			this.nbCartes[i] = 6;
+			if (i == 6 || i == 7 || i == 8)
+				this.nbCartes[i] = 4;
+			else
+				this.nbCartes[i] = 6;
 
 
 		// Initialisation des cartes
 		this.cartes[0] 	= new EtablissementBleu("Champs de blé", 				"Culture", 		1, 					1, 1);
 		this.cartes[1]	= new EtablissementBleu("Ferme", 						"Elevage", 		1, 					1, 2);
 		this.cartes[5] 	= new EtablissementBleu("Forêt", 						"Ressources", 	1, 					3, 5);
-		this.cartes[8] 	= new EtablissementBleu("Mine", 						"Ressources", 	5, 					6, 9);
-		this.cartes[10] = new EtablissementBleu("Verger", 						"Culture", 		3, 					3, 10);
+		this.cartes[11] 	= new EtablissementBleu("Mine", 						"Ressources", 	5, 					6, 9);
+		this.cartes[13] = new EtablissementBleu("Verger", 						"Culture", 		3, 					3, 10);
 
 		this.cartes[2] 	= new EtablissementVert("Boulangerie", 					"Commerce", 	1, 					1, 2,3);
 		this.cartes[4] 	= new EtablissementVert("Superette", 					"Commerce", 	3, 					2, 4);
-		this.cartes[6] 	= new EtablissementVert("Fromagerie", 					"Usine", 		3, "Elevage", 		5, 7);
-		this.cartes[7] 	= new EtablissementVert("Fabrique de Meubles", 			"Usine", 		3, "Ressources", 	3, 8);
-		this.cartes[11] = new EtablissementVert("Marché de fruits et légumes", 	"Marché", 		2, "Culture", 		2, 11,12);
+		this.cartes[9] 	= new EtablissementVert("Fromagerie", 					"Usine", 		3, "Elevage", 		5, 7);
+		this.cartes[10] 	= new EtablissementVert("Fabrique de Meubles", 			"Usine", 		3, "Ressources", 	3, 8);
+		this.cartes[14] = new EtablissementVert("Marché de fruits et légumes", 	"Marché", 		2, "Culture", 		2, 11,12);
 
 		this.cartes[3] 	= new EtablissementRouge("Café", 						"Restauration", 1, 					2, 3);
-		this.cartes[9] 	= new EtablissementRouge("Restaurant", 					"Restauration", 2, 					3, 9,10);
+		this.cartes[12] 	= new EtablissementRouge("Restaurant", 					"Restauration", 2, 					3, 9,10);
+		
+		this.cartes[6] 	= new EtablissementMauve("Stade", 							"Spécial", 		2, 6, 6);
+		this.cartes[7] 	= new EtablissementMauve("Chaîne de télévision", 			"Spécial", 		5, 7, 6);
+		this.cartes[8]  = new EtablissementMauve("Centre d'affaires", 				"Spécial", 		0, 8, 6);
 	}
 
 	public Etablissement achatEtablissement (int id, Joueur j)
