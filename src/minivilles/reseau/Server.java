@@ -33,15 +33,15 @@ public class Server
 	class AcceptClient implements Runnable
 	{
 		private LinkedList<ServerClient> clientList;
-		private boolean continue;
+		private boolean stop;
 
 		private AcceptClient() {}
 
 		public void run()
 		{
 			Socket sock;
-			continue = true;
-			while (continue) {
+			stop = true;
+			while (!stop) {
 				sock = serv.accept();
 				try {
 					InputStream is = sock.getInputStream();
@@ -56,7 +56,7 @@ public class Server
 
 		public void stop()
 		{
-			continue = false;
+			stop = true;
 		}
 	}
 
