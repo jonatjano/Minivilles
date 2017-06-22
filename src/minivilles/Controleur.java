@@ -12,7 +12,8 @@ public class Controleur
 {
 	private static int 	MAX_VAL = 6;
 
-	private Ihm ihm;
+	private Ihm 		ihm;
+	private GestionJeu 	gj;
 
 
 	public Controleur ()
@@ -23,38 +24,39 @@ public class Controleur
 
 	public void lancer ()
 	{
-		String 				choix = "";
+		this.ihm.displayMenu();
+	}
+
+
+	public void reponseMenu (String choix)
+	{
 		ArrayList<String> 	names = null;
-		do
+		switch (choix)
 		{
-			this.clearConsole();
-			choix = this.ihm.displayMenu();
+			case "1":
+				this.ihm.displayChoixJoueurs();
+				break;
+		}
+		if ( !choix.matches("1|-1") )	this.ihm.displayMenu();
+	}
 
-			switch (choix)
-			{
-				case "1":
-					this.clearConsole();
-					names = this.ihm.displayChoixJoueurs();
-					break;
-			}
-		} while ( !choix.matches("-1") && names == null );
-
-		if (names != null && names.size() != 0)
-			this.nouvellePartie(names);
+	public void reponseChoixJoueurs (ArrayList<String> names)
+	{
+		if (names != null && names.size() != 0)		this.nouvellePartie(names);
+		else										this.ihm.displayChoixJoueurs();
 	}
 
 	public void nouvellePartie (ArrayList<String> names)
 	{
-		boolean bool = true;
-
-		do
-		{
-			GestionJeu gj = new GestionJeu(this.ihm, names);
-			bool = gj.lancer(0);
-		} while (bool);
-
-		this.lancer();
+		this.gj = new GestionJeu(this.ihm, names);
+		this.gj.lancer();
 	}
+
+	public void reponseTourJoueur (int numTour, int[] valDe)
+	{
+		this.gj.resultatTour( numTour, valDe );
+	}
+	
 
 	public int[] lancerDe (int nbDe)
 	{
@@ -65,47 +67,14 @@ public class Controleur
 		return ret;
 	}
 
-	/**
-	  * Nettoie la console pour n'importe quel système d'exploitation
-	  */
-	// Avec plusieurs façons de faire
-	public static void clearConsole ()
-	{
-	 //    for(int i = 0; i < 50; i++)
-		// {
-		// 	System.out.print( String.format("\033[%dA", 1) ); 	// Avance le curseur de n lignes
-		// 	System.out.print( "\033[K" ); 						// Efface la ligne entièrement
-		// }
-
-		// try 				{ System.console().reader().reset(); }
-		// catch (Exception e) {}
-
-		// System.out.println("\u001B[H\u001B[2J");
-
-		if ( System.getProperty("os.name").startsWith("Windows") )
-		{
-			ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "cls");
-			try 				{ pb.inheritIO().start().waitFor(); }
-			catch (Exception e) { e.printStackTrace();				}
-		}
-		else
-			System.out.println("\033c");
-
-		String[][] sos = Monument.getStringAffichage("Gare");
-	}
-
-	public static void goBack (int i, int toErase, String line)//(int i, int toErase, String line)
-	{
-		System.out.print( String.format("\033[%dA", i) ); 		// Avance le curseur de n lignes
-		System.out.print( line + new String(new char[toErase]).replace("\0", " ") + "\n" );
-		System.out.print( String.format("\033[%dA", 1) ); 		// Avance le curseur de n lignes
-		System.out.print( line );
-	}
-
-
 	public static void main (String[] args)
 	{
 		Controleur controleur = new Controleur();
 		controleur.lancer();
+	}
+
+	public Ihm getIhm ()
+	{
+		return this.ihm;
 	}
 }
