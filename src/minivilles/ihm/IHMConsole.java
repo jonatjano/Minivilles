@@ -21,6 +21,7 @@ public class IHMConsole extends Ihm
 
 	public String displayMenu ()
 	{
+		this.clearConsole();
 		System.out.println(	"~ MENU PRINCIPAL ~\n\n"	+
 							" 1 : Nouvelle partie\n" 	+
 							"-1 : Quitter\n"				);
@@ -40,6 +41,7 @@ public class IHMConsole extends Ihm
 
 	public ArrayList<String> displayChoixJoueurs ()
 	{
+		this.clearConsole();
 		System.out.println(	"~ CHOIX DES JOUEURS ~\n" );
 
 		Scanner sc = new Scanner (System.in);
@@ -110,7 +112,7 @@ public class IHMConsole extends Ihm
 		toDisplay += String.format("\n\n\t--- Tour de %s ---", joueurActuel.getPrenom());
 
 
-		this.controler.clearConsole();
+		this.clearConsole();
 		System.out.println( toDisplay );
 
 		/* LANCEMENT n°1 */
@@ -127,7 +129,7 @@ public class IHMConsole extends Ihm
 		{
 			do
 			{
-				this.controler.clearConsole();
+				this.clearConsole();
 				System.out.println( toDisplay );
 				if (valDe.length == 1)		System.out.println( String.format( "\n. Lancer de dé : %d", valDeTot ) );
 				else 						System.out.println( String.format( "\n. Lancer de dé : %d (%d + %d)", valDeTot, valDe[0], valDe[1] ) );
@@ -146,7 +148,7 @@ public class IHMConsole extends Ihm
 		/* LANCEMENT n°2 (Ou pas) */
 		if ( ans.matches("o") )
 		{
-			this.controler.clearConsole();
+			this.clearConsole();
 			System.out.println( toDisplay );
 
 			// Choix du nombre de dé
@@ -184,7 +186,7 @@ public class IHMConsole extends Ihm
 			choix = ""; c = null;
 			do
 			{
-				this.controler.clearConsole();
+				this.clearConsole();
 				System.out.print( toDisplay );
 
 				choix = sc.nextLine();
@@ -204,7 +206,7 @@ public class IHMConsole extends Ihm
 				ans = "";
 				do
 				{
-					this.controler.clearConsole();
+					this.clearConsole();
 					System.out.println( toDisplay );
 
 					System.out.println("\n   Lequel (Parmi la liste ci-dessous) ?  (NB : '-1' pour revenir en arrière)");
@@ -245,7 +247,7 @@ public class IHMConsole extends Ihm
 			{
 				do
 				{
-					this.controler.clearConsole();
+					this.clearConsole();
 					System.out.println( toDisplay );
 
 					System.out.println("\n   Lequel (Parmi la liste ci-dessous) ?  (NB : '-1' pour revenir en arrière)");
@@ -279,7 +281,7 @@ public class IHMConsole extends Ihm
 
 						for (int i = tabAffichageMonument.length - 1; i >= 0; i--)
 						{
-							Controleur.clearConsole();
+							Ihm.clearConsole();
 							String sTemp = "";
 							for (int j=tabAffichageMonument.length-1; j >= i ; j--)
 								sTemp = String.format("\t%s\n",String.join("",tabAffichageMonument[j])) + sTemp;
@@ -313,7 +315,7 @@ public class IHMConsole extends Ihm
 		// } while ();
 		// return bool;
 
-		this.controler.clearConsole();
+		this.clearConsole();
 
 		System.out.println( "~ NOUS AVONS UN GAGNANT !" );
 		System.out.println( String.format("\nBravo à %s pour sa victoire en %d tours !", j.getPrenom(), nbTour) );
@@ -350,7 +352,7 @@ public class IHMConsole extends Ihm
 
 	public void printCartes (Pioche pioche)
 	{
-		Controleur.clearConsole();
+		Ihm.clearConsole();
 		Utility.waitForSeconds(0.25f);
 		Scanner pause = new Scanner(System.in);
 
@@ -364,7 +366,7 @@ public class IHMConsole extends Ihm
 		try					{ System.in.read(); }
 		catch (Exception e)	{}
 
-		Controleur.clearConsole();
+		Ihm.clearConsole();
 
 		Utility.waitForSeconds(0.25f);
 		for (int i = cartes.length / 2; i < cartes.length; i++)
@@ -377,6 +379,6 @@ public class IHMConsole extends Ihm
 		catch (Exception e)	{}
 
 		Utility.waitForSeconds(0.25f);
-		Controleur.clearConsole();
+		Ihm.clearConsole();
 	}
 }

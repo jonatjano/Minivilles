@@ -102,7 +102,7 @@ public class IHMGraphique extends Ihm
 		toDisplay += String.format("\n\n\t--- Tour de %s ---", joueurActuel.getPrenom());
 
 
-		this.controler.clearConsole();
+		Ihm.clearConsole();
 		System.out.println( toDisplay );
 
 		/* LANCEMENT n°1 */
@@ -119,7 +119,7 @@ public class IHMGraphique extends Ihm
 		{
 			do
 			{
-				this.controler.clearConsole();
+				Ihm.clearConsole();
 				System.out.println( toDisplay );
 				if (valDe.length == 1)		System.out.println( String.format( "\n. Lancer de dé : %d", valDeTot ) );
 				else 						System.out.println( String.format( "\n. Lancer de dé : %d (%d + %d)", valDeTot, valDe[0], valDe[1] ) );
@@ -138,7 +138,7 @@ public class IHMGraphique extends Ihm
 		/* LANCEMENT n°2 (Ou pas) */
 		if ( ans.matches("o") )
 		{
-			this.controler.clearConsole();
+			Ihm.clearConsole();
 			System.out.println( toDisplay );
 
 			// Choix du nombre de dé
@@ -176,7 +176,7 @@ public class IHMGraphique extends Ihm
 			choix = ""; c = null;
 			do
 			{
-				this.controler.clearConsole();
+				Ihm.clearConsole();
 				System.out.print( toDisplay );
 
 				choix = sc.nextLine();
@@ -196,7 +196,7 @@ public class IHMGraphique extends Ihm
 				ans = "";
 				do
 				{
-					this.controler.clearConsole();
+					Ihm.clearConsole();
 					System.out.println( toDisplay );
 
 					System.out.println("\n   Lequel (Parmi la liste ci-dessous) ?  (NB : '-1' pour revenir en arrière)");
@@ -237,7 +237,7 @@ public class IHMGraphique extends Ihm
 			{
 				do
 				{
-					this.controler.clearConsole();
+					Ihm.clearConsole();
 					System.out.println( toDisplay );
 
 					System.out.println("\n   Lequel (Parmi la liste ci-dessous) ?  (NB : '-1' pour revenir en arrière)");
@@ -271,7 +271,7 @@ public class IHMGraphique extends Ihm
 
 						for (int i = tabAffichageMonument.length - 1; i >= 0; i--)
 						{
-							Controleur.clearConsole();
+							Ihm.clearConsole();
 							String sTemp = "";
 							for (int j=tabAffichageMonument.length-1; j >= i ; j--)
 								sTemp = String.format("\t%s\n",String.join("",tabAffichageMonument[j])) + sTemp;
@@ -289,14 +289,14 @@ public class IHMGraphique extends Ihm
 
 			if ( choix.matches("3") )
 			{
-				Controleur.clearConsole();
+				Ihm.clearConsole();
 				Utility.waitForSeconds(0.25f);
 				System.out.println(pioche.toStringCartes());
 
 				System.out.println( "\n\tAppuyez sur une touche..." );
 				try					{ System.in.read(); }
 				catch (Exception e)	{}
-				Controleur.clearConsole();
+				Ihm.clearConsole();
 			}
 		} while ( (ans.equals("") && !choix.equals("-1")) || ans.equals("-1")  );
 
@@ -310,7 +310,7 @@ public class IHMGraphique extends Ihm
 		// {
 		// } while ();
 		// return bool;
-		this.controler.clearConsole();
+		Ihm.clearConsole();
 
 		System.out.println( "~ NOUS AVONS UN GAGNANT !" );
 		System.out.println( String.format("\nBravo à %s pour sa victoire en %d tours !", j.getPrenom(), nbTour) );
