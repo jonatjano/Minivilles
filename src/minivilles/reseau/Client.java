@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Scanner;
 
-public class Client
+public class Client implements Runnable
 {
 	private Socket sock;
 	private InputStream is;
@@ -18,7 +18,10 @@ public class Client
 			Socket sock = new Socket(ip, port);
 			InputStream is = sock.getInputStream();
 			OutputStream os = sock.getOutputStream();
-			return new Client(sock, is, os);
+			Client c = new Client(sock, is, os);
+			Thread tClient = new Thread(c);
+			tClient.start();
+			return c;
 		}
 		catch (Exception e) { return null; }
 	}
@@ -28,7 +31,10 @@ public class Client
 		this.sock = sock;
 		this.is = is;
 		this.os = os;
+	}
 
+	public void run()
+	{
 		Scanner scis = new Scanner(is);
 
 		while (scis.hasNextLine()) {
@@ -41,13 +47,24 @@ public class Client
 	{
 		try {
 			os.write((msg + "\n").getBytes("UTF-8"));
-			os.flush();
+			os.flush()
 		}
-		catch (Exception e) {}
+		catch (Exception e) { System.out.println("echec a l'envoi de " + msg); }
 	}
 
 	private void actionOnMsg(String msg)
 	{
-		System.out.println("TODO : Client.java line 50");
+		System.out.println(msg);
+	}
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		Client c = connect("localhost", 7777);
+		if (c == null) {
+			System.out.println("Ce serveur est inaccessible");
+		}
+		while (sc.hasNextLine()) {
+			c.sendMsg(sc.nextLine());
+		}
 	}
 }
