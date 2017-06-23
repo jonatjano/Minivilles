@@ -19,8 +19,8 @@ public class Controleur
 
 	public Controleur ()
 	{
-		// this.ihm = new IHMConsole( this );
-		this.ihm = new IHMGraphique( this );
+		this.ihm = new IHMConsole( this );
+		//this.ihm = new IHMGraphique( this );
 	}
 
 	public void lancer ()
@@ -32,6 +32,7 @@ public class Controleur
 	public void reponseMenu (String choix)
 	{
 		ArrayList<String> 	names = null;
+		System.out.println(choix.toLowerCase().replace("é","e"));
 		switch (choix.toLowerCase().replace("é","e"))
 		{
 			case "1":

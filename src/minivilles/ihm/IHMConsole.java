@@ -34,8 +34,8 @@ public class IHMConsole extends Ihm
 			System.out.print("Choix : ");
 			ans = sc.nextLine();
 
-			if ( !ans.matches("-1|1") )	System.out.println("\tErreur : Paramètre incorrect");
-		} while ( !ans.matches("-1|1") );
+			if ( !ans.toLowerCase().replace("é","e").matches("-1|1|(evaluation)") )	System.out.println("\tErreur : Paramètre incorrect");
+		} while ( !ans.toLowerCase().replace("é","e").matches("-1|1|(evaluation)") );
 
 		this.controler.reponseMenu( ans );
 	}
