@@ -104,8 +104,9 @@ public class Joueur
 	public int 						getMonnaie ()					{ return this.monnaie;				}
 
 	/* SETTER */
+	public void 	setMonnaie (int valeur) {addMonnaie(valeur - this.monnaie);}
 
-	public boolean addMonnaie (int valeur)
+	public boolean  addMonnaie (int valeur)
 	{
 		if (this.monnaie + valeur >= 0) {
 			this.monnaie += valeur;
@@ -114,7 +115,14 @@ public class Joueur
 		return false;
 	}
 
-	public void addEtablissement 	(Etablissement et)			{ this.etablissements.add(et);	}
+	public boolean addEtablissement 	(Etablissement et)
+	{ 
+		if (this.etablissements.contains(et) && et.estLimite())
+			return false;
+		
+		this.etablissements.add(et);
+		return true;
+	}
 	public void removeEtablissement (Etablissement et)		
 	{
 		etablissements.remove(et);

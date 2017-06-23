@@ -11,7 +11,7 @@ import java.io.File;
 
 public class GestionJeu
 {
-	private static final int BEG_MON = 666;
+	private static final int BEG_MON = 3;
 
 	private Ihm 		ihm;
 	private Pioche 		pioche;
@@ -22,6 +22,7 @@ public class GestionJeu
 	private Joueur[] 	tabJoueur;
 	private Joueur 		joueurGagnant;
 	private Joueur 		joueurActuel;
+	private boolean		isEvaluation;
 
 
 	public GestionJeu (Ihm ihm, ArrayList<String> names)
@@ -29,6 +30,7 @@ public class GestionJeu
 		this.ihm 				= ihm;
 		this.pioche 			= new Pioche();
 		this.nbJoueur 			= names.size();
+		this.isEvaluation		= false;
 		this.indexFirstPlayer	= -1;
 
 		this.tabJoueur = new Joueur[this.nbJoueur];
@@ -43,9 +45,10 @@ public class GestionJeu
 	{
 		this.ihm 				= ihm;
 		this.pioche 			= new Pioche();
+		this.isEvaluation		= true;
 		this.indexFirstPlayer	= 0;
 		try{
-			Scanner sc = new Scanner(new File(Controleur.PATH + file));
+			Scanner sc = new Scanner(new File(Controleur.PATH + "/PartieInit/" + file));
 		
 			String ligneJoueur = sc.nextLine();
 			
@@ -60,7 +63,9 @@ public class GestionJeu
 				int piece = Integer.parseInt(tabInfoJ[0]);
 				String[] tabCarteJ = tabInfoJ[1].split(":");
 				
-				this.tabJoueur[cptNom] = new Joueur(tabNomJoueur[cptNom],piece);
+				this.tabJoueur[cptNom] = new Joueur(tabNomJoueur[cptNom],10000);
+				this.tabJoueur[cptNom].removeEtablissement (this.tabJoueur[cptNom].getEtablissements().get(0));	
+				this.tabJoueur[cptNom].removeEtablissement (this.tabJoueur[cptNom].getEtablissements().get(0));
 				
 				for (int i=0; i < tabCarteJ.length; i++)
 					for (int j=0; j < Integer.parseInt(tabCarteJ[i]) ; j++)
@@ -70,6 +75,9 @@ public class GestionJeu
 				for (int i=0 ; i < tabMonuJ.length ; i++)
 					if ( tabMonuJ[i].equals("V") )
 						this.tabJoueur[cptNom].construireMonument(i);
+				
+				this.tabJoueur[cptNom].setMonnaie (piece);
+				try{StringInfoJ = sc.nextLine();} catch(Exception e) {}
 			}
 		} catch(Exception e){}
 		

@@ -83,7 +83,7 @@ public class IHMConsole extends Ihm
 	public void displayChoixPartieInit ()
 	{
 		Ihm.clearConsole();
-		System.out.println(	"~ CHOIX DU FICHIER D'INITIALIZATION ~\n" );
+		System.out.println(	"~ CHOIX DU FICHIER D'INITIALISATION ~\n" );
 
 		Scanner sc = new Scanner (System.in);
 		String[] fPartieInit;
@@ -94,9 +94,9 @@ public class IHMConsole extends Ihm
 		{
 			fPartieInit = new File(Controleur.PATH + "/PartieInit").list();
 			for (int i=0; i< fPartieInit.length; i++)
-				System.out.println(i + " -" + fPartieInit[i]);
+				System.out.println("\t" + i + " -" + fPartieInit[i]);
 			
-			System.out.println("Veuillez entrer l'index du fichier à charger : ");
+			System.out.print("\nVeuillez entrer l'index du fichier à charger : ");
 			choix = sc.nextLine();
 			
 			if (!choix.matches("[0-9]+") && !choix.matches("0*"))														System.out.println("Ce n'est pas un nombre");
@@ -299,9 +299,13 @@ public class IHMConsole extends Ihm
 
 					if (c != null)
 					{
-						System.out.println("\t-> '" + c.getNom() + "' ajouté !");
+						if (joueurActuel.addEtablissement((Etablissement) c))
+							System.out.println("\t-> '" + c.getNom() + "' ajouté !");
+						else
+							System.out.println("\t-> '" + c.getNom() + "' : Limite atteinte !");
 						Utility.waitForSeconds(0.75f);
-						joueurActuel.addEtablissement((Etablissement) c);
+						
+							
 					}
 				} while ( !ans.equals("-1") && c == null );
 			}
