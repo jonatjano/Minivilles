@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.IOException;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.*;
 import javax.swing.*;
 import javax.imageio.ImageIO;
@@ -26,15 +28,33 @@ public class MainFrame extends JFrame
 		// 	UIManager.setLookAndFeel( new SyntheticaBlackEyeLookAndFeel() );
 		// } catch (Exception e) {}
 		this.controler = controler;
-
 		this.setTitle("MiniVilles");
-		this.setSize(1200,700);
-		this.setLocation(200,150);
-		this.setResizable(false);
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+		this.setExtendedState( JFrame.MAXIMIZED_BOTH );
+		this.setDefaultCloseOperation( EXIT_ON_CLOSE );
 
-		this.bgPanel = new JPanelWithBackground();
+		this.setVisible(true);
+		this.bgPanel = new JPanelWithBackground( this );
+
+		// Ajoute un évènement quand la fenêtre est redimensionnée
+		// this.setResizable(false);
+		this.addComponentListener(new ComponentAdapter() {
+			private JPanelWithBackground bgPanel;
+
+            public void componentResized (ComponentEvent e)
+            {
+            	try 					{ this.bgPanel.resizeImg(); }
+            	catch (IOException ex) 	{}
+                
+            }
+
+            private ComponentAdapter init(JPanelWithBackground bgPanel)
+            {
+            	this.bgPanel = bgPanel;
+            	return this;
+            }
+        }.init(this.bgPanel) );
+
 		this.add( bgPanel );
 	}
 
@@ -58,11 +78,14 @@ public class MainFrame extends JFrame
 
 	public class JPanelWithBackground extends JPanel
 	{
-		private Image bgImg;
+		private Image 		bgImg;
+		private Image 		toDisplayImg;
+		private MainFrame	frame;
 
 
-		public JPanelWithBackground ()
+		public JPanelWithBackground (MainFrame frame)
 		{
+			this.frame = frame;
 			this.setLayout( new GridBagLayout() );
 		}
 
@@ -72,15 +95,24 @@ public class MainFrame extends JFrame
 			if (fileName == null || fileName.equals(""))
 				bgImg = null;
 			else
-				bgImg = Utility.getScaledImage( ImageIO.read( new File(fileName) ), 1200, 700);
+			{
+				this.bgImg 			= ImageIO.read( new File(fileName) );
+				this.toDisplayImg 	= Utility.getScaledImage( bgImg, this.frame.getWidth(), this.frame.getHeight() );
+			}
+		}
+
+		public void resizeImg ()
+		throws IOException
+		{
+			this.toDisplayImg = Utility.getScaledImage( this.bgImg, this.frame.getWidth(), this.frame.getHeight() );
 		}
 
 		public void paintComponent (Graphics g)
 		{
 			super.paintComponent(g);
 
-			if (this.bgImg != null)
-				g.drawImage( bgImg, 0, 0, this );
+			if (this.toDisplayImg != null)
+				g.drawImage( this.toDisplayImg, 0, 0, this );
 		}
 	}
 }

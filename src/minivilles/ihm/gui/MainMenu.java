@@ -18,8 +18,9 @@ public class MainMenu extends JPanel implements ActionListener
 	public MainMenu (MainFrame frame)
 	{
 		this.frame = frame;
-		try						{ this.frame.getBgPanel().setImage("../images/image.jpg"); }
-		catch (IOException e) 	{}
+		// this.frame.getBgPanel().setLayout( new GridBagLayout() );
+		// try						{ this.frame.getBgPanel().setImage("../images/minivilles.jpg"); }
+		// catch (IOException e) 	{}
 
 
 
@@ -30,12 +31,15 @@ public class MainMenu extends JPanel implements ActionListener
 
 
 		// Logo de MiniVilles
+		// BufferedImage img = new ImageIcon("../images/logo.png").getImage();
+		// Image resized = Utility.getScaledImage(new ImageIcon("../images/logo.png").getImage(), 600, 262);
 		ImageIcon logo = new ImageIcon( Utility.getScaledImage(new ImageIcon("../images/logo.png").getImage(), 600, 262) );
 		this.logoL = new JLabel ("");
 		this.logoL.setIcon( logo );
 
 		c.gridwidth = 2;
 		this.add( logoL, c );
+		// this.logoL.setVisible(false);
 
 
 		JPanel buttonP = new JPanel();

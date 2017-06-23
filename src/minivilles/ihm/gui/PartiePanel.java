@@ -20,7 +20,8 @@ public class PartiePanel extends JPanel implements ActionListener
 {
 	private MainFrame 	frame;
 	private JLabel		numTourL, joueurTourL;
-	private JButton 	endTourB, quittGameB;
+	private JButton 	endTourB, quittGameB, rollDiceB;
+	private JComboBox	nbDesCB;
 
 	private GestionJeu 	gj;
 
@@ -28,6 +29,8 @@ public class PartiePanel extends JPanel implements ActionListener
 	public PartiePanel (MainFrame frame, GestionJeu gj)
 	{
 		this.frame 	= frame;
+		this.frame.getBgPanel().setLayout( new BorderLayout() );
+
 		this.gj 	= gj;
 		this.setLayout( new BorderLayout() );
 		this.setVisible(true);
@@ -41,8 +44,11 @@ public class PartiePanel extends JPanel implements ActionListener
 
 		/* Panel central */
 
-		JCanvas centerP = new JCanvas(new Dimension(800, 600));
-		centerP.setBackground(Color.RED);
+		JPanel centerP = new JPanel();
+		centerP.setLayout( new GridBagLayout() );
+
+		JCanvas canvas = new JCanvas( new Dimension(800, 600) );
+		canvas.setBackground(Color.RED);
 
 
 		// Offset et rotation en fonction du nombre de joueurs
@@ -50,8 +56,8 @@ public class PartiePanel extends JPanel implements ActionListener
 				offset 	= 150;
 
 		// Coordonnées du centre du canvas
-		double 	centerX 	= centerP.getPreferredSize().getWidth() / 2,
-				centerY 	= centerP.getPreferredSize().getHeight() / 2;
+		double 	centerX 	= canvas.getPreferredSize().getWidth() / 2,
+				centerY 	= canvas.getPreferredSize().getHeight() / 2;
 		// Les coordonnées à incrémenter
 		int 	x 		= (int) centerX,
 				y 		= (int) (centerY + offset);
@@ -63,8 +69,8 @@ public class PartiePanel extends JPanel implements ActionListener
 		int indexJ 	= this.gj.calcIndexCourant();
 
 		BufferedImage imgCartes = null;
-		try 					{ imgCartes = ImageIO.read( new File("../images/etablissements.jpg") ); }
-		catch (IOException e)	{}
+		try 					{ imgCartes = ImageIO.read( new File("../images/etablissements.png") ); }
+		catch (IOException e)	{e.printStackTrace();}
 
 		// Affichage des noms des joueurs
 		int[][] coords = new int[len][2];
@@ -75,15 +81,10 @@ public class PartiePanel extends JPanel implements ActionListener
 			x = coords[i][0];
 			y = coords[i][1];
 
-			centerP.printString( this.gj.getTabJoueur()[ Utility.posModulo(indexJ - i - 1, len) ].getPrenom(), x, y );
+			canvas.printString( this.gj.getTabJoueur()[ Utility.posModulo(indexJ - i - 1, len) ].getPrenom(), x, y );
 
 			cpt++;
 		}
-
-		// 185 large
-		// 5 plus loin
-		// 273 hauteur
-		// 7 plus loin
 
 		// Affichage des cartes du joueur
 		int begX = 9,
@@ -96,10 +97,13 @@ public class PartiePanel extends JPanel implements ActionListener
 			ArrayList<Etablissement> main = this.gj.getTabJoueur()[ Utility.posModulo(indexJ - i - 1, len) ].getEtablissements();
 			for (int j = 0; j < main.size(); j++)
 			{
-				centerP.printImage( imgCartes, new Dimension(50, 70), coordCard[0] + j*20, coordCard[1] );
+				
+				canvas.printImage( imgCartes, new Dimension(84, 124), (begX + main.get(j).getCol()*(185+5)), (begY + main.get(j).getLig()*(273+7)), new Dimension(185, 273), coordCard[0] + j*80, coordCard[1] );
 			}
+				
 		}
 
+		centerP.add( canvas );
 		rightP.add( centerP );
 		
 
@@ -119,7 +123,14 @@ public class PartiePanel extends JPanel implements ActionListener
 		/* Panel de gauche */
 
 		JPanel leftP = new JPanel();
-		// leftP.setPreferredSize(new Dimension(500, 100));
+
+		this.nbDesCB 	= new JComboBox();
+		this.nbDesCB.addActionListener( this );
+		leftP.add( this.nbDesCB );
+
+		this.rollDiceB	= new JButton("Lancer les dés");
+		this.rollDiceB.addActionListener( this );
+		leftP.add( this.rollDiceB );
 
 		this.endTourB 		= new JButton("Fin du tour");
 		this.endTourB.addActionListener( this );
