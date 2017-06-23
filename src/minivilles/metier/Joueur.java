@@ -117,12 +117,7 @@ public class Joueur
 	public void addEtablissement 	(Etablissement et)			{ this.etablissements.add(et);	}
 	public void removeEtablissement (Etablissement et)		
 	{
-		for (Etablissement etTemp : etablissements)
-			if (etTemp.equals(et))
-			{
-				etablissements.remove(et);
-				return;
-			}
+		etablissements.remove(et);
 	}
 
 	public Monument construireMonument (int id)

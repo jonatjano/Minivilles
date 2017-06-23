@@ -397,7 +397,7 @@ public class IHMConsole extends Ihm
 		{
 			System.out.println(demande);
 			for (int i = 0;i < tabJ.length ;i++ )
-				System.out.println(i+" -" + tabJ[i].getPrenom());
+				System.out.println("\t" + i + " -" + tabJ[i].getPrenom());
 				
 			ans = sc.nextLine();
 			Ihm.clearConsole();
@@ -426,7 +426,7 @@ public class IHMConsole extends Ihm
 		{
 			System.out.println(demande);
 			for (int i = 0;i < tabE.length ;i++ )
-				System.out.println(i+" -" + tabE[i].getNom());
+				System.out.println("\t" + i + " -" + tabE[i].getNom());
 				
 			ans = sc.nextLine();
 			Ihm.clearConsole();
