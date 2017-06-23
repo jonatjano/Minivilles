@@ -1,10 +1,5 @@
-setlocal 
-set current_path = %PATH%
-echo %current_path%
-endlocal
+set current=%~dp0
 
-REM %~dp0
-REM #cd %MINIVILLES11%
-REM #java minivilles.Controleur
-REM #cd
-PAUSE
+cd %MINIVILLE11%
+java minivilles.Controleur
+cd %current%

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Controleur
 {
 	private static int 	MAX_VAL = 6;
-	public  static final String PATH = "TEMP";//System.getenv("MiniVille11");
+	public  static final String PATH = System.getenv("MINIVILLE11");
 
 	private Ihm 		ihm;
 	private GestionJeu 	gj;

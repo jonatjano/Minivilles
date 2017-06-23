@@ -1,7 +1,6 @@
-set MINIVILLE11=C:\Program Files (x86)\minivilles11
+if not exist "%MINIVILLE11%" mkdir "%MINIVILLE11%"
+if not exist "%MINIVILLE11%\PartieInit" mkdir "%MINIVILLE11%\PartieInit"
 
-if not exist "C:\Program Files (x86)\minivilles11" mkdir "C:\Program Files (x86)\minivilles11"
-if not exist "C:\Program Files (x86)\minivilles11\PartieInit" mkdir "C:\Program Files (x86)\minivilles11\PartieInit"
+javac -d "%MINIVILLE11%" @sources.list
 
-javac -d "C:\Program Files (x86)\minivilles11" @sources.list
-copy file1 "C:\Program Files (x86)\minivilles11\PartieInit"
+copy InitTemplate.ini "%MINIVILLE11%\PartieInit\"
