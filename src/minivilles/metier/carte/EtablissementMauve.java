@@ -2,6 +2,7 @@ package minivilles.metier.carte;
 
 import minivilles.metier.Joueur;
 import minivilles.ihm.Ihm;
+import java.util.ArrayList;
 
 
 public class EtablissementMauve extends Etablissement
@@ -54,9 +55,14 @@ public class EtablissementMauve extends Etablissement
 					String sErr = null;
 					do
 					{
-						jEchange = ihm.displaychoixJoueur("à quel joueur voulez vous voler " + this.puissance + " piece" + ( this.puissance == 1 ? "" : "s" ) + " ?", sErr, tabJoueur);
-						if (jEchange == possesseur) sErr = "Vous ne pouvez pas vous vo<ler de l'argent.";
-					} while (jEchange == possesseur);
+					do
+						{
+							jEchange = ihm.displaychoixJoueur("à quel joueur voulez vous voler " + this.puissance + " piece" + ( this.puissance == 1 ? "" : "s" ) + " ?", sErr, tabJoueur);
+							if (jEchange == possesseur) sErr = "Vous ne pouvez pas vous voler de l'argent.";
+						} while (jEchange == possesseur);
+						
+						if (jEchange == null) sErr = "Vous devez choisir un joueur !";
+					}while (jEchange == null);
 
 					int nb = this.puissance;
 					if (jEchange.getMonnaie() < puissance)
@@ -66,13 +72,47 @@ public class EtablissementMauve extends Etablissement
 					break;
 
 				case 2:
-					Joueur jEchange;
 					sErr = null;
-					System.out.println("Souhaitez vous échanger un établissement avec un autre joueur ? (o/n)");
-					do {
-						jEchange = ihm.displayChoixJoueur("Quel batiment souhaitez vous échanger :")
-					} while ();
-
+					
+					if ( ! ihm.displayDemande("Souhaitez vous échanger un établissement avec un autre joueur ?"))
+						return;
+					
+					do
+					{
+						jEchange = ihm.displaychoixJoueur("avec quel joueur voulez vous échanger un établissement ?", sErr, tabJoueur);
+						if (jEchange == possesseur) sErr = "Vous ne pouvez pas vous échanger un établissement.";
+					} while (jEchange == possesseur);
+					if (jEchange == null)
+						return;
+					
+					ArrayList<Etablissement> arTemp = possesseur.getEtablissements();
+					for (Etablissement et : arTemp)
+						if ( et.getColor().equals("Mauve"))
+							arTemp.remove(et);
+					
+					Etablissement[] tabEtTemp = arTemp.toArray(new Etablissement[arTemp.size()]); 
+					
+					Etablissement pEtablissement = ihm.displaychoixJoueur("lequel de vos établissements souhaitez-vous échanger ?", sErr, tabEtTemp);
+					if (pEtablissement == null)
+						return;
+					
+					arTemp = jEchange.getEtablissements();
+					for (Etablissement et : arTemp)
+						if ( et.getColor().equals("Mauve"))
+							arTemp.remove(et);
+					
+					tabEtTemp = arTemp.toArray(new Etablissement[arTemp.size()]); 
+					
+					Etablissement jEtablissement = ihm.displaychoixJoueur("lequel des établissements souhaitez-vous prendre ?", sErr, tabEtTemp);
+					if (jEtablissement == null)
+						return;
+					
+					possesseur.removeEtablissement(pEtablissement);
+					possesseur.addEtablissement(jEtablissement);
+					
+					jEchange.removeEtablissement(jEtablissement);
+					jEchange.addEtablissement(pEtablissement);
+					
 					break;
 			}
 		}

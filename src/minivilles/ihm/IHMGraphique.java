@@ -74,8 +74,8 @@ public class IHMGraphique extends Ihm
 
 		return min;
 	}
-
-	public Joueur				displaychoixJoueur(String demande, String err, Joueur[] tabJ) {return null;}
-	public Etablissement 		displaychoixJoueur(String demande, String err, Etablissement[] tabE) {return null;}
+	public boolean 				displayDemande (String demande) 										{return false;}
+	public Joueur				displaychoixJoueur(String demande, String err, Joueur[] tabJ) 			{return null;}
+	public Etablissement 		displaychoixJoueur(String demande, String err, Etablissement[] tabE) 	{return null;}
 
 }

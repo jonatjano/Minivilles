@@ -78,6 +78,24 @@ public class IHMConsole extends Ihm
 
 		this.controler.reponseChoixJoueurs( names );
 	}
+	
+	public boolean displayDemande (String demande)
+	{
+		if ( demande == null )
+			return false;
+		
+		demande +=  "(o/n)";
+		Scanner sc = new Scanner(System.in);
+		
+		String s = sc.nextLine();
+		while(!s.matches("o|n"))
+		{
+			System.out.println("réponse invalide : (o/n)");
+			s = sc.nextLine();
+		}
+		
+		return s == "o" ? true : false;
+	}
 
 	public void displayDebutPartie (GestionJeu gj)
 	{
@@ -382,9 +400,12 @@ public class IHMConsole extends Ihm
 			}
 			if (!ans.matches("[0-9]+") || ans.matches("0*"))													System.out.println("Ce n'est pas un nombre");
 			if (ans.matches("[0-9]+") && ( Integer.parseInt(ans) >= 0 || Integer.parseInt(ans) < tabJ.length))	System.out.println("Indice invalide");
-		} while(!ans.matches("[0-9]+") || ans.matches("0*") ||
-				Integer.parseInt(ans) >= 0 || Integer.parseInt(ans) < tabJ.length);
-
+		} while(ans.equals("-1") && (!ans.matches("[0-9]+") || ans.matches("0*") ||
+				Integer.parseInt(ans) >= 0 || Integer.parseInt(ans) < tabJ.length));
+				
+		if (ans.equals("-1"))
+			return null;
+		
 		return tabJ[Integer.parseInt(ans)];
 
 	}
@@ -396,14 +417,7 @@ public class IHMConsole extends Ihm
 
 		Scanner sc = new Scanner(System.in);
 		String ans = "";
-
-		ans = sc.nextLine();
-		while(!ans.matches("o|n"))
-		{
-			System.out.println("réponse invalide : (o/n)");
-		}
-		if(ans.equals("n"))
-			return null;
+		
 		do
 		{
 			System.out.println(demande);
@@ -414,9 +428,12 @@ public class IHMConsole extends Ihm
 			}
 			if (!ans.matches("[0-9]+") || ans.matches("0*"))						System.out.println("Ce n'est pas un nombre");
 			if (ans.matches("[0-9]+") && ( Integer.parseInt(ans) >= 0 || Integer.parseInt(ans) < tabE.length))	System.out.println("Indice invalide");
-		} while(!ans.matches("[0-9]+") || ans.matches("0*") ||
-				Integer.parseInt(ans) >= 0 || Integer.parseInt(ans) < tabE.length);
+		} while(!ans.equals("-1") && (!ans.matches("[0-9]+") || ans.matches("0*") ||
+				Integer.parseInt(ans) >= 0 || Integer.parseInt(ans) < tabE.length ));
 
+		if (ans.equals("-1"))
+			return null;
+		
 		return tabE[Integer.parseInt(ans)];
 
 	}

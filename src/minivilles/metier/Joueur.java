@@ -99,7 +99,7 @@ public class Joueur
 	/* GETTER */
 
 	public String 					getPrenom ()					{ return this.prenom;				}
-	public ArrayList<Monument> 		getMonuments ()					{ return new ArrayList<Monuments>( this.monuments );			}
+	public ArrayList<Monument> 		getMonuments ()					{ return new ArrayList<Monument>( this.monuments );			}
 	public ArrayList<Etablissement> getEtablissements ()			{ return new ArrayList<Etablissement>( this.etablissements );	}
 	public int 						getMonnaie ()					{ return this.monnaie;				}
 
@@ -114,7 +114,16 @@ public class Joueur
 		return false;
 	}
 
-	public void addEtablissement (Etablissement et)			{ this.etablissements.add(et);	}
+	public void addEtablissement 	(Etablissement et)			{ this.etablissements.add(et);	}
+	public void removeEtablissement (Etablissement et)		
+	{
+		for (Etablissement etTemp : etablissements)
+			if (etTemp.equals(et))
+			{
+				etablissements.remove(et);
+				return;
+			}
+	}
 
 	public Monument construireMonument (int id)
 	throws IndexOutOfBoundsException
