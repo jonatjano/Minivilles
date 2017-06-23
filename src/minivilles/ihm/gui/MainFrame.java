@@ -19,6 +19,8 @@ public class MainFrame extends JFrame
 	private JComponent				content;
 	private JPanelWithBackground 	bgPanel;
 
+	private Font 					font;
+
 
 	public MainFrame (Controleur controler)
 	{
@@ -27,6 +29,10 @@ public class MainFrame extends JFrame
 		// {
 		// 	UIManager.setLookAndFeel( new SyntheticaBlackEyeLookAndFeel() );
 		// } catch (Exception e) {}
+
+		// Police des panel
+		this.font = new Font("Arial", 0, 16);
+
 		this.controler = controler;
 		this.setTitle("MiniVilles");
 
@@ -35,6 +41,7 @@ public class MainFrame extends JFrame
 
 		this.setVisible(true);
 		this.bgPanel = new JPanelWithBackground( this );
+
 
 		// Ajoute un évènement quand la fenêtre est redimensionnée
 		// this.setResizable(false);
@@ -45,7 +52,8 @@ public class MainFrame extends JFrame
             {
             	try 					{ this.bgPanel.resizeImg(); }
             	catch (IOException ex) 	{}
-                
+
+            	// Resize tout le CONTENU
             }
 
             private ComponentAdapter init(JPanelWithBackground bgPanel)
@@ -61,6 +69,7 @@ public class MainFrame extends JFrame
 	public Controleur 				getControler ()	{ return this.controler;	}
 	public JComponent 				getContent ()	{ return this.content;		}
 	public JPanelWithBackground 	getBgPanel ()	{ return this.bgPanel;		}
+	public Font 					getFont () 		{ return this.font;			}
 
 	public void openPage (JPanel panel)
 	{
@@ -93,7 +102,10 @@ public class MainFrame extends JFrame
 		throws IOException
 		{
 			if (fileName == null || fileName.equals(""))
-				bgImg = null;
+			{
+				this.bgImg 			= null;
+				this.toDisplayImg 	= null;
+			}
 			else
 			{
 				this.bgImg 			= ImageIO.read( new File(fileName) );

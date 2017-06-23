@@ -26,7 +26,7 @@ public class JCanvas extends JPanel
 		super.paintComponent(g);
 
 		g.setColor( Color.WHITE );
-		g.fillRect(0, 0, (int) (int) dim.getWidth(), (int) dim.getHeight());
+		g.fillRect(0, 0, (int) dim.getWidth(), (int) dim.getHeight());
 
 		g.setColor( Color.BLACK );
 
@@ -41,19 +41,8 @@ public class JCanvas extends JPanel
 		{
 			BufferedImage img = di.getImage();
 			if ( di.getDimSrc() != null )
-			{
 				img = img.getSubimage( di.getSrcX(), di.getSrcY(), (int) di.getDimSrc().getWidth(), (int) di.getDimSrc().getHeight() );
-				// Image img = Utility.getScaledImage( di.getImage(), (int) di.getDim().getWidth(), (int) di.getDim().getHeight() );
-				// g.drawImage( 	img,
-				// 				di.getX() - (int) (di.getDim().getWidth()/2),
-				// 				di.getY() - (int) (di.getDim().getHeight()/2),
-				// 				di.getX() + (int) (di.getDim().getWidth()/2),
-				// 				di.getY() + (int) (di.getDim().getHeight()/2),
-				// 				di.getSrcX(),
-				// 				di.getSrcY(),
-				// 				di.getSrcX() + (int) di.getDimSrc().getWidth(),
-				// 				di.getSrcY() + (int) di.getDimSrc().getHeight(), null );
-			}
+
 
 			if ( di.getDim() != null )
 				g.drawImage( img, di.getX(), di.getY(), (int) di.getDim().getWidth(), (int) di.getDim().getHeight(), null );

@@ -1,2 +1,5 @@
 . APPUYER SUR JTEXTFIELD DISABLED = ACTION
 . ETABLISSEMENT MAUVES : 2 ECHANGES = BAM
+
+. Resize en fonction de la frame :
+- canvas (PartiePanel)

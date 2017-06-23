@@ -1,5 +1,6 @@
 package minivilles.util;
 
+import minivilles.ihm.gui.MainFrame;
 import java.util.ArrayList;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -49,6 +50,24 @@ public class Utility
 		Graphics2D 		g2 			= resizedImg.createGraphics();
 
 		g2.drawImage(srcImg, 0, 0, w, h, null);
+		g2.dispose();
+
+		return resizedImg;
+	}
+
+	public static int[] getPercentOfFrame (MainFrame frame, double pctW, double pctH)
+	{
+		return new int[] { (int) (frame.getWidth() * (pctW/100)), (int) (frame.getHeight() * (pctH/100)) };
+	}
+
+	public static Image resizeAfterFrame (Image srcImg, MainFrame frame, double pctW, double pctH)
+	{
+		int[] dim = Utility.getPercentOfFrame(frame, pctW, pctH);
+
+		BufferedImage 	resizedImg	= new BufferedImage(dim[0], dim[1], BufferedImage.TYPE_INT_ARGB);
+		Graphics2D 		g2 			= resizedImg.createGraphics();
+
+		g2.drawImage(srcImg, 0, 0, dim[0], dim[1], null);
 		g2.dispose();
 
 		return resizedImg;
