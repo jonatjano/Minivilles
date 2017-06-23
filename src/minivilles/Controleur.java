@@ -19,8 +19,8 @@ public class Controleur
 
 	public Controleur ()
 	{
-		// this.ihm = new IHMConsole( this );
-		this.ihm = new IHMGraphique( this );
+		this.ihm = new IHMConsole( this );
+		//this.ihm = new IHMGraphique( this );
 	}
 
 	public void lancer ()
@@ -32,12 +32,13 @@ public class Controleur
 	public void reponseMenu (String choix)
 	{
 		ArrayList<String> 	names = null;
+		System.out.println(choix.toLowerCase().replace("é","e"));
 		switch (choix.toLowerCase().replace("é","e"))
 		{
 			case "1":
 				this.ihm.displayChoixJoueurs();
 				break;
-				
+
 			case "evaluation":
 				this.ihm.displayChoixPartieInit();
 				break;
@@ -56,7 +57,7 @@ public class Controleur
 		this.gj = new GestionJeu(this.ihm, names);
 		this.gj.lancer();
 	}
-	
+
 	public void nouvellePartie (String file)
 	{
 		this.gj = new GestionJeu(this.ihm, file);
@@ -67,7 +68,7 @@ public class Controleur
 	{
 		this.gj.resultatTour( valDe );
 	}
-	
+
 
 	public int[] lancerDe (int nbDe)
 	{
@@ -78,14 +79,14 @@ public class Controleur
 		return ret;
 	}
 
+	public Ihm getIhm ()
+	{
+		return this.ihm;
+	}
+
 	public static void main (String[] args)
 	{
 		Controleur controleur = new Controleur();
 		controleur.lancer();
-	}
-
-	public Ihm getIhm ()
-	{
-		return this.ihm;
 	}
 }
