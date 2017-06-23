@@ -12,7 +12,7 @@ public class Server
 	public static final int MAX_J = 4;
 
 	private ServerSocket serv;
-
+	private AcceptClient acceptCli;
 
 	public static Server createServ(int port)
 	{
@@ -27,9 +27,9 @@ public class Server
 	private Server(ServerSocket serv)
 	{
 		this.serv = serv;
-		AcceptClient ac = new AcceptClient();
-		Thread tAc = new Thread(ac);
-		tAc.run();
+		acceptCli = new AcceptClient();
+		Thread tAcceptCli = new Thread(acceptCli);
+		tAcceptCli.start();
 	}
 
 	class AcceptClient implements Runnable
@@ -37,7 +37,9 @@ public class Server
 		private LinkedList<ServerClient> clientList;
 		private boolean stop;
 
-		private AcceptClient() {}
+		private AcceptClient() {
+			clientList = new LinkedList<ServerClient>();
+		}
 
 		public void run()
 		{
@@ -48,7 +50,10 @@ public class Server
 					sock = serv.accept();
 					InputStream is = sock.getInputStream();
 					OutputStream os = sock.getOutputStream();
-					clientList.add(new ServerClient(sock, is, os));
+					ServerClient c = new ServerClient(sock, is, os);
+					Thread tClient = new Thread(c);
+					tClient.start();
+					clientList.add(c);
 				}
 				catch (Exception e) {
 					try {sock.close();} catch (Exception ex) {}
@@ -60,16 +65,26 @@ public class Server
 		{
 			stop = true;
 		}
+
+		private LinkedList<ServerClient> getClientList()
+		{
+			return clientList;
+		}
 	}
 
-	class ServerClient
+	class ServerClient implements Runnable
 	{
-		OutputStream os;
+		private OutputStream os;
+		private InputStream is;
 
 		public ServerClient(Socket sock, InputStream is, OutputStream os)
 		{
 			this.os = os;
+			this.is = is;
+		}
 
+		public void run()
+		{
 			Scanner scis = new Scanner(is);
 
 			while (scis.hasNextLine()) {
@@ -90,6 +105,13 @@ public class Server
 
 	private void actionOnMsg(String msg)
 	{
-		System.out.println("TODO : Client.java line 50");
+		for (ServerClient sc : acceptCli.getClientList()) {
+			sc.sendMsg(msg);
+		}
+	}
+
+	public static void main(String[] args) {
+		Server s = createServ(7777);
+		System.out.println(s);
 	}
 }
