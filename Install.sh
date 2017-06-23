@@ -4,10 +4,10 @@ then
 fi
 if [ ! -f "$MINIVILLE11" ]
 then
-    mkdir "$MINIVILLE11\PartieInit"
+    mkdir "$MINIVILLE11/PartieInit"
 fi
 
 
 javac -d "$MINIVILLE11" @sources.list
 
-cp InitTemplate.ini "$MINIVILLE11\PartieInit\"
+cp InitTemplate.ini "$MINIVILLE11/PartieInit/"
