@@ -1,4 +1,4 @@
-export MINIVILLE11="$HOME/minivilles11"
+echo "export MINIVILLE11="$HOME/minivilles11"" >> $HOME/.bashrc
 
 if [ ! -d "$MINIVILLE11" ]
 then
