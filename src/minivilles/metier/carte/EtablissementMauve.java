@@ -55,7 +55,7 @@ public class EtablissementMauve extends Etablissement
 					do
 					{
 						jEchange = ihm.displaychoixJoueur("à quel joueur voulez vous voler " + this.puissance + " piece" + ( this.puissance == 1 ? "" : "s" ) + " ?", sErr, tabJoueur);
-						if (jEchange == possesseur) sErr = "Vous ne pouvez pas vous vouler de l'argent.";
+						if (jEchange == possesseur) sErr = "Vous ne pouvez pas vous vo<ler de l'argent.";
 					} while (jEchange == possesseur);
 
 					int nb = this.puissance;
@@ -66,7 +66,12 @@ public class EtablissementMauve extends Etablissement
 					break;
 
 				case 2:
-					System.out.println("Souhaitez vous échanger un établissement avec un autre joueur ?");
+					Joueur jEchange;
+					sErr = null;
+					System.out.println("Souhaitez vous échanger un établissement avec un autre joueur ? (o/n)");
+					do {
+						jEchange = ihm.displayChoixJoueur("Quel batiment souhaitez vous échanger :")
+					} while ();
 
 					break;
 			}

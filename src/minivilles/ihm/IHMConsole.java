@@ -387,8 +387,16 @@ public class IHMConsole extends Ihm
 		if ( err != null )
 			System.out.println(err);
 
-		String ans = "";
 		Scanner sc = new Scanner(System.in);
+		String ans = "";
+
+		ans = sc.nextLine();
+		while(!ans.matches("o|n"))
+		{
+			System.out.println("réponse invalide : (o/n)");
+		}
+		if(ans.equals("n"))
+			return null;
 		do
 		{
 			System.out.println(demande);
