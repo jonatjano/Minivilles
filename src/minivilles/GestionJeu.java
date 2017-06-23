@@ -15,7 +15,7 @@ public class GestionJeu
 	private Ihm 		ihm;
 	private Pioche 		pioche;
 	private int 		nbJoueur,
-						nbBoucle,
+						indexJoueurActuel,
 						indexFirstPlayer,
 						numTour;
 	private Joueur[] 	tabJoueur;
@@ -43,7 +43,7 @@ public class GestionJeu
 	{
 		this.indexFirstPlayer 	= 0;
 		this.joueurActuel		= this.tabJoueur[ this.indexFirstPlayer ];
-		this.nbBoucle 			= this.indexFirstPlayer;
+		this.indexJoueurActuel 			= this.indexFirstPlayer;
 		this.numTour			= 1;
 
 		this.ihm.displayDebutPartie( this );
@@ -52,19 +52,19 @@ public class GestionJeu
 
 	public void resultatTour (int[] valDe)
 	{
-		boolean aUnDouble 	= false;
+		boolean aUnDouble = valDe.length == 2 && this.joueurActuel.hasParc() && valDe[0] == valDe[1];;
 
 		if ( !aUnDouble )
-			this.nbBoucle++;
-		this.nbBoucle = this.nbBoucle%nbJoueur;
+			this.indexJoueurActuel++;
+		this.indexJoueurActuel = this.indexJoueurActuel%nbJoueur;
 
 		// Nouveau tour
-		if (this.nbBoucle == indexFirstPlayer && !aUnDouble)
+		if (this.indexJoueurActuel == indexFirstPlayer && !aUnDouble)
 			this.numTour++;
 
-		this.joueurActuel = this.tabJoueur[ this.nbBoucle ];
+		this.joueurActuel = this.tabJoueur[ this.indexJoueurActuel ];
 
-		aUnDouble = valDe.length == 2 && this.joueurActuel.hasParc() && valDe[0] == valDe[1];
+
 
 
 		// Vérifie si un joueur a gagné
