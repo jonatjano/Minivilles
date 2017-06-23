@@ -69,6 +69,16 @@ public class Pioche
 		return ret;
 	}
 
+	public int[] getNbCartes()
+	{
+		int[] ret = new int[this.nbCartes.length];
+		for (int i = 0; i < this.nbCartes.length; i++)
+		{
+			ret[i] = this.nbCartes[i];
+		}
+		return ret;
+	}
+
 	/* toString */
 
 	public String toString ()

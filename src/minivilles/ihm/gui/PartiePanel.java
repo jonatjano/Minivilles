@@ -20,9 +20,10 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 {
 	private MainFrame 	frame;
 	private JLabel		numTourL, joueurTourL, resLanceL;
-	private JButton 	endTourB, quittGameB, rollDiceB;
+	private JButton 	endTourB, quittGameB, rollDiceB, buyB;
+	private JTextField	buyTF;
 	private JComboBox	nbDeCB;
-	private JPanel		centerP, topP, bottomP, leftP, rightTopP, rightBottP, rightP;
+	private JPanel		centerP, topP, bottomP, leftP, rightTopP, rightCenterP, rightBottP, rightP;
 	private JCanvas 	canvas, achatP;
 
 	private Dimension		dimCard;
@@ -111,7 +112,8 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 		
 		/* Panel haut droite */
 		// Création du tableau qu'affichera la combobx permettant de choisir le nombre de dés
-		rightTopP = new JPanel();
+		this.rightTopP = new JPanel();
+		this.rightTopP.setLayout( new GridLayout(2, 2) );
 
 		int nbDesJoueurs = this.gj.getJoueurActuel().getNbDes();
 		String[] tabNbDes = new String[nbDesJoueurs];
@@ -122,37 +124,52 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 		this.nbDeCB.setFont( this.frame.getFont() );
 		this.nbDeCB.setSelectedIndex(0);
 		// this.nbDeCB.addItemListener( this );
-		rightTopP.add( this.nbDeCB );
+		this.rightTopP.add( this.nbDeCB );
 
 		// Création des boutons d'action du tour
 		this.rollDiceB	= new JButton("Lancer les dés");
 		this.rollDiceB.setFont( this.frame.getFont() );
 		this.rollDiceB.addActionListener( this );
-		rightTopP.add( this.rollDiceB );
+		this.rightTopP.add( this.rollDiceB );
 
 		this.resLanceL 	= new JLabel("Résultat du lancé : ");
 		this.resLanceL.setFont( this.frame.getFont() );
-		rightTopP.add( this.resLanceL );
+		this.rightTopP.add( this.resLanceL );
 
 		this.endTourB 	= new JButton("Fin du tour");
 		this.endTourB.setFont( this.frame.getFont() );
 		this.endTourB.addActionListener( this );
 		this.endTourB.setEnabled(false);
-		rightTopP.add( this.endTourB );
+		this.rightTopP.add( this.endTourB );
 
-		rightP.add( rightTopP );
+		this.rightP.add( this.rightTopP );
+
+
+		/* Panel milieu droit */
+		this.rightCenterP = new JPanel();
+		this.rightCenterP.setLayout( new GridLayout( 1, 2) );//rightCenterP, BoxLayout.X_AXIS) );
+
+		this.buyTF = new JTextField();
+		this.rightCenterP.add( this.buyTF );
+
+		this.buyB = new JButton("Acheter");
+		this.buyB.addActionListener( this );
+		this.buyB.setEnabled(false);
+		this.rightCenterP.add( this.buyB );
+
+		this.rightP.add( this.rightCenterP );
 
 
 		/* Panel bas droite (ACHAT) */
-		rightBottP = new JPanel();
+		this.rightBottP = new JPanel();
 
-		int[] dim2 = Utility.getPercentOfFrame(this.frame, 20, 80);
+		int[] dim2 = Utility.getPercentOfFrame(this.frame, 20, 75);
 		this.achatP = new JCanvas( new Dimension(dim2[0], dim2[1]) );
 		this.achatP.setBorder( BorderFactory.createLineBorder(Color.black) );
 		this.achatP.setEnabled(false);
-		rightBottP.add( this.achatP );
+		this.rightBottP.add( this.achatP );
 
-		rightP.add( rightBottP );
+		this.rightP.add( this.rightBottP );
 
 
 		// this.add( rightP, BorderLayout.EAST );
@@ -245,7 +262,7 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 			col = 0;
 
 		x = 45 + (int) (this.dimCard.getWidth()*this.rapCard/2f);
-		y = 20 + (int) (this.dimCard.getHeight()*this.rapCard/2f);
+		y = 30 + (int) (this.dimCard.getHeight()*this.rapCard/2f);
 
 		int	centerCardX = 0,
 			centerCardY = 0;
@@ -292,12 +309,10 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 				this.dernierLance = this.frame.getControler().lancerDe( Integer.parseInt( (String) this.nbDeCB.getSelectedItem() ) );
 				this.resLanceL.setText( "Résultat du lancé : " + ((dernierLance.length == 1) ? ("" + dernierLance[0]) : String.format("%d (%d + %d)", (dernierLance[0] + dernierLance[1]), dernierLance[0], dernierLance[1])) );
 				this.endTourB.setEnabled(true);
+				this.buyB.setEnabled(true);
 				this.rollDiceB.setEnabled(false);
 				// Voir si a double
 				// this.frame.getControler().getIhm().lancerDe( this.nbDeCB.getSelectedIndex() );
-
-				// Rend disponible l'achat d'établissement / la construction de monument
-				this.achatP.setEnabled(true);
 			}
 		}
 		else if ( e.getSource() == this.endTourB )
@@ -308,11 +323,26 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 				this.dernierLance = null;
 				this.resLanceL.setText( "Résultat du lancé : " );
 				this.endTourB.setEnabled(false);
+				this.buyB.setEnabled(false);
 				this.rollDiceB.setEnabled(true);
-				this.achatP.setEnabled(false);
+				this.buyTF.setText("");
 			}
 			else
 				System.out.println("AFFICHER UN MESSAGE");
+		}
+		else if ( e.getSource() == this.buyB )
+		{
+			if ( this.buyTF.getText().matches("[0-9]+") )
+			{
+				Joueur 			j 	= this.gj.getJoueurActuel();
+				Etablissement 	et 	= this.gj.getPioche().achatEtablissement( Integer.parseInt(this.buyTF.getText()) - 1, j);
+				if ( et != null )
+				{
+					j.addEtablissement( et );
+					e.setSource( this.endTourB );
+					this.actionPerformed( e );
+				}
+			}
 		}
 	}
 

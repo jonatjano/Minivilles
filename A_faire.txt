@@ -1,5 +1,7 @@
 . APPUYER SUR JTEXTFIELD DISABLED = ACTION
 . ETABLISSEMENT MAUVES : 2 ECHANGES = BAM
 
+
+. INVERSER L'AFFICHAGE
 . Resize en fonction de la frame :
 - canvas (PartiePanel)
