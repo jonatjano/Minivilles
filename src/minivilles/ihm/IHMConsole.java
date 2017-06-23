@@ -87,6 +87,7 @@ public class IHMConsole extends Ihm
 		demande +=  "(o/n)";
 		Scanner sc = new Scanner(System.in);
 		
+		System.out.println(demande);
 		String s = sc.nextLine();
 		while(!s.matches("o|n"))
 		{
@@ -94,7 +95,8 @@ public class IHMConsole extends Ihm
 			s = sc.nextLine();
 		}
 		
-		return s == "o" ? true : false;
+		System.out.println(s == "o" ? true : false);
+		return s.equals("o") ? true : false;
 	}
 
 	public void displayDebutPartie (GestionJeu gj)
@@ -385,6 +387,7 @@ public class IHMConsole extends Ihm
 
 	public Joueur displaychoixJoueur(String demande, String err, Joueur[] tabJ)
 	{
+		Ihm.clearConsole();
 		if ( err != null )
 			System.out.println(err);
 
@@ -394,14 +397,14 @@ public class IHMConsole extends Ihm
 		{
 			System.out.println(demande);
 			for (int i = 0;i < tabJ.length ;i++ )
-			{
-				System.out.println(i+" -" + tabJ[i].toString());
-				ans = sc.nextLine();
-			}
-			if (!ans.matches("[0-9]+") || ans.matches("0*"))													System.out.println("Ce n'est pas un nombre");
-			if (ans.matches("[0-9]+") && ( Integer.parseInt(ans) >= 0 || Integer.parseInt(ans) < tabJ.length))	System.out.println("Indice invalide");
-		} while(ans.equals("-1") && (!ans.matches("[0-9]+") || ans.matches("0*") ||
-				Integer.parseInt(ans) >= 0 || Integer.parseInt(ans) < tabJ.length));
+				System.out.println(i+" -" + tabJ[i].getPrenom());
+				
+			ans = sc.nextLine();
+			Ihm.clearConsole();
+			if (!ans.matches("[0-9]+") && !ans.matches("0*"))													System.out.println("Ce n'est pas un nombre");
+			if (ans.matches("[0-9]+") && ( Integer.parseInt(ans) < 0 || Integer.parseInt(ans) >= tabJ.length))	System.out.println("Indice invalide");
+		} while(!ans.equals("-1") && ((!ans.matches("[0-9]+") && !ans.matches("0*")) ||
+				Integer.parseInt(ans) < 0 || Integer.parseInt(ans) >= tabJ.length));
 				
 		if (ans.equals("-1"))
 			return null;
@@ -412,6 +415,7 @@ public class IHMConsole extends Ihm
 
 	public Etablissement displaychoixJoueur(String demande, String err, Etablissement[] tabE)
 	{
+		Ihm.clearConsole();
 		if ( err != null )
 			System.out.println(err);
 
@@ -422,14 +426,14 @@ public class IHMConsole extends Ihm
 		{
 			System.out.println(demande);
 			for (int i = 0;i < tabE.length ;i++ )
-			{
-				System.out.println(i+" -" + tabE[i].toString());
-				ans = sc.nextLine();
-			}
-			if (!ans.matches("[0-9]+") || ans.matches("0*"))						System.out.println("Ce n'est pas un nombre");
-			if (ans.matches("[0-9]+") && ( Integer.parseInt(ans) >= 0 || Integer.parseInt(ans) < tabE.length))	System.out.println("Indice invalide");
-		} while(!ans.equals("-1") && (!ans.matches("[0-9]+") || ans.matches("0*") ||
-				Integer.parseInt(ans) >= 0 || Integer.parseInt(ans) < tabE.length ));
+				System.out.println(i+" -" + tabE[i].getNom());
+				
+			ans = sc.nextLine();
+			Ihm.clearConsole();
+			if (!ans.matches("[0-9]+") && !ans.matches("0*"))						System.out.println("Ce n'est pas un nombre");
+			if (ans.matches("[0-9]+") && ( Integer.parseInt(ans) < 0 || Integer.parseInt(ans) >= tabE.length))	System.out.println("Indice invalide");
+		} while(!ans.equals("-1") && ((!ans.matches("[0-9]+") && !ans.matches("0*")) ||
+				Integer.parseInt(ans) < 0 || Integer.parseInt(ans) >= tabE.length));
 
 		if (ans.equals("-1"))
 			return null;

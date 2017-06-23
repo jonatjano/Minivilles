@@ -85,11 +85,16 @@ public class EtablissementMauve extends Etablissement
 					if (jEchange == null)
 						return;
 					
-					ArrayList<Etablissement> arTemp = possesseur.getEtablissements();
-					for (Etablissement et : arTemp)
-						if ( et.getColor().equals("Mauve"))
-							arTemp.remove(et);
+					sErr = null;
 					
+					ArrayList<Etablissement> arTemp = possesseur.getEtablissements();
+					for (int i =0; i < arTemp.size() ; i++)
+						if ( arTemp.get(i).getColor().equals("Mauve"))
+						{
+							arTemp.remove(i);
+							i--;
+						}
+						
 					Etablissement[] tabEtTemp = arTemp.toArray(new Etablissement[arTemp.size()]); 
 					
 					Etablissement pEtablissement = ihm.displaychoixJoueur("lequel de vos établissements souhaitez-vous échanger ?", sErr, tabEtTemp);
@@ -97,9 +102,12 @@ public class EtablissementMauve extends Etablissement
 						return;
 					
 					arTemp = jEchange.getEtablissements();
-					for (Etablissement et : arTemp)
-						if ( et.getColor().equals("Mauve"))
-							arTemp.remove(et);
+					for (int i =0; i < arTemp.size() ; i++)
+						if ( arTemp.get(i).getColor().equals("Mauve"))
+						{
+							arTemp.remove(i);
+							i--;
+						}
 					
 					tabEtTemp = arTemp.toArray(new Etablissement[arTemp.size()]); 
 					
