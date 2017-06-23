@@ -9,35 +9,35 @@ import java.awt.image.BufferedImage;
 
 public class JCanvas extends JPanel
 {
-	private Dimension					dim;
 	private LinkedList<DessinString> 	stringList = new LinkedList<DessinString>();
 	private LinkedList<DessinImage> 	imageList  = new LinkedList<DessinImage>();
 
 
 	public JCanvas (Dimension dim)
 	{
-		this.dim = dim;
-		this.setPreferredSize( this.dim );
+		this.setPreferredSize( dim );
 	}
+
 
 	@Override
 	public void paintComponent (Graphics g)
 	{
 		super.paintComponent(g);
 
-		g.setColor( Color.WHITE );
-		g.fillRect(0, 0, (int) dim.getWidth(), (int) dim.getHeight());
+		// g.setColor( Color.WHITE );//new Color( (float) Math.random(), (float) Math.random(), (float) Math.random()) );
+		// g.fillRect(0, 0, (int) dim.getWidth(), (int) dim.getHeight());
+		g.clearRect( 0, 0, this.getWidth(), this.getHeight() );
 
 		g.setColor( Color.BLACK );
 
 		// Dessin des labels
-		for (DessinString ds : stringList)
+		for (DessinString ds : this.stringList)
 		{
 			g.drawString(ds.getVal(), ds.getX(), ds.getY());	
 		}
 
 		// Dessins des images
-		for (DessinImage di : imageList)
+		for (DessinImage di : this.imageList)
 		{
 			BufferedImage img = di.getImage();
 			if ( di.getDimSrc() != null )
@@ -51,21 +51,31 @@ public class JCanvas extends JPanel
 		}
 	}
 
+	public void clearAll ()
+	{
+		// this.stringList = new LinkedList<DessinString>();
+		// this.imageList = new LinkedList<DessinImage>();
+		this.stringList.clear();
+		this.imageList.clear();
+
+		this.repaint();			
+	}
+
 	public void printString (String val, int x, int y)
 	{
-		stringList.add( new DessinString(val, x, y) );
+		this.stringList.add( new DessinString(val, x, y) );
 		repaint();
 	}
 
 	public void printImage (BufferedImage img, Dimension dim, int x, int y)
 	{
-		imageList.add( new DessinImage(img, dim, x, y) );
+		this.imageList.add( new DessinImage(img, dim, x, y) );
 		repaint();
 	}
 
 	public void printImage (BufferedImage img, Dimension dim, int srcX, int srcY, Dimension dimSrc, int x, int y)
 	{
-		imageList.add( new DessinImage(img, dim, srcX, srcY, dimSrc, x, y) );
+		this.imageList.add( new DessinImage(img, dim, srcX, srcY, dimSrc, x, y) );
 		repaint();
 	}
 

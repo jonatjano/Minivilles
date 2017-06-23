@@ -22,9 +22,14 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 	private JLabel		numTourL, joueurTourL, resLanceL;
 	private JButton 	endTourB, quittGameB, rollDiceB;
 	private JComboBox	nbDeCB;
+	private JPanel		centerP, topP, bottomP, leftP, rightTopP, rightBottP, rightP;
+	private JCanvas 	canvas, achatP;
 
-	private GestionJeu 	gj;
-	private int[] 		dernierLance;
+	private Dimension		dimCard;
+	private double 			rapCard;
+	private BufferedImage 	imgCartes;
+	private GestionJeu 		gj;
+	private int[] 			dernierLance;
 
 
 	public PartiePanel (MainFrame frame, GestionJeu gj)
@@ -37,124 +42,56 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 		this.setLayout( new BorderLayout() );
 		this.setVisible(true);
 
+		/* Variables utiles */
+
+		this.imgCartes = null;
+		try 					{ this.imgCartes = ImageIO.read( new File("../images/etablissements.png") ); }
+		catch (IOException e)	{e.printStackTrace();}
+		this.dimCard = new Dimension(185, 273);
+		this.rapCard = 0.5;
+
 
 		/* Panel de gauche */
 
-		JPanel leftP = new JPanel();
+		leftP = new JPanel();
 		leftP.setLayout( new BorderLayout() );
 
 
 		/* Panel central */
 
-		JPanel centerP = new JPanel();
+		centerP = new JPanel();
 		centerP.setLayout( new GridBagLayout() );
 
 		int[] dim = Utility.getPercentOfFrame(this.frame, 75, 85);
-		JCanvas canvas = new JCanvas( new Dimension(dim[0], dim[1]) );
-		canvas.setBorder( BorderFactory.createLineBorder(Color.black) );
-		canvas.setBackground(Color.RED);
+		this.canvas = new JCanvas( new Dimension(dim[0], dim[1]) );
+		this.canvas.setBorder( BorderFactory.createLineBorder(Color.black) );
 
-
-		// Offset et rotation en fonction du nombre de joueurs
-		double 	rot 	= Math.toRadians(360 / this.gj.getTabJoueur().length),
-				offset 	= 150;
-
-		// Coordonnées du centre du canvas
-		double 	centerX 	= canvas.getPreferredSize().getWidth() / 2,
-				centerY 	= canvas.getPreferredSize().getHeight() / 2;
-		// Les coordonnées à incrémenter
-		int 	x 		= (int) centerX,
-				y 		= (int) (centerY + offset);
-
-
-
-		
-		int len 	= this.gj.getTabJoueur().length;
-		int indexJ 	= this.gj.calcIndexCourant();
-
-		BufferedImage imgCartes = null;
-		try 					{ imgCartes = ImageIO.read( new File("../images/etablissements.png") ); }
-		catch (IOException e)	{e.printStackTrace();}
-
-		// Affichage des noms des joueurs
-		int[][] coords = new int[len][2];
-		int cpt = 0;
-		for (int i = 0; i < len; i++)
-		{
-			coords[i] = Utility.rotateAround(centerX, centerY, x, y, rot);
-			x = coords[i][0];
-			y = coords[i][1];
-
-			canvas.printString( this.gj.getTabJoueur()[ Utility.posModulo(indexJ - i - 1, len) ].getPrenom(), x, y );
-
-			cpt++;
-		}
-
-		// Affichage des cartes du joueur
-		int begX = 9,
-			begY = 8;
-		Dimension dimCard = new Dimension(185, 273);
-		double rap = 0.5;
-		double decalage = dimCard.getWidth()*rap*(1f/10);
-		
-		for (int i = 0; i < len; i++)
-		{
-			/* Affichage de la Main du joueur */
-			ArrayList<Etablissement> main = this.gj.getTabJoueur()[ Utility.posModulo(indexJ - i - 1, len) ].getEtablissements();
-			System.out.println( (main.size()/2f) );
-			int[] coordCard = Utility.rotateAround( coords[i][0],
-													coords[i][1],
-													coords[i][0] - 100,//( (main.size() <= 4) ? (int) ((dimCard.getWidth()*rap + decalage)*(main.size()/4f)) : (int) ((dimCard.getWidth()*rap + decalage)*2f) ),
-													coords[i][1] + (dimCard.getHeight()*rap)/2 + (dimCard.getHeight()*rap*(1f/10)),
-													rot*(i+1) );
-			
-			int lig = 0;
-			int col = 0;
-			for (int j = 0; j < main.size(); j++)
-			{
-				
-				canvas.printImage( imgCartes, new Dimension( 	(int) (dimCard.getWidth() * rap),
-																(int) (dimCard.getHeight() * rap) ),
-																(begX + main.get(j).getCol()*(185+5)),
-																(begY + main.get(j).getLig()*(273+7)),
-																dimCard,
-																coordCard[0] + (int) (col * (dimCard.getWidth()*rap + decalage)),
-																coordCard[1] + (int) (lig * (dimCard.getHeight()*rap + decalage)) );
-				col++;
-				if (col > 7)
-				{
-					lig++;
-					col = 0;
-				}
-			}
-				
-		}
-		centerP.add( canvas );
-		leftP.add( centerP );
+		centerP.add( this.canvas );
+		leftP.add( centerP );	
 
 
 		/* Panel du haut */
 
-		JPanel upP = new JPanel();
-		upP.setLayout( new GridBagLayout() );
+		topP = new JPanel();
+		topP.setLayout( new GridBagLayout() );
 		GridBagConstraints c = new GridBagConstraints();
 
 		this.numTourL 		= new JLabel( "Tour n°" + gj.getNumTour() );
 		this.numTourL.setFont( this.frame.getFont() );
-		upP.add( this.numTourL, c );
+		topP.add( this.numTourL, c );
 
-		this.joueurTourL	= new JLabel( "Tour de " + this.gj.getTabJoueur()[ indexJ ].getPrenom() );
+		this.joueurTourL	= new JLabel( "Tour de " + this.gj.getTabJoueur()[ this.gj.calcIndexCourant() ].getPrenom() );
 		this.joueurTourL.setFont( this.frame.getFont() );
 		c.gridy = 1;
-		upP.add( this.joueurTourL, c );
+		topP.add( this.joueurTourL, c );
 
-		leftP.add( upP, BorderLayout.NORTH );
+		leftP.add( topP, BorderLayout.NORTH );
 
 
 
 		/* Panel du bas */
 
-		JPanel bottomP = new JPanel();
+		bottomP = new JPanel();
 
 		this.quittGameB 	= new JButton("Quitter la partie");
 		this.quittGameB.setFont( this.frame.getFont() );
@@ -168,13 +105,14 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 
 		/* Panel de droite */
 
-		JPanel rightP = new JPanel();
+		rightP = new JPanel();
 		rightP.setLayout( new BoxLayout(rightP, BoxLayout.Y_AXIS) );
 
-		JPanel rightTopP = new JPanel();
-
+		
 		/* Panel haut droite */
 		// Création du tableau qu'affichera la combobx permettant de choisir le nombre de dés
+		rightTopP = new JPanel();
+
 		int nbDesJoueurs = this.gj.getJoueurActuel().getNbDes();
 		String[] tabNbDes = new String[nbDesJoueurs];
 		for ( int i = 0; i < this.gj.getJoueurActuel().getNbDes(); i++ )
@@ -199,18 +137,20 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 		this.endTourB 	= new JButton("Fin du tour");
 		this.endTourB.setFont( this.frame.getFont() );
 		this.endTourB.addActionListener( this );
+		this.endTourB.setEnabled(false);
 		rightTopP.add( this.endTourB );
 
 		rightP.add( rightTopP );
 
 
 		/* Panel bas droite (ACHAT) */
-		JPanel rightBottP = new JPanel();
+		rightBottP = new JPanel();
 
-		int[] dim2 = Utility.getPercentOfFrame(this.frame, 20, 40);
-		JCanvas achatP = new JCanvas( new Dimension(dim2[0], dim2[1]) );
-		achatP.setBorder( BorderFactory.createLineBorder(Color.black) );
-		rightBottP.add( achatP );
+		int[] dim2 = Utility.getPercentOfFrame(this.frame, 20, 80);
+		this.achatP = new JCanvas( new Dimension(dim2[0], dim2[1]) );
+		this.achatP.setBorder( BorderFactory.createLineBorder(Color.black) );
+		this.achatP.setEnabled(false);
+		rightBottP.add( this.achatP );
 
 		rightP.add( rightBottP );
 
@@ -224,10 +164,121 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 
 	public void majDisplay (GestionJeu gj)
 	{
-		int indexJ = this.gj.calcIndexCourant();
+		int indexJ 	= this.gj.calcIndexCourant();
+		int len 	= this.gj.getTabJoueur().length;
 
 		this.numTourL.setText( "Tour n°" + gj.getNumTour() );
 		this.joueurTourL.setText( "Tour de " + this.gj.getTabJoueur()[ indexJ ].getPrenom() );
+
+
+		this.canvas.clearAll();
+		this.achatP.clearAll();
+
+		// Offset et rotation en fonction du nombre de joueurs
+		double 	rot 	= Math.toRadians(360 / this.gj.getTabJoueur().length),
+				offset 	= 150;
+
+		int begX = 9,
+			begY = 8;
+
+		// Coordonnées du centre du this.canvas
+		double 	centerX 	= this.canvas.getPreferredSize().getWidth() / 2,
+				centerY 	= this.canvas.getPreferredSize().getHeight() / 2;
+		// Les coordonnées à incrémenter
+		int 	x 		= (int) centerX,
+				y 		= (int) (centerY + offset);
+
+		// Affichage des noms des joueurs
+		int[][] coords = new int[len][2];
+		int cpt = 0;
+		for (int i = 0; i < len; i++)
+		{
+			coords[i] = Utility.rotateAround(centerX, centerY, x, y, rot);
+			x = coords[i][0];
+			y = coords[i][1];
+
+			Joueur j = this.gj.getTabJoueur()[ Utility.posModulo(indexJ - i - 1, len) ];
+			this.canvas.printString( String.format("%-20s (%2d Pièces)", j.getPrenom(), j.getMonnaie()), x, y );
+
+			cpt++;
+		}
+
+		// Affichage des cartes des joueurs
+		double decalage = this.dimCard.getWidth()*this.rapCard*(1f/10);
+
+		for (int i = 0; i < len; i++)
+		{
+			/* Affichage de la Main du joueur */
+			ArrayList<Etablissement> main = this.gj.getTabJoueur()[ Utility.posModulo(indexJ - i - 1, len) ].getEtablissements();
+			int[] coordCard = Utility.rotateAround( coords[i][0],
+													coords[i][1],
+													coords[i][0],//( (main.size() <= 4) ? (int) ((this.dimCard.getWidth()*this.rapCard + decalage)*(main.size()/4f)) : (int) ((this.dimCard.getWidth()*this.rapCard + decalage)*2f) ),
+													coords[i][1] + (this.dimCard.getHeight()*this.rapCard)/2 + (this.dimCard.getHeight()*this.rapCard*(3f/10)),
+													rot*(i+1) );
+			
+			int lig = 0;
+			int col = 0;
+			for (int j = 0; j < main.size(); j++)
+			{
+				
+				this.canvas.printImage( 	imgCartes,
+									new Dimension( (int) (this.dimCard.getWidth() * this.rapCard), (int) (this.dimCard.getHeight() * this.rapCard) ),
+									(begX + main.get(j).getCol()*(185+5)),
+									(begY + main.get(j).getLig()*(273+7)),
+									this.dimCard,
+									coordCard[0] + (int) (col * (this.dimCard.getWidth()*this.rapCard + decalage)),
+									coordCard[1] + (int) (lig * (this.dimCard.getHeight()*this.rapCard + decalage)) );
+				col++;
+				if (col > 7)
+				{
+					lig++;
+					col = 0;
+				}
+			}	
+		}
+
+		// Affichage des achats
+		Pioche pioche = this.gj.getPioche();
+		int ligSrc = 0,
+			colSrc = 0,
+			lig = 0,
+			col = 0;
+
+		x = 45 + (int) (this.dimCard.getWidth()*this.rapCard/2f);
+		y = 20 + (int) (this.dimCard.getHeight()*this.rapCard/2f);
+
+		int	centerCardX = 0,
+			centerCardY = 0;
+
+		for (int j = 0; j < 15; j++)
+		{
+			centerCardX = x + (int) (col*(185+5)*this.rapCard);
+			centerCardY = y + (int) (lig*(273+42)*this.rapCard);
+
+			this.achatP.printString(	String.format("%2d  x%d", (j+1), pioche.getNbCartes()[j] ),
+										(int) (centerCardX - this.dimCard.getWidth()*this.rapCard/4f),
+										(int) (centerCardY - this.dimCard.getWidth()*this.rapCard/2f - 25) );
+			this.achatP.printImage( 	imgCartes,
+								new Dimension( (int) (this.dimCard.getWidth() * this.rapCard),(int) (this.dimCard.getHeight() * this.rapCard) ),
+								(begX + colSrc*(185+5)),
+								(begY + ligSrc*(273+7)),
+								this.dimCard,
+								centerCardX,
+								centerCardY 	);
+			col++;
+			if (col >= 3)
+			{
+				lig++;
+				col = 0;
+			}
+
+			colSrc++;
+			if (colSrc >= 5)
+			{
+				ligSrc++;
+				colSrc = 0;
+			}
+		}
 	}
 
 	public void actionPerformed (ActionEvent e)
@@ -236,10 +287,18 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 			this.frame.openPage( new MainMenu(frame) );
 		else if ( e.getSource() == this.rollDiceB )
 		{
-			this.dernierLance = this.frame.getControler().lancerDe( Integer.parseInt( (String) this.nbDeCB.getSelectedItem() ) );
-			this.resLanceL.setText( "Résultat du lancé : " + ((dernierLance.length == 1) ? ("" + dernierLance[0]) : String.format("%d (%d + %d)", (dernierLance[0] + dernierLance[1]), dernierLance[0], dernierLance[1])) );
-			// Voir si a double
-			// this.frame.getControler().getIhm().lancerDe( this.nbDeCB.getSelectedIndex() );
+			if ( !this.endTourB.isEnabled() )
+			{
+				this.dernierLance = this.frame.getControler().lancerDe( Integer.parseInt( (String) this.nbDeCB.getSelectedItem() ) );
+				this.resLanceL.setText( "Résultat du lancé : " + ((dernierLance.length == 1) ? ("" + dernierLance[0]) : String.format("%d (%d + %d)", (dernierLance[0] + dernierLance[1]), dernierLance[0], dernierLance[1])) );
+				this.endTourB.setEnabled(true);
+				this.rollDiceB.setEnabled(false);
+				// Voir si a double
+				// this.frame.getControler().getIhm().lancerDe( this.nbDeCB.getSelectedIndex() );
+
+				// Rend disponible l'achat d'établissement / la construction de monument
+				this.achatP.setEnabled(true);
+			}
 		}
 		else if ( e.getSource() == this.endTourB )
 		{
@@ -248,8 +307,9 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 				this.frame.getControler().reponseTourJoueur( this.dernierLance );
 				this.dernierLance = null;
 				this.resLanceL.setText( "Résultat du lancé : " );
-
-				// Rend disponible l'achat d'établissement / la construction de monument
+				this.endTourB.setEnabled(false);
+				this.rollDiceB.setEnabled(true);
+				this.achatP.setEnabled(false);
 			}
 			else
 				System.out.println("AFFICHER UN MESSAGE");
