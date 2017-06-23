@@ -1,3 +1,5 @@
+export MINIVILLE11="$HOME/minivilles11"
+
 if [ ! -d "$MINIVILLE11" ]
 then
     mkdir "$MINIVILLE11"
