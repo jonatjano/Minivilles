@@ -1,4 +1,5 @@
-javac @options.list @sources.list
-cd class
+set current=%~dp0
+
+cd %MINIVILLE11%
 java minivilles.Controleur
-cd ..
+cd %current%

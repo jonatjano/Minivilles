@@ -6,6 +6,7 @@ import minivilles.metier.*;
 import minivilles.util.Utility;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.File;
 
 
 public class GestionJeu
@@ -19,7 +20,6 @@ public class GestionJeu
 						indexFirstPlayer,
 						numTour;
 	private Joueur[] 	tabJoueur;
-	private int 		banque;
 	private Joueur 		joueurGagnant;
 	private Joueur 		joueurActuel;
 
@@ -34,6 +34,45 @@ public class GestionJeu
 		this.tabJoueur = new Joueur[this.nbJoueur];
 		for (int i = 0; i < nbJoueur; i++)
 			tabJoueur[i] = new Joueur(names.get(i), GestionJeu.BEG_MON);
+
+		this.joueurActuel 	= null;
+		this.joueurGagnant	= null;
+	}
+	
+	public GestionJeu (Ihm ihm, String file)
+	{
+		this.ihm 				= ihm;
+		this.pioche 			= new Pioche();
+		this.indexFirstPlayer	= 0;
+		try{
+			Scanner sc = new Scanner(new File(Controleur.PATH + file));
+		
+			String ligneJoueur = sc.nextLine();
+			
+			String[] tabNomJoueur = ligneJoueur.split(";");
+			this.nbJoueur = tabNomJoueur.length;
+			this.tabJoueur = new Joueur[this.nbJoueur];
+			
+			String StringInfoJ = sc.nextLine();
+			for (int cptNom=0; cptNom < this.nbJoueur ; cptNom++)
+			{
+				String[] tabInfoJ = StringInfoJ.split(";");
+				int piece = Integer.parseInt(tabInfoJ[0]);
+				String[] tabCarteJ = tabInfoJ[1].split(":");
+				
+				this.tabJoueur[cptNom] = new Joueur(tabNomJoueur[cptNom],piece);
+				
+				for (int i=0; i < tabCarteJ.length; i++)
+					for (int j=0; j < Integer.parseInt(tabCarteJ[i]) ; j++)
+						this.tabJoueur[cptNom].addEtablissement(this.pioche.getCartes()[i]);
+				
+				String[] tabMonuJ = tabInfoJ[2].split(":");
+				for (int i=0 ; i < tabMonuJ.length ; i++)
+					if ( tabMonuJ[i].equals("V") )
+						this.tabJoueur[cptNom].construireMonument(i);
+			}
+		} catch(Exception e){}
+		
 
 		this.joueurActuel 	= null;
 		this.joueurGagnant	= null;

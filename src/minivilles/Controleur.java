@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class Controleur
 {
 	private static int 	MAX_VAL = 6;
+	public  static final String PATH = System.getenv("MINIVILLE11");
 
 	private Ihm 		ihm;
 	private GestionJeu 	gj;
@@ -31,10 +32,14 @@ public class Controleur
 	public void reponseMenu (String choix)
 	{
 		ArrayList<String> 	names = null;
-		switch (choix)
+		switch (choix.toLowerCase().replace("é","e"))
 		{
 			case "1":
 				this.ihm.displayChoixJoueurs();
+				break;
+				
+			case "evaluation":
+				this.ihm.displayChoixPartieInit();
 				break;
 		}
 		if ( !choix.matches("1|-1") )	this.ihm.displayMenu();
@@ -49,6 +54,12 @@ public class Controleur
 	public void nouvellePartie (ArrayList<String> names)
 	{
 		this.gj = new GestionJeu(this.ihm, names);
+		this.gj.lancer();
+	}
+	
+	public void nouvellePartie (String file)
+	{
+		this.gj = new GestionJeu(this.ihm, file);
 		this.gj.lancer();
 	}
 

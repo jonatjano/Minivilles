@@ -1,4 +1,5 @@
-javac @options.list @sources.list
-cd class
+current = $(pwd)
+
+cd $MINIVILLE11
 java minivilles.Controleur
-cd ..
+cd $current
