@@ -47,7 +47,7 @@ public class Client implements Runnable
 	{
 		try {
 			os.write((msg + "\n").getBytes("UTF-8"));
-			os.flush()
+			os.flush();
 		}
 		catch (Exception e) { System.out.println("echec a l'envoi de " + msg); }
 	}

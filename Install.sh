@@ -1,3 +1,4 @@
+
 if [ ! -d "$MINIVILLE11" ]
 then
     mkdir "$MINIVILLE11"
