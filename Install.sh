@@ -1,8 +1,8 @@
-if [ ! -f "$MINIVILLE11" ]
+if [ ! -d "$MINIVILLE11" ]
 then
     mkdir "$MINIVILLE11"
 fi
-if [ ! -f "$MINIVILLE11" ]
+if [ ! -d "$MINIVILLE11" ]
 then
     mkdir "$MINIVILLE11/PartieInit"
 fi
