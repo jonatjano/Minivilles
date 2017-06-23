@@ -15,6 +15,7 @@ public abstract class Ihm
 	public abstract void 				displayMenu ();
 	public abstract boolean 			displayDemande (String demande);
 	public abstract void			 	displayChoixJoueurs ();
+	public abstract void			 	displayChoixPartieInit();
 	public abstract void 				displayDebutPartie (GestionJeu gj);
 	public abstract void 				displayTourJoueur (GestionJeu gj);
 	public abstract void 				displayFinPartie (Joueur j, int nbTour);

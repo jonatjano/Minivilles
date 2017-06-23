@@ -2,6 +2,7 @@ package minivilles.ihm;
 
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.File;
 
 import minivilles.*;
 import minivilles.ihm.Ihm;
@@ -77,6 +78,34 @@ public class IHMConsole extends Ihm
 		} while ( !ans.matches("n") && cpt != 4);
 
 		this.controler.reponseChoixJoueurs( names );
+	}
+	
+	public void displayChoixPartieInit ()
+	{
+		Ihm.clearConsole();
+		System.out.println(	"~ CHOIX DU FICHIER D'INITIALIZATION ~\n" );
+
+		Scanner sc = new Scanner (System.in);
+		String[] fPartieInit;
+		String choix;
+		String err = null;
+		
+		do
+		{
+			fPartieInit = new File(Controleur.PATH + "/PartieInit").list();
+			for (int i=0; i< fPartieInit.length; i++)
+				System.out.println(i + " -" + fPartieInit[i]);
+			
+			System.out.println("Veuillez entrer l'index du fichier à charger : ");
+			choix = sc.nextLine();
+			
+			if (!choix.matches("[0-9]+") && !choix.matches("0*"))														System.out.println("Ce n'est pas un nombre");
+			if (choix.matches("[0-9]+") && ( Integer.parseInt(choix) < 0 || Integer.parseInt(choix) >= fPartieInit.length))	System.out.println("Indice invalide");
+		} while((!choix.matches("[0-9]+") && !choix.matches("0*")) ||
+				Integer.parseInt(choix) < 0 || Integer.parseInt(choix) >= fPartieInit.length);		
+		
+		
+		this.controler.nouvellePartie( fPartieInit[Integer.parseInt(choix)] );
 	}
 	
 	public boolean displayDemande (String demande)
