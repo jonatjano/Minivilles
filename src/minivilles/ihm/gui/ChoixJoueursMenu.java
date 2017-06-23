@@ -1,6 +1,7 @@
 package minivilles.ihm.gui;
 
 import minivilles.reseau.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.event.*;
 import java.awt.*;
@@ -18,6 +19,10 @@ public class ChoixJoueursMenu extends JPanel implements ActionListener
 	public ChoixJoueursMenu (MainFrame frame)
 	{
 		this.frame = frame;
+		try 					{ this.frame.getBgPanel().setImage(null); }
+		catch (IOException e) 	{e.printStackTrace();}
+		
+
 		int maxJ = Server.MAX_J;
 		this.setLayout( new GridLayout(maxJ + 2, 1) );
 
@@ -28,6 +33,31 @@ public class ChoixJoueursMenu extends JPanel implements ActionListener
 			this.lines[i] 	= new ChoixJoueursLine(this, (i+1));
 			this.add( this.lines[i] );
 		}
+
+		// // Ajout des évènements à la pression de la touche "Tab"
+		// for (int i = 0; i < maxJ; i++)
+		// {
+		// 	if (i != maxJ -1)
+		// 	{
+		// 		this.lines[i].addKeyListener(new KeyAdapter() {
+		// 			private ChoixJoueursLine line;
+
+		// 			@Override
+		// 			public void keyPressed (KeyEvent e)
+		// 			{
+		// 				if( e.getKeyCode() == KeyEvent.VK_TAB )
+		// 					line.toggleTextField();
+		// 			}
+
+		// 			private KeyAdapter init(ChoixJoueursLine line)
+		// 			{
+		// 		        this.line = line;
+		// 		        return this;
+		// 		    }
+		// 		}.init(this.lines[i]) );
+		// 		this.lines[i].setFocusTraversalKeysEnabled(false);
+		// 	}
+		// }
 
 
 		/* Boutons du bas */
@@ -40,7 +70,7 @@ public class ChoixJoueursMenu extends JPanel implements ActionListener
 		this.add( retourB );
 
 
-        this.setVisible(true);
+		this.setVisible(true);
 	}
 
 	public void actionPerformed (ActionEvent e)

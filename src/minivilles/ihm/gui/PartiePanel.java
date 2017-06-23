@@ -3,11 +3,14 @@ package minivilles.ihm.gui;
 import minivilles.util.Utility;
 import minivilles.metier.*;
 import minivilles.GestionJeu;
-import javax.swing.plaf.synth.Region;
+import java.io.File;
+import java.io.IOException;
 import java.awt.event.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import javax.swing.*;
+import javax.imageio.ImageIO;
+import javax.swing.plaf.synth.Region;
 
 
 public class PartiePanel extends JPanel implements ActionListener
@@ -27,17 +30,21 @@ public class PartiePanel extends JPanel implements ActionListener
 		this.setVisible(true);
 
 
-		/* 
+		/* Panel de droite */
+
+		JPanel rightP = new JPanel();
+		rightP.setLayout( new BorderLayout() );
+
 
 		/* Panel central */
 
-		JCanvas centerP = new JCanvas(new Dimension(700, 500));
+		JCanvas centerP = new JCanvas(new Dimension(800, 600));
 		centerP.setBackground(Color.RED);
 
 
 		// Offset et rotation en fonction du nombre de joueurs
 		double 	rot 	= Math.toRadians(360 / this.gj.getTabJoueur().length),
-				offset 	= 200;
+				offset 	= 150;
 
 		// Coordonnées du centre du canvas
 		double 	centerX 	= centerP.getPreferredSize().getWidth() / 2,
@@ -47,25 +54,43 @@ public class PartiePanel extends JPanel implements ActionListener
 				y 		= (int) (centerY + offset);
 
 
+
+		
 		int len = this.gj.getTabJoueur().length;
+		int indexJ = this.gj.calcIndexCourant();
+
+		// Affichage des noms des joueurs
+		int[][] coords = new int[len][2];
 		int cpt = 0;
 		for (int i = 0; i < len; i++)
 		{
+			coords[i] = Utility.rotateAround(centerX, centerY, x, y, rot);
+			x = coords[i][0];
+			y = coords[i][1];
 
-			double x1 = x - centerX;
-			double y1 = y - centerY;
+			centerP.printString( this.gj.getTabJoueur()[ Utility.posModulo(indexJ - i - 1, len) ].getPrenom(), x, y );
 
-			double x2 = x1 * Math.cos(rot) - y1 * Math.sin(rot);
-			double y2 = x1 * Math.sin(rot) + y1 * Math.cos(rot);
-
-			x = (int) (x2 + centerX);
-			y = (int) (y2 + centerY);
-
-
-			centerP.printString( this.gj.getTabJoueur()[ Utility.posModulo(this.gj.getIndexFirstPlayer() - i - 1, len) ].getPrenom(), x, y );
 			cpt++;
 		}
-		this.add( centerP );
+
+		// Affichage des cartes du joueur
+		for (int i = 0; i < len; i++)
+		{
+			int[] coordCard = Utility.rotateAround( coords[i][0], coords[i][1], coords[i][0], coords[i][1] + 80, rot*(i+1) );
+
+			/* Main du joueur */
+			try 
+			{
+			    centerP.printImage( ImageIO.read(new File("../images/image.jpg")), new Dimension(50, 70), coordCard[0], coordCard[1] );
+			} 
+			catch (IOException e) 
+			{
+			    e.printStackTrace();
+			}
+		}
+
+		rightP.add( centerP );
+		
 
 
 		/* Panel du haut */
@@ -74,20 +99,22 @@ public class PartiePanel extends JPanel implements ActionListener
 
 		this.numTourL 		= new JLabel( "Tour n°" + gj.getNumTour() );
 		upP.add( this.numTourL );
-		this.joueurTourL	= new JLabel( "Tour de " + this.gj.getTabJoueur()[ this.gj.getIndexFirstPlayer() ].getPrenom() );
+		this.joueurTourL	= new JLabel( "Tour de " + this.gj.getTabJoueur()[ indexJ ].getPrenom() );
 		upP.add( this.joueurTourL );
 
-		this.add( upP, BorderLayout.NORTH );
+		rightP.add( upP, BorderLayout.NORTH );
 
 
 		/* Panel de gauche */
 
 		JPanel leftP = new JPanel();
+		// leftP.setPreferredSize(new Dimension(500, 100));
 
 		this.endTourB 		= new JButton("Fin du tour");
 		this.endTourB.addActionListener( this );
 		leftP.add( this.endTourB );
 
+		// this.add( leftP, BorderLayout.EAST );
 		this.add( leftP, BorderLayout.EAST );
 
 
@@ -99,10 +126,21 @@ public class PartiePanel extends JPanel implements ActionListener
 		this.quittGameB.addActionListener( this );
 		bottomP.add( this.quittGameB );
 
-		this.add( bottomP, BorderLayout.SOUTH );
+		rightP.add( bottomP, BorderLayout.SOUTH );
+
+
+		this.add( rightP );
 
 
 		this.setVisible(true);
+	}
+
+	public void majDisplay (GestionJeu gj)
+	{
+		int indexJ = this.gj.calcIndexCourant();
+
+		this.numTourL.setText( "Tour n°" + gj.getNumTour() );
+		this.joueurTourL.setText( "Tour de" + this.gj.getTabJoueur()[ indexJ ].getPrenom() );
 	}
 
 	public void actionPerformed (ActionEvent e)
@@ -110,7 +148,7 @@ public class PartiePanel extends JPanel implements ActionListener
 		if ( e.getSource() == this.quittGameB )
 			this.frame.openPage( new MainMenu(frame) );
 		else if ( e.getSource() == this.endTourB )
-			this.frame.getControler().getIhm().displayTourJoueur( this.gj );
+			this.frame.getControler().reponseTourJoueur(new int[]{6});
 	}
 }
 

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public abstract class Ihm
 {
 	protected Controleur controler;
+	
 
 	public abstract void 				displayMenu ();
 	public abstract void			 	displayChoixJoueurs ();
