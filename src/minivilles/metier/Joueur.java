@@ -25,8 +25,8 @@ public class Joueur
 																						new Monument("Parc d'Attractions", "", 16),
 																						new Monument("Tour Radio", "", 22) }) );
 
-		this.etablissements = new ArrayList<Etablissement>( Arrays.asList(new Etablissement[] { new EtablissementBleu("Champs de blé", 	"Culture", 	1, 1, 1),
-																								new EtablissementVert("Boulangerie", 	"Commerce", 1, 1, 2,3) }) );
+		this.etablissements = new ArrayList<Etablissement>( Arrays.asList(new Etablissement[] { new EtablissementBleu("Champs de blé", 	"Culture", 	1, 1, 1,	0, 0),
+																								new EtablissementVert("Boulangerie", 	"Commerce", 1, 1, 2,3,	0, 2) }) );
 
 		this.monnaie = monnaie;
 	}
@@ -99,8 +99,8 @@ public class Joueur
 	/* GETTER */
 
 	public String 					getPrenom ()					{ return this.prenom;				}
-	public ArrayList<Monument> 		getMonuments ()					{ return this.monuments;			}
-	public ArrayList<Etablissement> getEtablissements ()			{ return this.etablissements;		}
+	public ArrayList<Monument> 		getMonuments ()					{ return new ArrayList<Monuments>( this.monuments );			}
+	public ArrayList<Etablissement> getEtablissements ()			{ return new ArrayList<Etablissement>( this.etablissements );	}
 	public int 						getMonnaie ()					{ return this.monnaie;				}
 
 	/* SETTER */
