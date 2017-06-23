@@ -8,16 +8,17 @@ public class EtablissementVert extends Etablissement
 	private int puissance;
 	private String typePuissance;
 
-	public EtablissementVert (String nom, String type, int puissance, int coutPiece, int... valActivation)
+
+	public EtablissementVert (String nom, String type, int puissance, int coutPiece, int col, int lig, int... valActivation)
 	{
-		super(nom, type, String.format("Recevez %d pièce%s de la banque", puissance, (puissance == 1) ? "" : "s"), false, coutPiece, valActivation);
+		super(nom, type, String.format("Recevez %d pièce%s de la banque", puissance, (puissance == 1) ? "" : "s"), false, coutPiece, col, lig, valActivation);
 		this.puissance = puissance;
 		this.typePuissance = null;
 	}
 
-	public EtablissementVert (String nom, String type, int puissance, String typePuissance, int coutPiece, int... valActivation)
+	public EtablissementVert (String nom, String type, int puissance, String typePuissance, int coutPiece, int col, int lig, int... valActivation)
 	{
-		super(nom, type, String.format("Recevez %d pièce%s de la banque pour chaque établissement de type %s que vous possédez", puissance, (puissance == 1) ? "" : "s", typePuissance), false, coutPiece, valActivation);
+		super(nom, type, String.format("Recevez %d pièce%s de la banque pour chaque établissement de type %s que vous possédez", puissance, (puissance == 1) ? "" : "s", typePuissance), false, coutPiece, col, lig, valActivation);
 		this.typePuissance = typePuissance;
 	}
 

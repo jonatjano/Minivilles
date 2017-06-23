@@ -20,9 +20,9 @@ public class EtablissementMauve extends Etablissement
 	}
 
 
-	public  EtablissementMauve (String nom, String type, int puissance, int coutPiece, int... valActivation)
+	public  EtablissementMauve (String nom, String type, int puissance, int coutPiece, int col, int lig, int... valActivation)
 	{
-		super(nom, type, String.format(EtablissementMauve.DESC_MAUVE[EtablissementMauve.getIndice(nom)],puissance == 0 ? "" : String.valueOf(puissance)), true, coutPiece, valActivation);
+		super(nom, type, String.format(EtablissementMauve.DESC_MAUVE[EtablissementMauve.getIndice(nom)],puissance == 0 ? "" : String.valueOf(puissance)), true, coutPiece, col, lig, valActivation);
 		this.puissance = puissance;
 	}
 

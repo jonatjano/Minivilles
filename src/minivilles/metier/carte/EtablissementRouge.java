@@ -6,9 +6,9 @@ public class EtablissementRouge extends Etablissement
 {
 	private int puissance;
 
-	public EtablissementRouge (String nom, String type, int puissance, int coutPiece, int... valActivation)
+	public EtablissementRouge (String nom, String type, int puissance, int coutPiece, int col, int lig, int... valActivation)
 	{
-		super(nom, type, String.format("Recevez %d pièce%s du joueur qui a lancé les dés", puissance, (puissance == 1) ? "" : "s"), false, coutPiece, valActivation);
+		super(nom, type, String.format("Recevez %d pièce%s du joueur qui a lancé les dés", puissance, (puissance == 1) ? "" : "s"), false, coutPiece, col, lig, valActivation);
 		this.puissance = puissance;
 	}
 
