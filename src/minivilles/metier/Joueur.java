@@ -25,8 +25,8 @@ public class Joueur
 																						new Monument("Parc d'Attractions", "", 16),
 																						new Monument("Tour Radio", "", 22) }) );
 
-		this.etablissements = new ArrayList<Etablissement>( Arrays.asList(new Etablissement[] { new EtablissementBleu("Champs de blé", 	"Culture", 	1, 1, 1,	0, 0),
-																								new EtablissementVert("Boulangerie", 	"Commerce", 1, 1, 2,3,	0, 2) }) );
+		this.etablissements = new ArrayList<Etablissement>( Arrays.asList(new Etablissement[] { new EtablissementBleu("Champs de blé", 	"Culture", 	1, 1, 0, 0,		1	),
+																								new EtablissementVert("Boulangerie", 	"Commerce", 1, 1, 0, 2,		2,3 ) }) );
 
 		this.monnaie = monnaie;
 	}

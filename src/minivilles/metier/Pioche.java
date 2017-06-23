@@ -25,24 +25,24 @@ public class Pioche
 
 
 		// Initialisation des cartes
-		this.cartes[0] 	= new EtablissementBleu("Champs de blé", 				"Culture", 		1, 					1, 1,		0, 0);
-		this.cartes[1]	= new EtablissementBleu("Ferme", 						"Elevage", 		1, 					1, 2,		0, 1);
-		this.cartes[5] 	= new EtablissementBleu("Forêt", 						"Ressources", 	1, 					3, 5,		1, 0);
-		this.cartes[11] 	= new EtablissementBleu("Mine", 					"Ressources", 	5, 					6, 9,		2, 1);
-		this.cartes[13] = new EtablissementBleu("Verger", 						"Culture", 		3, 					3, 10,		2, 3);
+		this.cartes[0] 	= new EtablissementBleu("Champs de blé", 				"Culture", 		1, 					1, 0, 0,	1	);
+		this.cartes[1]	= new EtablissementBleu("Ferme", 						"Elevage", 		1, 					1, 0, 1,	2	);
+		this.cartes[5] 	= new EtablissementBleu("Forêt", 						"Ressources", 	1, 					3, 1, 0,	5	);
+		this.cartes[11] 	= new EtablissementBleu("Mine", 					"Ressources", 	5, 					6, 2, 1,	9	);
+		this.cartes[13] = new EtablissementBleu("Verger", 						"Culture", 		3, 					3, 2, 3,	10	);
 
-		this.cartes[2] 	= new EtablissementVert("Boulangerie", 					"Commerce", 	1, 					1, 2,3,		0, 2);
-		this.cartes[4] 	= new EtablissementVert("Superette", 					"Commerce", 	3, 					2, 4,		0, 4);
-		this.cartes[9] 	= new EtablissementVert("Fromagerie", 					"Usine", 		3, "Elevage", 		5, 7,		1, 4);
-		this.cartes[10] 	= new EtablissementVert("Fabrique de Meubles", 		"Usine", 		3, "Ressources", 	3, 8,		2, 0);
-		this.cartes[14] = new EtablissementVert("Marché de fruits et légumes", 	"Marché", 		2, "Culture", 		2, 11,12,	2, 4);
+		this.cartes[2] 	= new EtablissementVert("Boulangerie", 					"Commerce", 	1, 					1, 0, 2,	2,3	);
+		this.cartes[4] 	= new EtablissementVert("Superette", 					"Commerce", 	3, 					2, 0, 4,	4	);
+		this.cartes[9] 	= new EtablissementVert("Fromagerie", 					"Usine", 		3, "Elevage", 		5, 1, 4,	7	);
+		this.cartes[10] 	= new EtablissementVert("Fabrique de Meubles", 		"Usine", 		3, "Ressources", 	3, 2, 0,	8	);
+		this.cartes[14] = new EtablissementVert("Marché de fruits et légumes", 	"Marché", 		2, "Culture", 		2, 2, 4,	11,12);
 
-		this.cartes[3] 	= new EtablissementRouge("Café", 						"Restauration", 1, 					2, 3,		0, 3);
-		this.cartes[12] 	= new EtablissementRouge("Restaurant", 				"Restauration", 2, 					3, 9,10,	2, 2);
+		this.cartes[3] 	= new EtablissementRouge("Café", 						"Restauration", 1, 					2, 0, 3,	3	);
+		this.cartes[12] 	= new EtablissementRouge("Restaurant", 				"Restauration", 2, 					3, 2, 2,	9,10);
 		
-		this.cartes[6] 	= new EtablissementMauve("Stade", 						"Spécial", 		2, 					6, 6,		1, 1);
-		this.cartes[7] 	= new EtablissementMauve("Chaîne de télévision", 		"Spécial", 		5, 					7, 6,		1, 2);
-		this.cartes[8]  = new EtablissementMauve("Centre d'affaires", 			"Spécial", 		0, 					8, 6,		1, 3);
+		this.cartes[6] 	= new EtablissementMauve("Stade", 						"Spécial", 		2, 					6, 1, 1,	6	);
+		this.cartes[7] 	= new EtablissementMauve("Chaîne de télévision", 		"Spécial", 		5, 					7, 1, 2,	6	);
+		this.cartes[8]  = new EtablissementMauve("Centre d'affaires", 			"Spécial", 		0, 					8, 1, 3,	6	);
 	}
 
 	public Etablissement achatEtablissement (int id, Joueur j)

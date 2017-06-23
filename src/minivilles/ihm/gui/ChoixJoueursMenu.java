@@ -19,6 +19,7 @@ public class ChoixJoueursMenu extends JPanel implements ActionListener
 	public ChoixJoueursMenu (MainFrame frame)
 	{
 		this.frame = frame;
+		this.frame.getBgPanel().setLayout( new GridBagLayout() );
 		try 					{ this.frame.getBgPanel().setImage(null); }
 		catch (IOException e) 	{e.printStackTrace();}
 		

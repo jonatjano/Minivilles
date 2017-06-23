@@ -1,5 +1,6 @@
 package minivilles.ihm.gui;
 
+import minivilles.util.Utility;
 import java.util.LinkedList;
 import javax.swing.*;
 import java.awt.*;
@@ -25,7 +26,7 @@ public class JCanvas extends JPanel
 		super.paintComponent(g);
 
 		g.setColor( Color.WHITE );
-		g.fillRect(0, 0, (int) dim.getWidth(), (int) dim.getHeight());
+		g.fillRect(0, 0, (int) (int) dim.getWidth(), (int) dim.getHeight());
 
 		g.setColor( Color.BLACK );
 
@@ -38,12 +39,26 @@ public class JCanvas extends JPanel
 		// Dessins des images
 		for (DessinImage di : imageList)
 		{
-			if 		( di.getDimSrc() != null )
-				g.drawImage( di.getImage(), 0, 0, (int) di.getDim().getWidth(), (int) di.getDim().getHeight(), di.getSrcX(), di.getSrcY(), di.getSrcX() + (int) di.getDimSrc().getWidth(), di.getSrcY() + (int) di.getDimSrc().getHeight(), null );
-			else if ( di.getDim() != null )
-				g.drawImage( di.getImage(), di.getX(), di.getY(), (int) di.getDim().getWidth(), (int) di.getDim().getHeight(), null );
+			BufferedImage img = di.getImage();
+			if ( di.getDimSrc() != null )
+			{
+				img = img.getSubimage( di.getSrcX(), di.getSrcY(), (int) di.getDimSrc().getWidth(), (int) di.getDimSrc().getHeight() );
+				// Image img = Utility.getScaledImage( di.getImage(), (int) di.getDim().getWidth(), (int) di.getDim().getHeight() );
+				// g.drawImage( 	img,
+				// 				di.getX() - (int) (di.getDim().getWidth()/2),
+				// 				di.getY() - (int) (di.getDim().getHeight()/2),
+				// 				di.getX() + (int) (di.getDim().getWidth()/2),
+				// 				di.getY() + (int) (di.getDim().getHeight()/2),
+				// 				di.getSrcX(),
+				// 				di.getSrcY(),
+				// 				di.getSrcX() + (int) di.getDimSrc().getWidth(),
+				// 				di.getSrcY() + (int) di.getDimSrc().getHeight(), null );
+			}
+
+			if ( di.getDim() != null )
+				g.drawImage( img, di.getX(), di.getY(), (int) di.getDim().getWidth(), (int) di.getDim().getHeight(), null );
 			else
-				g.drawImage( di.getImage(), di.getX(), di.getY(), null );
+				g.drawImage( img, di.getX(), di.getY(), null );
 		}
 	}
 
@@ -119,11 +134,11 @@ public class JCanvas extends JPanel
 			this.srcY = srcY;
 		}
 
-		public BufferedImage 	getImage () 	{ return this.img; 	}
-		public Dimension	 	getDim () 		{ return this.dim; 	}
-		public Dimension	 	getDimSrc () 	{ return this.dim; 	}
-		public int				getX () 		{ return this.x; 	}
-		public int	 			getY () 		{ return this.y; 	}
+		public BufferedImage 	getImage () 	{ return this.img; 		}
+		public Dimension	 	getDim () 		{ return this.dim; 		}
+		public Dimension	 	getDimSrc () 	{ return this.dimSrc; 	}
+		public int				getX () 		{ return this.x; 		}
+		public int	 			getY () 		{ return this.y; 		}
 		public int	 			getSrcX () 		{ return this.srcX; 	}
 		public int	 			getSrcY () 		{ return this.srcY; 	}
 	}
