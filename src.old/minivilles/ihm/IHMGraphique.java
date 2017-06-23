@@ -44,8 +44,7 @@ public class IHMGraphique extends Ihm
 	  */
 	public void displayTourJoueur (GestionJeu gj)
 	{
-		
-		((PartiePanel) this.frame.getContent()).majDisplay(gj);
+		// Màj
 	}
 
 	public void displayFinPartie (Joueur j, int nbTour)

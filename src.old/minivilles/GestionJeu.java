@@ -85,14 +85,4 @@ public class GestionJeu
 	public int 		getNumTour ()			{ return this.numTour; 			}
 	public Joueur[] getTabJoueur ()			{ return this.tabJoueur; 		}
 	public Joueur 	getJoueurActuel ()		{ return this.joueurActuel; 	}
-
-	public int calcIndexCourant ()
-	{
-		int indexJ = 0;
-		for ( int i = 0; i < this.tabJoueur.length; i++)
-			if ( this.tabJoueur[i] == this.joueurActuel )
-				indexJ = i;
-
-		return indexJ;
-	}
 }

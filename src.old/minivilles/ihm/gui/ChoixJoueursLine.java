@@ -44,15 +44,7 @@ public class ChoixJoueursLine extends JPanel implements ActionListener
 	{
 		this.nameTF.setEnabled( !this.nameTF.isEnabled() );
 		if ( !this.nameTF.isEnabled() )
-		{
 			this.nameTF.setText("");
-			this.addB.setText("Ajouter");
-		}
-		else
-		{
-			this.nameTF.grabFocus();
-			this.addB.setText("Retirer");
-		}
 	}
 
 	public void actionPerformed (ActionEvent e)

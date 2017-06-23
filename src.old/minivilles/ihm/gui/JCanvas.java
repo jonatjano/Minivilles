@@ -20,7 +20,7 @@ public class JCanvas extends JPanel
 	}
 
 	@Override
-	public void paintComponent (Graphics g)
+	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
 
@@ -38,10 +38,7 @@ public class JCanvas extends JPanel
 		// Dessins des images
 		for (DessinImage di : imageList)
 		{
-			if ( di.getDim() != null )
-				g.drawImage(di.getImage(), di.getX(), di.getY(), (int) di.getDim().getWidth(), (int) di.getDim().getHeight(), null);
-			else
-				g.drawImage(di.getImage(), di.getX(), di.getY(), null);
+			g.drawImage(di.getImage(), 0, 0, null);	
 		}
 	}
 
@@ -89,15 +86,13 @@ public class JCanvas extends JPanel
 		public DessinImage (BufferedImage img, Dimension dim, int x, int y)
 		{
 			this.img = img;
+			// REDIMENSIONNER
 			this.dim = dim;
-			this.x = (int) (x - ( (this.dim != null) ? this.dim.getWidth()/2 : img.getWidth()/2) );
-			this.y = (int) (y - ( (this.dim != null) ? this.dim.getHeight()/2 : img.getHeight()/2) );
+			this.x = (int) (x - this.dim.getWidth()/2);
+			this.y = (int) (y - this.dim.getHeight()/2);
 		}
 		// Deuxième avec portion de l'image (xy début, xy fin)
 
 		public BufferedImage 	getImage () { return this.img; 	}
-		public Dimension	 	getDim () 	{ return this.dim; 	}
-		public int				getX () 	{ return this.x; 	}
-		public int	 			getY () 	{ return this.y; 	}
 	}
 }
