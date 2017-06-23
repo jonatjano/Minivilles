@@ -1,4 +1,4 @@
-current = $(pwd)
+current=$(pwd)
 
 cd $MINIVILLE11
 java minivilles.Controleur
