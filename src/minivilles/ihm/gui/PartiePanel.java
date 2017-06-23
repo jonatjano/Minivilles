@@ -1,12 +1,15 @@
 package minivilles.ihm.gui;
 
 import minivilles.util.Utility;
+import minivilles.metier.carte.Etablissement;
 import minivilles.metier.*;
 import minivilles.GestionJeu;
+import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
 import java.awt.event.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.awt.geom.AffineTransform;
 import javax.swing.*;
 import javax.imageio.ImageIO;
@@ -56,8 +59,12 @@ public class PartiePanel extends JPanel implements ActionListener
 
 
 		
-		int len = this.gj.getTabJoueur().length;
-		int indexJ = this.gj.calcIndexCourant();
+		int len 	= this.gj.getTabJoueur().length;
+		int indexJ 	= this.gj.calcIndexCourant();
+
+		BufferedImage imgCartes = null;
+		try 					{ imgCartes = ImageIO.read( new File("../images/etablissements.jpg") ); }
+		catch (IOException e)	{}
 
 		// Affichage des noms des joueurs
 		int[][] coords = new int[len][2];
@@ -73,19 +80,23 @@ public class PartiePanel extends JPanel implements ActionListener
 			cpt++;
 		}
 
+		// 185 large
+		// 5 plus loin
+		// 273 hauteur
+		// 7 plus loin
+
 		// Affichage des cartes du joueur
+		int begX = 9,
+			begY = 8;
 		for (int i = 0; i < len; i++)
 		{
 			int[] coordCard = Utility.rotateAround( coords[i][0], coords[i][1], coords[i][0], coords[i][1] + 80, rot*(i+1) );
 
-			/* Main du joueur */
-			try 
+			/* Affichage de la Main du joueur */
+			ArrayList<Etablissement> main = this.gj.getTabJoueur()[ Utility.posModulo(indexJ - i - 1, len) ].getEtablissements();
+			for (int j = 0; j < main.size(); j++)
 			{
-			    centerP.printImage( ImageIO.read(new File("../images/image.jpg")), new Dimension(50, 70), coordCard[0], coordCard[1] );
-			} 
-			catch (IOException e) 
-			{
-			    e.printStackTrace();
+				centerP.printImage( imgCartes, new Dimension(50, 70), coordCard[0] + j*20, coordCard[1] );
 			}
 		}
 

@@ -29,6 +29,7 @@ public class MainMenu extends JPanel implements ActionListener
 		GridBagConstraints c = new GridBagConstraints();
 
 
+		// Logo de MiniVilles
 		ImageIcon logo = new ImageIcon( Utility.getScaledImage(new ImageIcon("../images/logo.png").getImage(), 600, 262) );
 		this.logoL = new JLabel ("");
 		this.logoL.setIcon( logo );
@@ -64,6 +65,8 @@ public class MainMenu extends JPanel implements ActionListener
 	public void actionPerformed (ActionEvent e)
 	{
 		if 		( e.getSource() == this.launchB )
+			this.frame.getControler().getIhm().displayChoixJoueurs();
+		else if	( e.getSource() == this.joinB )
 			this.frame.getControler().getIhm().displayChoixJoueurs();
 		else if ( e.getSource() == this.quittB )
 			System.exit(0);
