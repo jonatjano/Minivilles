@@ -16,4 +16,5 @@ cp "images" "%MINIVILLE11%\images" -rf
 
 clear
 javac -d "$MINIVILLE11" @sources.list
-read -p "appuyer sur une touche pour continuer..."
+echo "appuyer sur une touche pour continuer..."
+read mot
