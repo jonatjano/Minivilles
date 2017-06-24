@@ -189,10 +189,10 @@ public class IHMConsole extends Ihm
 			valDe = new int[nbDe];
 			for (int i = 1 ; i <= nbDe ; i++)
 			{
-				System.out.print("valeur du dé " + i + " : ");
 				String s = "";
 				do
 				{
+					System.out.print("valeur du dé " + i + " : ");
 					s = sc.nextLine();
 					if (!s.matches("[0-9]+"))																	System.out.println("Ce n'est pas un nombre !");
 					if (s.matches("[0-9]+") && ( Integer.parseInt(s) <= 0 || Integer.parseInt(s) > 6 ))	System.out.println("nombre invalide !");
