@@ -141,6 +141,7 @@ public class GestionJeu
 	public int 		getNumTour ()					{ return this.numTour; 			}
 	public Joueur[] getTabJoueur ()					{ return this.tabJoueur; 		}
 	public Joueur 	getJoueurActuel ()				{ return this.joueurActuel; 	}
+	public boolean 	isEvaluationMode ()				{ return this.isEvaluation; 	}
 
 	public int calcIndexCourant ()
 	{
