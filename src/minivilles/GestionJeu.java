@@ -47,13 +47,14 @@ public class GestionJeu
 		this.ihm 				= ihm;
 		this.pioche 			= new Pioche();
 		this.isEvaluation		= ev;
-		this.indexFirstPlayer	= 0;
 		try
 		{
 			Scanner sc = new Scanner(new File(Controleur.PATH + "/PartieInit/" + file));
 		
-			String ligneJoueur = sc.nextLine();
-			this.numTour	   = Integer.parseInt(sc.nextLine());
+			String ligneJoueur  	= sc.nextLine();
+			String[] infoPartie 	= sc.nextLine().split(";");
+			this.numTour	    	= Integer.parseInt(infoPartie[0]);
+			this.indexFirstPlayer	= Integer.parseInt(infoPartie[1]);
 			
 			String[] tabNomJoueur = ligneJoueur.split(";");
 			this.nbJoueur = tabNomJoueur.length;
@@ -91,7 +92,6 @@ public class GestionJeu
 
 	public void lancer ()
 	{
-		this.indexFirstPlayer 	= 0;
 		this.joueurActuel		= this.tabJoueur[ this.indexFirstPlayer ];
 		this.indexJoueurActuel 			= this.indexFirstPlayer;
 
