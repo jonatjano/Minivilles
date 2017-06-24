@@ -2,6 +2,7 @@ package minivilles.ihm.gui;
 
 import minivilles.util.Utility;
 import minivilles.metier.carte.Etablissement;
+import minivilles.metier.carte.Monument;
 import minivilles.metier.*;
 import minivilles.GestionJeu;
 import java.util.ArrayList;
@@ -19,14 +20,13 @@ import javax.swing.plaf.synth.Region;
 public class PartiePanel extends JPanel implements ActionListener, ItemListener
 {
 	private MainFrame 	frame;
-	private JLabel		numTourL, joueurTourL, resLanceL;
+	private JLabel		numTourL, joueurTourL, resLanceL, achatL;
 	private JButton 	endTourB, quittGameB, rollDiceB, buyB;
 	private JTextField	buyTF;
 	private JComboBox	nbDeCB;
 	private JPanel		centerP, topP, bottomP, leftP, rightTopP, rightCenterP, rightBottP, rightP;
 	private JCanvas 	canvas, achatP;
 
-	private Dimension		dimCard;
 	private double 			rapCard;
 	private BufferedImage 	imgCartes;
 	private GestionJeu 		gj;
@@ -48,8 +48,8 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 		this.imgCartes = null;
 		try 					{ this.imgCartes = ImageIO.read( new File("../images/etablissements.png") ); }
 		catch (IOException e)	{e.printStackTrace();}
-		this.dimCard = new Dimension(185, 273);
-		this.rapCard = 0.5;
+		System.out.println(1500/3920f);
+		this.rapCard = this.frame.getWidth() / 3750f;//0.5;
 
 
 		/* Panel de gauche */
@@ -63,7 +63,7 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 		centerP = new JPanel();
 		centerP.setLayout( new GridBagLayout() );
 
-		int[] dim = Utility.getPercentOfFrame(this.frame, 75, 85);
+		int[] dim = Utility.getPercentOfFrame(this.frame, 70, 80);
 		this.canvas = new JCanvas( new Dimension(dim[0], dim[1]) );
 		this.canvas.setBorder( BorderFactory.createLineBorder(Color.black) );
 
@@ -147,16 +147,31 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 
 		/* Panel milieu droit */
 		this.rightCenterP = new JPanel();
-		this.rightCenterP.setLayout( new GridLayout( 1, 2) );//rightCenterP, BoxLayout.X_AXIS) );
+		this.rightCenterP.setLayout( new GridLayout( 2, 1) );
+
+
+		JPanel topRightCenterP = new JPanel();
+		this.achatL = new JLabel("Construire un bâtiment (après le lancer de dé)");
+		this.achatL.setFont( this.frame.getFont() );
+		topRightCenterP.add( this.achatL );
+
+		this.rightCenterP.add( topRightCenterP );
+
+
+		JPanel bottRightCenterP = new JPanel();
+		bottRightCenterP.setLayout( new GridLayout( 1, 2) );
 
 		this.buyTF = new JTextField();
-		this.rightCenterP.add( this.buyTF );
+		this.buyTF.setEnabled(false);
+		bottRightCenterP.add( this.buyTF );
 
 		this.buyB = new JButton("Acheter");
+		this.buyB.setFont( this.frame.getFont() );
 		this.buyB.addActionListener( this );
 		this.buyB.setEnabled(false);
-		this.rightCenterP.add( this.buyB );
+		bottRightCenterP.add( this.buyB );
 
+		this.rightCenterP.add( bottRightCenterP );
 		this.rightP.add( this.rightCenterP );
 
 
@@ -220,8 +235,8 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 			cpt++;
 		}
 
-		// Affichage des cartes des joueurs
-		double decalage = this.dimCard.getWidth()*this.rapCard*(1f/10);
+		// Affichage les cartes des joueurs
+		double decalage = Etablissement.DIM_ET.getWidth()*this.rapCard*(1f/10);
 
 		for (int i = 0; i < len; i++)
 		{
@@ -229,8 +244,8 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 			ArrayList<Etablissement> main = this.gj.getTabJoueur()[ Utility.posModulo(indexJ - i - 1, len) ].getEtablissements();
 			int[] coordCard = Utility.rotateAround( coords[i][0],
 													coords[i][1],
-													coords[i][0],//( (main.size() <= 4) ? (int) ((this.dimCard.getWidth()*this.rapCard + decalage)*(main.size()/4f)) : (int) ((this.dimCard.getWidth()*this.rapCard + decalage)*2f) ),
-													coords[i][1] + (this.dimCard.getHeight()*this.rapCard)/2 + (this.dimCard.getHeight()*this.rapCard*(3f/10)),
+													coords[i][0],//( (main.size() <= 4) ? (int) ((Etablissement.DIM_ET.getWidth()*this.rapCard + decalage)*(main.size()/4f)) : (int) ((Etablissement.DIM_ET.getWidth()*this.rapCard + decalage)*2f) ),
+													coords[i][1] + (Etablissement.DIM_ET.getHeight()*this.rapCard)/2 + (Etablissement.DIM_ET.getHeight()*this.rapCard*(3f/10)),
 													rot*(i+1) );
 			
 			int lig = 0;
@@ -239,12 +254,12 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 			{
 				
 				this.canvas.printImage( 	imgCartes,
-									new Dimension( (int) (this.dimCard.getWidth() * this.rapCard), (int) (this.dimCard.getHeight() * this.rapCard) ),
+									new Dimension( (int) (Etablissement.DIM_ET.getWidth() * this.rapCard), (int) (Etablissement.DIM_ET.getHeight() * this.rapCard) ),
 									(begX + main.get(j).getCol()*(185+5)),
 									(begY + main.get(j).getLig()*(273+7)),
-									this.dimCard,
-									coordCard[0] + (int) (col * (this.dimCard.getWidth()*this.rapCard + decalage)),
-									coordCard[1] + (int) (lig * (this.dimCard.getHeight()*this.rapCard + decalage)) );
+									Etablissement.DIM_ET,
+									coordCard[0] + (int) (col * (Etablissement.DIM_ET.getWidth()*this.rapCard + decalage)),
+									coordCard[1] + (int) (lig * (Etablissement.DIM_ET.getHeight()*this.rapCard + decalage)) );
 				col++;
 				if (col > 7)
 				{
@@ -261,34 +276,37 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 			lig = 0,
 			col = 0;
 
-		x = 45 + (int) (this.dimCard.getWidth()*this.rapCard/2f);
-		y = 30 + (int) (this.dimCard.getHeight()*this.rapCard/2f);
+		x = (int) (110*this.rapCard + Etablissement.DIM_ET.getWidth()*this.rapCard/2f);
+		y = (int) (90*this.rapCard + Etablissement.DIM_ET.getHeight()*this.rapCard/2f);
 
 		int	centerCardX = 0,
 			centerCardY = 0;
 
 		for (int j = 0; j < 15; j++)
 		{
-			centerCardX = x + (int) (col*(185+5)*this.rapCard);
-			centerCardY = y + (int) (lig*(273+42)*this.rapCard);
-
-			this.achatP.printString(	String.format("%2d  x%d", (j+1), pioche.getNbCartes()[j] ),
-										(int) (centerCardX - this.dimCard.getWidth()*this.rapCard/4f),
-										(int) (centerCardY - this.dimCard.getWidth()*this.rapCard/2f - 25) );
-			this.achatP.printImage( 	imgCartes,
-								new Dimension( (int) (this.dimCard.getWidth() * this.rapCard),(int) (this.dimCard.getHeight() * this.rapCard) ),
-								(begX + colSrc*(185+5)),
-								(begY + ligSrc*(273+7)),
-								this.dimCard,
-								centerCardX,
-								centerCardY 	);
-			col++;
-			if (col >= 3)
+			if (pioche.getNbCartes()[j] > 0)
 			{
-				lig++;
-				col = 0;
-			}
+				centerCardX = x + (int) (col*(185+5)*this.rapCard);
+				centerCardY = y + (int) (lig*(273+42)*this.rapCard);
 
+				this.achatP.printString(	String.format("%2d  x%d", (j+1), pioche.getNbCartes()[j] ),
+											(int) (centerCardX - Etablissement.DIM_ET.getWidth()*this.rapCard/4f),
+											(int) (centerCardY - Etablissement.DIM_ET.getWidth()*this.rapCard/2f - 55*this.rapCard) );
+				this.achatP.printImage( 	imgCartes,
+									new Dimension( (int) (Etablissement.DIM_ET.getWidth() * this.rapCard),(int) (Etablissement.DIM_ET.getHeight() * this.rapCard) ),
+									(begX + colSrc*(185+5)),
+									(begY + ligSrc*(273+7)),
+									Etablissement.DIM_ET,
+									centerCardX,
+									centerCardY 	);
+				col++;
+				if (col >= 3)
+				{
+					lig++;
+					col = 0;
+				}
+			}
+			
 			colSrc++;
 			if (colSrc >= 5)
 			{
@@ -300,21 +318,40 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 
 	public void actionPerformed (ActionEvent e)
 	{
+		/* PRESSION BOUTON - FIN PARTIE */
 		if 	( e.getSource() == this.quittGameB )
+		{
 			this.frame.openPage( new MainMenu(frame) );
+		}
+		/* PRESSION BOUTON - LANCE DE DE(S) */
 		else if ( e.getSource() == this.rollDiceB )
 		{
 			if ( !this.endTourB.isEnabled() )
 			{
 				this.dernierLance = this.frame.getControler().lancerDe( Integer.parseInt( (String) this.nbDeCB.getSelectedItem() ) );
 				this.resLanceL.setText( "Résultat du lancé : " + ((dernierLance.length == 1) ? ("" + dernierLance[0]) : String.format("%d (%d + %d)", (dernierLance[0] + dernierLance[1]), dernierLance[0], dernierLance[1])) );
+				
+				// Si le joueur a fait un double et a le parc d'attraction...
+				if ( this.gj.hasPlayerDouble(this.dernierLance) )
+				{
+					int ans = 0;
+					ans = JOptionPane.showConfirmDialog (this.frame, "Votre lancé de dé est de '%2d'\nVoulez-vous relancer ?", "Relance", ans);
+					if (ans == JOptionPane.YES_OPTION)
+					{
+						this.dernierLance = this.frame.getControler().lancerDe( Integer.parseInt( (String) this.nbDeCB.getSelectedItem() ) );
+						this.resLanceL.setText( "Résultat du lancé : " + ((dernierLance.length == 1) ? ("" + dernierLance[0]) : String.format("%d (%d + %d)", (dernierLance[0] + dernierLance[1]), dernierLance[0], dernierLance[1])) );
+					}
+				}
+
+				this.frame.getControler().activateCardsAction( Utility.arraySum(this.dernierLance) );
+				this.majDisplay( this.gj );
 				this.endTourB.setEnabled(true);
 				this.buyB.setEnabled(true);
+				this.buyTF.setEnabled(true);
 				this.rollDiceB.setEnabled(false);
-				// Voir si a double
-				// this.frame.getControler().getIhm().lancerDe( this.nbDeCB.getSelectedIndex() );
 			}
 		}
+		/* PRESSION BOUTON - FIN TOUR */
 		else if ( e.getSource() == this.endTourB )
 		{
 			if (this.dernierLance != null)
@@ -322,10 +359,12 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 				this.frame.getControler().reponseTourJoueur( this.dernierLance );
 				this.dernierLance = null;
 				this.resLanceL.setText( "Résultat du lancé : " );
+
 				this.endTourB.setEnabled(false);
 				this.buyB.setEnabled(false);
-				this.rollDiceB.setEnabled(true);
+				this.buyTF.setEnabled(false);
 				this.buyTF.setText("");
+				this.rollDiceB.setEnabled(true);
 			}
 			else
 				System.out.println("AFFICHER UN MESSAGE");
@@ -334,15 +373,26 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 		{
 			if ( this.buyTF.getText().matches("[0-9]+") )
 			{
-				Joueur 			j 	= this.gj.getJoueurActuel();
-				Etablissement 	et 	= this.gj.getPioche().achatEtablissement( Integer.parseInt(this.buyTF.getText()) - 1, j);
-				if ( et != null )
+				try
 				{
-					j.addEtablissement( et );
-					e.setSource( this.endTourB );
-					this.actionPerformed( e );
+					Joueur 			j 	= this.gj.getJoueurActuel();
+					Etablissement 	et 	= this.gj.getPioche().achatEtablissement( Integer.parseInt(this.buyTF.getText()) - 1, j);
+					if ( et != null )
+					{
+						j.addEtablissement( et );
+						e.setSource( this.endTourB );
+						this.actionPerformed( e );
+					}
+					else
+						this.frame.errorMessage("Erreur", "Impossible d'acheter : vous n'avez plus assez d'argent !", JOptionPane.ERROR_MESSAGE);
+				}
+				catch (IndexOutOfBoundsException ex)
+				{
+					this.frame.errorMessage("Erreur", "Impossible d'acheter : index incorrect ou indisponible !",  JOptionPane.ERROR_MESSAGE);
 				}
 			}
+			else
+				this.frame.errorMessage("Erreur", "Impossible d'acheter : entrez un chiffre !",  JOptionPane.ERROR_MESSAGE);
 		}
 	}
 

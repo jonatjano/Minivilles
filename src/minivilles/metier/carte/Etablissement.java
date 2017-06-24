@@ -1,5 +1,6 @@
 package minivilles.metier.carte;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.Map;
@@ -7,6 +8,7 @@ import minivilles.metier.Joueur;
 
 public abstract class Etablissement extends Carte
 {
+	public static final Dimension DIM_ET = new Dimension(185, 273);
 	private ArrayList<Integer> 	valActivation;
 	private int col,
 				lig;

@@ -72,4 +72,13 @@ public class Utility
 
 		return resizedImg;
 	}
+
+	public static int arraySum (int[] arr)
+	{
+		int sum = 0;
+		for (int val : arr)
+			sum += val;
+
+		return sum;
+	}
 }

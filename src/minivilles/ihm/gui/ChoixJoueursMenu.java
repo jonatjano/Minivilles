@@ -79,16 +79,33 @@ public class ChoixJoueursMenu extends JPanel implements ActionListener
 		if 		( e.getSource() == this.launchB )
 		{
 			ArrayList<String> names = new ArrayList<String>();
+			boolean isUnique 	= true;
+			boolean isTooLong 	= false;
 			for (ChoixJoueursLine line : lines)
 			{
 				if ( line.getText().matches(".*[a-zA-Z].*") )
-					names.add( line.getText() );
-				// else if ( !line.equals("") )
-				// 	label.setErrorText("Erreur : saisie incorrecte");
+				{
+					for (ChoixJoueursLine otherLine : lines)
+					{
+						if 		( line.getText().length() > 10 )
+							isTooLong = true;
+						else if ( otherLine != line && otherLine.getText().equals( line.getText() ) )
+							isUnique = false;
+					}
+					if (isUnique && !isTooLong)
+						names.add( line.getText() );
+				}
 			}
 
-			if ( names.size() >= 2 )
+			
+			if 		(isTooLong)
+				this.frame.errorMessage("Impossible de lancer", "Un des noms est trop long\n(max. 10 caractères)", JOptionPane.ERROR_MESSAGE);
+			else if (!isUnique)
+				this.frame.errorMessage("Impossible de lancer", "Deux joueurs possèdent le même nom", JOptionPane.ERROR_MESSAGE);
+			else if ( names.size() >= 2 )
 				this.frame.getControler().nouvellePartie(names);
+			else
+				this.frame.errorMessage("Impossible de lancer", "Pas assez de joueurs", JOptionPane.ERROR_MESSAGE);
 		}
 		else if ( e.getSource() == this.retourB )
 			this.frame.openPage( new MainMenu(frame) );

@@ -31,7 +31,7 @@ public class GestionJeu
 		this.pioche 			= new Pioche();
 		this.nbJoueur 			= names.size();
 		this.isEvaluation		= false;
-		this.indexFirstPlayer	= -1;
+		this.indexFirstPlayer	= 0;
 
 		this.tabJoueur = new Joueur[this.nbJoueur];
 		for (int i = 0; i < nbJoueur; i++)
@@ -47,7 +47,8 @@ public class GestionJeu
 		this.pioche 			= new Pioche();
 		this.isEvaluation		= true;
 		this.indexFirstPlayer	= 0;
-		try{
+		try
+		{
 			Scanner sc = new Scanner(new File(Controleur.PATH + "/PartieInit/" + file));
 		
 			String ligneJoueur = sc.nextLine();
@@ -99,7 +100,7 @@ public class GestionJeu
 
 	public void resultatTour (int[] valDe)
 	{
-		boolean aUnDouble = valDe.length == 2 && this.joueurActuel.hasParc() && valDe[0] == valDe[1];;
+		boolean aUnDouble = this.hasPlayerDouble( valDe );
 
 		if ( !aUnDouble )
 			this.indexJoueurActuel++;
@@ -110,7 +111,6 @@ public class GestionJeu
 			this.numTour++;
 
 		this.joueurActuel = this.tabJoueur[ this.indexJoueurActuel ];
-
 
 
 
@@ -126,12 +126,21 @@ public class GestionJeu
 			this.ihm.displayFinPartie(this.joueurGagnant, this.numTour);
 	}
 
+	public void activateCardsAction (int valDeTotale)
+	{
+		// Une fois que le lancer est définitif...
+		// Active les actions pour les joueurs en commençant par le premier et en allant dans le sens inverse des aiguilles d'une montre
+		for (int i = 0; i < this.tabJoueur.length; i++)
+			this.tabJoueur[ Utility.posModulo(this.indexJoueurActuel - i - 1, this.tabJoueur.length) ].actionCartes( this.joueurActuel, valDeTotale, this.tabJoueur, this.ihm);
+	}
 
-	public Pioche 	getPioche ()			{ return this.pioche; 			}
-	public int 		getIndexFirstPlayer ()	{ return this.indexFirstPlayer; }
-	public int 		getNumTour ()			{ return this.numTour; 			}
-	public Joueur[] getTabJoueur ()			{ return this.tabJoueur; 		}
-	public Joueur 	getJoueurActuel ()		{ return this.joueurActuel; 	}
+
+	public boolean 	hasPlayerDouble (int[] valDe)	{ return valDe.length == 2 && this.joueurActuel.hasParc() && valDe[0] == valDe[1];}
+	public Pioche 	getPioche ()					{ return this.pioche; 			}
+	public int 		getIndexFirstPlayer ()			{ return this.indexFirstPlayer; }
+	public int 		getNumTour ()					{ return this.numTour; 			}
+	public Joueur[] getTabJoueur ()					{ return this.tabJoueur; 		}
+	public Joueur 	getJoueurActuel ()				{ return this.joueurActuel; 	}
 
 	public int calcIndexCourant ()
 	{

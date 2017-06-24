@@ -18,6 +18,9 @@ public class MainFrame extends JFrame
 	private Controleur 				controler;
 	private JComponent				content;
 	private JPanelWithBackground 	bgPanel;
+	private JOptionPane				errorMsg;
+
+	private Dimension				screenSize;
 
 	private Font 					font;
 
@@ -25,10 +28,8 @@ public class MainFrame extends JFrame
 	public MainFrame (Controleur controler)
 	{
 		super();
-		// try
-		// {
-		// 	UIManager.setLookAndFeel( new SyntheticaBlackEyeLookAndFeel() );
-		// } catch (Exception e) {}
+		
+		this.screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
 		// Police des panel
 		this.font = new Font("Arial", 0, 16);
@@ -36,40 +37,45 @@ public class MainFrame extends JFrame
 		this.controler = controler;
 		this.setTitle("MiniVilles");
 
-		this.setExtendedState( JFrame.MAXIMIZED_BOTH );
+		this.setSize(1300, 900);
+		this.setLocation(200, 100);
+		// this.setExtendedState( JFrame.MAXIMIZED_BOTH );
 		this.setDefaultCloseOperation( EXIT_ON_CLOSE );
 
 		this.setVisible(true);
-		this.bgPanel = new JPanelWithBackground( this );
+		this.bgPanel 	= new JPanelWithBackground( this );
+		this.errorMsg 	= new JOptionPane( new JLabel("", JLabel.CENTER) );
 
 
+		
+		this.setResizable(false);
 		// Ajoute un évènement quand la fenêtre est redimensionnée
-		// this.setResizable(false);
-		this.addComponentListener(new ComponentAdapter() {
-			private JPanelWithBackground bgPanel;
+		// this.addComponentListener(new ComponentAdapter() {
+		// 	private JPanelWithBackground bgPanel;
 
-            public void componentResized (ComponentEvent e)
-            {
-            	try 					{ this.bgPanel.resizeImg(); }
-            	catch (IOException ex) 	{}
+  //           public void componentResized (ComponentEvent e)
+  //           {
+  //           	try 					{ this.bgPanel.resizeImg(); }
+  //           	catch (IOException ex) 	{}
 
-            	// Resize tout le CONTENU
-            }
+  //           	// Resize tout le CONTENU
+  //           }
 
-            private ComponentAdapter init(JPanelWithBackground bgPanel)
-            {
-            	this.bgPanel = bgPanel;
-            	return this;
-            }
-        }.init(this.bgPanel) );
+  //           private ComponentAdapter init(JPanelWithBackground bgPanel)
+  //           {
+  //           	this.bgPanel = bgPanel;
+  //           	return this;
+  //           }
+  //       }.init(this.bgPanel) );
 
 		this.add( bgPanel );
 	}
 
-	public Controleur 				getControler ()	{ return this.controler;	}
-	public JComponent 				getContent ()	{ return this.content;		}
-	public JPanelWithBackground 	getBgPanel ()	{ return this.bgPanel;		}
-	public Font 					getFont () 		{ return this.font;			}
+	public Controleur 				getControler ()		{ return this.controler;	}
+	public JComponent 				getContent ()		{ return this.content;		}
+	public JPanelWithBackground 	getBgPanel ()		{ return this.bgPanel;		}
+	public Font 					getFont () 			{ return this.font;			}
+	public Dimension				getScreenSize ()	{ return this.screenSize;	}
 
 	public void openPage (JPanel panel)
 	{
@@ -81,6 +87,11 @@ public class MainFrame extends JFrame
 		this.validate();
 		this.repaint();
 		this.setVisible(true);
+	}
+
+	public void errorMessage (String title, String str, int val)
+	{
+		this.errorMsg.showMessageDialog( this, str, title, val);
 	}
 
 

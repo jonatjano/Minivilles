@@ -225,16 +225,7 @@ public class IHMConsole extends Ihm
 				valDeTot += val;
 		}
 
-		// Action des cartes du joueur en fonction du lancé de dé
-		int idJoueurActuel = 0;
-		for (int i = 0; i < tabJ.length; i++)
-			if ( tabJ[i] == joueurActuel )
-				idJoueurActuel = i;
-
-		// Une fois que le lancer est définitif...
-		// Active les actions pour les joueurs en commençant par le premier et en allant dans le sens inverse des aiguilles d'une montre
-		for (int i = 0; i < tabJ.length; i++) //int i = idJoueurActuel - 1; i != idJoueurActuel; i-- )
-			tabJ[ Utility.posModulo(idJoueurActuel - i - 1, tabJ.length) ].actionCartes( joueurActuel,  valDeTot, tabJ, this);
+		this.controler.activateCardsAction(valDeTot);
 
 
 		toDisplay += "\n\n";

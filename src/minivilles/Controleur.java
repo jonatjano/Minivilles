@@ -69,6 +69,11 @@ public class Controleur
 		this.gj.resultatTour( valDe );
 	}
 
+	public void activateCardsAction (int valDeTotale)
+	{
+		this.gj.activateCardsAction( valDeTotale );
+	}
+
 
 	public int[] lancerDe (int nbDe)
 	{
