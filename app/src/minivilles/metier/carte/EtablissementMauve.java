@@ -35,7 +35,6 @@ public class EtablissementMauve extends Etablissement
 
 		if (canActivate(des) && j == possesseur)
 		{
-			System.out.println("activation de " + getNom());
 
 			switch (EtablissementMauve.getIndice(getNom()))
 			{

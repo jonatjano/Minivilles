@@ -20,7 +20,6 @@ public class EtablissementRouge extends Etablissement
 		if ( ( this.getType().equals("Restauration") || this.getType().equals("Commerce") ) && possesseur.hasCentreComm() ) { pow++; }
 
 		if (canActivate(des) && j != possesseur) {
-			System.out.println("activation de " + getNom());
 			int mon = j.getMonnaie();
 			if (mon >= pow) {
 				j.addMonnaie(- pow);
