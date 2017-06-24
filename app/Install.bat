@@ -6,7 +6,4 @@ xcopy "PartieInit" "%MINIVILLE11%\PartieInit\" /s /e /Y
 
 cls
 javac -d "%MINIVILLE11%" -encoding utf-8 @sources.list
-
-
-
 PAUSE
