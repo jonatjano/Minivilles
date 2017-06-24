@@ -401,8 +401,6 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 				this.buyTF.setText("");
 				this.rollDiceB.setEnabled(true);
 			}
-			else
-				System.out.println("AFFICHER UN MESSAGE");
 		}
 		else if ( e.getSource() == this.buyB )
 		{

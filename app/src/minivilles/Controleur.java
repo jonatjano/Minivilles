@@ -35,7 +35,6 @@ public class Controleur
 	public void reponseMenu (String choix)
 	{
 		ArrayList<String> 	names = null;
-		System.out.println(choix.toLowerCase().replace("é","e"));
 		switch (choix.toLowerCase().replace("é","e"))
 		{
 			case "1":
