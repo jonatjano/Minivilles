@@ -1,6 +1,7 @@
 package minivilles.ihm.gui;
 
 import minivilles.util.Utility;
+import minivilles.Controleur;
 import java.io.IOException;
 import java.awt.event.*;
 import java.awt.*;
@@ -19,7 +20,7 @@ public class MainMenu extends JPanel implements ActionListener
 	{
 		this.frame = frame;
 		this.frame.getBgPanel().setLayout( new GridBagLayout() );
-		try						{ this.frame.getBgPanel().setImage("../images/minivilles.jpg"); }
+		try						{ this.frame.getBgPanel().setImage(Controleur.PATH + "/images/minivilles.jpg"); }
 		catch (IOException e) 	{}
 
 

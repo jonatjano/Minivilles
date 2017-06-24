@@ -5,6 +5,7 @@ import minivilles.metier.carte.Etablissement;
 import minivilles.metier.carte.Monument;
 import minivilles.metier.*;
 import minivilles.GestionJeu;
+import minivilles.Controleur;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
@@ -46,7 +47,7 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 		/* Variables utiles */
 
 		this.imgCartes = null;
-		try 					{ this.imgCartes = ImageIO.read( new File("../images/etablissements.png") ); }
+		try 					{ this.imgCartes = ImageIO.read( new File(Controleur.PATH + "/images/etablissements.png") ); }
 		catch (IOException e)	{e.printStackTrace();}
 		System.out.println(1500/3920f);
 		this.rapCard = this.frame.getWidth() / 3750f;//0.5;
