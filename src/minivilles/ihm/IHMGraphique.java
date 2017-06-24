@@ -76,7 +76,7 @@ public class IHMGraphique extends Ihm
 	public boolean 				displayDemande (String demande) 										{return false;}
 	public Joueur				displaychoixJoueur(String demande, String err, Joueur[] tabJ) 			{return null;}
 	public Etablissement 		displaychoixJoueur(String demande, String err, Etablissement[] tabE) 	{return null;}
-	public void					displayChoixPartieInit() 												{}
+	public void					displayChoixPartieInit(boolean ev) 										{}
 
 
 }

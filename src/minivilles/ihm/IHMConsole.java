@@ -80,7 +80,7 @@ public class IHMConsole extends Ihm
 		this.controler.reponseChoixJoueurs( names );
 	}
 	
-	public void displayChoixPartieInit ()
+	public void displayChoixPartieInit (boolean ev)
 	{
 		Ihm.clearConsole();
 		System.out.println(	"~ CHOIX DU FICHIER D'INITIALISATION ~\n" );
@@ -105,7 +105,7 @@ public class IHMConsole extends Ihm
 				Integer.parseInt(choix) < 0 || Integer.parseInt(choix) >= fPartieInit.length);		
 		
 		
-		this.controler.nouvellePartie( fPartieInit[Integer.parseInt(choix)] );
+		this.controler.nouvellePartie( fPartieInit[Integer.parseInt(choix)] , true);
 	}
 	
 	public boolean displayDemande (String demande)
@@ -183,7 +183,26 @@ public class IHMConsole extends Ihm
 		/* LANCEMENT n°1 */
 		// Choix du nombre de dé
 		nbDe 	= this.displayChoixDe( 1, joueurActuel.getNbDes() );
-		valDe 	= this.controler.lancerDe( nbDe );
+		
+		if ( this.controler.isEvaluationMode())
+		{
+			valDe = new int[nbDe];
+			for (int i = 1 ; i <= nbDe ; i++)
+			{
+				System.out.print("valeur du dé " + i + " : ");
+				String s = "";
+				do
+				{
+					s = sc.nextLine();
+					if (!s.matches("[0-9]+"))																	System.out.println("Ce n'est pas un nombre !");
+					if (s.matches("[0-9]+") && ( Integer.parseInt(s) <= 0 || Integer.parseInt(s) > 6 ))	System.out.println("nombre invalide !");
+				} while (!s.matches("[0-9]+") || Integer.parseInt(s) <= 0 || Integer.parseInt(s) > 6);
+				valDe[i-1] = Integer.parseInt(s);
+				System.out.println("");
+			}
+		}
+		else
+			valDe 	= this.controler.lancerDe( nbDe );
 
 		valDeTot = 0;
 		for (int val : valDe)
@@ -199,14 +218,19 @@ public class IHMConsole extends Ihm
 				if (valDe.length == 1)		System.out.println( String.format( "\n. Lancer de dé : %d", valDeTot ) );
 				else 						System.out.println( String.format( "\n. Lancer de dé : %d (%d + %d)", valDeTot, valDe[0], valDe[1] ) );
 
-				System.out.print("Voulez-vous relancer le(s) dés ? (o/n)  ");
-				ans = sc.nextLine();
-
-				if ( !ans.matches("o|n") )
+				if (controler.isEvaluationMode())
+					ans = "n";
+				else
 				{
-					System.out.println("\tErreur : Saisie incorrecte");
-					Utility.waitForSeconds(0.75f);
+					System.out.print("Voulez-vous relancer le(s) dés ? (o/n)  ");
+					ans = sc.nextLine();
+					if ( !ans.matches("o|n") )
+					{
+						System.out.println("\tErreur : Saisie incorrecte");
+						Utility.waitForSeconds(0.75f);
+					}
 				}
+
 			} while ( !ans.matches("o|n") );
 		}
 
