@@ -3,12 +3,17 @@ if [ ! -d "$MINIVILLE11" ]
 then
     mkdir "$MINIVILLE11"
 fi
-if [ ! -d "$MINIVILLE11" ]
+if [ ! -d "$MINIVILLE11/PartieInit" ]
 then
     mkdir "$MINIVILLE11/PartieInit"
 fi
-
-
-javac -d "$MINIVILLE11" @sources.list
-
+if [ ! -d "$MINIVILLE11/images" ]
+then
+    mkdir "$MINIVILLE11/images"
+fi
 cp InitTemplate.ini "$MINIVILLE11/PartieInit/"
+cp "images" "%MINIVILLE11%\images" -rf
+
+clear
+javac -d "$MINIVILLE11" @sources.list
+read -p "appuyer sur une touche pour continuer..."
