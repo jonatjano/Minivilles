@@ -7,6 +7,7 @@ import minivilles.util.Utility;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.File;
+import java.io.PrintWriter;
 
 
 public class GestionJeu
@@ -47,16 +48,19 @@ public class GestionJeu
 	{
 		this.ihm 				= ihm;
 		this.pioche 			= new Pioche();
-		this.isEvaluation		= ev;
 		try
 		{
-			Scanner sc = new Scanner(new File(Controleur.PATH + "/PartieInit/" + file));
+			String chemin = Controleur.PATH + "/PartieInit/" + file;
+			if ( !ev )
+				chemin = Controleur.PATH + "/Sauvegarde/" + file;
+			Scanner sc = new Scanner(new File(chemin));
 		
 			String ligneJoueur  	= sc.nextLine();
 			String[] infoPartie 	= sc.nextLine().split(";");
 			this.numTour	    	= Integer.parseInt(infoPartie[0]);
 			this.indexFirstPlayer	= Integer.parseInt(infoPartie[1]);
 			this.indexJoueurActuel	= Integer.parseInt(infoPartie[2]);
+			this.isEvaluation	= infoPartie[3].equals("V");
 			
 			String[] tabNomJoueur = ligneJoueur.split(";");
 			this.nbJoueur = tabNomJoueur.length;
@@ -98,6 +102,40 @@ public class GestionJeu
 
 		this.ihm.displayDebutPartie( this );
 		this.ihm.displayTourJoueur( this );
+	}
+	
+	public void save (String file)
+	{
+		try
+		{
+			
+			PrintWriter pw = new PrintWriter( new File(Controleur.PATH + "/Sauvegarde/" + file));
+			
+			String nom = tabJoueur[0].getPrenom();
+			for (int i =1; i < tabJoueur.length ; i++)
+			{
+				nom += ";" + tabJoueur[i].getPrenom();
+			}
+			pw.println(nom);
+			pw.println(this.numTour + ";" + this.indexFirstPlayer + ";" + this.indexJoueurActuel + ";" + (this.isEvaluation == true ? "V" : "F" ));
+			
+			for(Joueur j : tabJoueur)
+			{
+				String sInfoJ = j.getMonnaie() + ";";
+				
+				sInfoJ += j.getnbEtablissements(pioche.getCartes()[0]);
+				for (int i=1 ; i < pioche.getCartes().length ; i++)
+					sInfoJ += ":" + j.getnbEtablissements(pioche.getCartes()[i]);
+				
+				sInfoJ += ";" + ( j.hasGare() 		? "V" : "F" );
+				sInfoJ += ":" + ( j.hasCentreComm() ? "V" : "F" );
+				sInfoJ += ":" + ( j.hasParc() 		? "V" : "F" );
+				sInfoJ += ":" + ( j.hasTourRadio() 	? "V" : "F" );
+				
+				pw.println(sInfoJ);
+			}
+			pw.close();
+		} catch(Exception e) {}
 	}
 
 	public void resultatTour (int[] valDe)

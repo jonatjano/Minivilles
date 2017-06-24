@@ -25,6 +25,7 @@ public class IHMConsole extends Ihm
 		Ihm.clearConsole();
 		System.out.println(	"~ MENU PRINCIPAL ~\n\n"	+
 							" 1 : Nouvelle partie\n" 	+
+							" 2 : Charger une partie\n" 	+
 							"-1 : Quitter\n"				);
 
 		Scanner sc = new Scanner (System.in);
@@ -34,8 +35,8 @@ public class IHMConsole extends Ihm
 			System.out.print("Choix : ");
 			ans = sc.nextLine();
 
-			if ( !ans.toLowerCase().replace("é","e").matches("-1|1|(evaluation)") )	System.out.println("\tErreur : Paramètre incorrect");
-		} while ( !ans.toLowerCase().replace("é","e").matches("-1|1|(evaluation)") );
+			if ( !ans.toLowerCase().replace("é","e").matches("-1|1|2|(evaluation)") )	System.out.println("\tErreur : Paramètre incorrect");
+		} while ( !ans.toLowerCase().replace("é","e").matches("-1|1|2|(evaluation)") );
 
 		this.controler.reponseMenu( ans );
 	}
@@ -58,10 +59,10 @@ public class IHMConsole extends Ihm
 			{
 				System.out.print( String.format("%2d - Nom du joueur :  ", (cpt + 1)) );
 				name = sc.nextLine();
-				if 		( name == null || !name.matches(".*[a-zA-Z].*") )		System.out.println( "\t\tErreur : Nom invalide" );
+				if 		( name == null || !name.matches("[.[^;]]*[a-zA-Z][.[^;]]*") )		System.out.println( "\t\tErreur : Nom invalide" );
 				else if ( name.length() > 20 )									System.out.println( "\t\tErreur : Longuer invalide (entre 1 et 20)" );
 				else if ( Utility.containsIgnoreCase(names,name))				System.out.println( "\t\tErreur : Un nom identique existe déjà" );
-			} while ( name == null || !name.matches(".*[a-zA-Z].*") || name.length() > 20 || Utility.containsIgnoreCase(names,name));
+			} while ( name == null || !name.matches("[.[^;]]*[a-zA-Z][.[^;]]*") || name.length() > 20 || Utility.containsIgnoreCase(names,name));
 			names.add( name );
 
 			cpt++;
@@ -99,13 +100,48 @@ public class IHMConsole extends Ihm
 			System.out.print("\nVeuillez entrer l'index du fichier à charger : ");
 			choix = sc.nextLine();
 			
-			if (!choix.matches("[0-9]+") && !choix.matches("0*"))														System.out.println("Ce n'est pas un nombre");
+			if (!choix.matches("[0-9]+") && !choix.matches("0*"))															System.out.println("Ce n'est pas un nombre");
 			if (choix.matches("[0-9]+") && ( Integer.parseInt(choix) < 0 || Integer.parseInt(choix) >= fPartieInit.length))	System.out.println("Indice invalide");
 		} while((!choix.matches("[0-9]+") && !choix.matches("0*")) ||
 				Integer.parseInt(choix) < 0 || Integer.parseInt(choix) >= fPartieInit.length);		
 		
 		
-		this.controler.nouvellePartie( fPartieInit[Integer.parseInt(choix)] , true);
+		this.controler.nouvellePartie( fPartieInit[Integer.parseInt(choix)] , ev);
+	}
+	
+	public void displayChoixPartieLoad ()
+	{
+		Ihm.clearConsole();
+		System.out.println(	"~ CHOIX DU FICHIER À CHARGER ~\n" );
+
+		Scanner sc = new Scanner (System.in);
+		String[] fPartieSave;
+		String choix;
+		String err = null;
+		
+		do
+		{
+			fPartieSave = new File(Controleur.PATH + "/Sauvegarde").list();
+			if (fPartieSave.length == 0)
+			{
+				System.out.println("pas de fichier de sauvegarde !");
+				Utility.waitForSeconds(1);
+				this.displayMenu();
+			}
+			
+			for (int i=0; i< fPartieSave.length; i++)
+				System.out.println("\t" + i + " -" + fPartieSave[i]);
+			
+			System.out.print("\nVeuillez entrer l'index du fichier à charger : ");
+			choix = sc.nextLine();
+			
+			if (!choix.matches("[0-9]+") && !choix.matches("0*"))															System.out.println("Ce n'est pas un nombre");
+			if (choix.matches("[0-9]+") && ( Integer.parseInt(choix) < 0 || Integer.parseInt(choix) >= fPartieSave.length))	System.out.println("Indice invalide");
+		} while((!choix.matches("[0-9]+") && !choix.matches("0*")) ||
+				Integer.parseInt(choix) < 0 || Integer.parseInt(choix) >= fPartieSave.length);		
+		
+		
+		this.controler.nouvellePartie( fPartieSave[Integer.parseInt(choix)] , false);
 	}
 	
 	public boolean displayDemande (String demande)
@@ -262,6 +298,7 @@ public class IHMConsole extends Ihm
 		/* Demande de construction */
 		toDisplay +=	"\n-> Que voulez-vous faire ?\n" 										+
 						"   ( 1 : Etablissement ;  2 : Monument ; -1 : Ne rien construire\n"	+
+						"     4 : Sauvegarder et quitter\n"										+
 						"     3 : Glossaire des cartes (avec effet)                       )  ";
 		do
 		{
@@ -272,12 +309,12 @@ public class IHMConsole extends Ihm
 				System.out.print( toDisplay );
 				choix = sc.nextLine();
 
-				if ( !choix.matches("1|2|3|-1") )//&& !choix.equals("") )
+				if ( !choix.matches("1|2|3|4|-1") )//&& !choix.equals("") )
 				{
 					System.out.println("\tErreur : Saisie incorrecte");
 					Utility.waitForSeconds(0.75f);
 				}
-			} while ( !choix.matches("1|2|3|-1") );
+			} while ( !choix.matches("1|2|3|4|-1") );
 
 
 			/* CONSTRUCTION ETABLISSEMENT */
@@ -385,6 +422,37 @@ public class IHMConsole extends Ihm
 			if ( choix.matches("3") )
 			{
 				printCartes(pioche);
+			}
+			
+			if ( choix.matches("4") )
+			{
+				Ihm.clearConsole();
+				
+				File fichierSave = null;
+				String nomFichier;
+				
+				do
+				{
+					System.out.print("Entrez un nom de sauvegarde : ");
+					nomFichier = sc.nextLine();
+					
+					if 	( nomFichier == null || !nomFichier.matches("[a-z0-9-_A-Z]+") )	
+						System.out.println( "\t\tErreur : Nom de fichier invalide (Caractère autoriser : lettre sans accent, chiffre, tiret du milieu, tiret du bas)" );
+					else
+					{
+						fichierSave = new File(Controleur.PATH + "/Sauvegarde/" + nomFichier + ".save");
+						if 		(fichierSave.exists())
+							System.out.println("Une sauvegarde avec ce nom existe déjà");
+						else if ( nomFichier.length() > 20 )							System.out.println( "\t\tErreur : Longuer invalide (entre 1 et 20)" );
+					}
+					
+				} while (nomFichier == null || !nomFichier.matches("[a-z0-9-_A-Z]+") || fichierSave.exists() || nomFichier.length() > 20);
+				
+				this.controler.sauvegarde(nomFichier + ".save");
+				Ihm.clearConsole();
+				System.out.println("La partie a été sauvegarder sous le nom : " + nomFichier);
+				Utility.waitForSeconds(2);
+				return;
 			}
 
 		} while ( (ans.equals("") && !choix.equals("-1")) || ans.equals("-1")  );

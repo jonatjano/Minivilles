@@ -56,10 +56,14 @@ public class Joueur
 	}
 
 	public int getNbDes() {
+		return this.hasGare() ? 2 : 1;
+	}
+	
+	public boolean hasGare() {
 		for (Monument m : this.monuments)
 			if (m.getNom().equals("Gare"))
-				return m.estConstruit() ? 2 : 1;
-		return 1;
+				return m.estConstruit();
+		return false;
 	}
 
 	public boolean hasCentreComm() {
@@ -99,10 +103,18 @@ public class Joueur
 
 	/* GETTER */
 
-	public String 					getPrenom ()					{ return this.prenom;				}
-	public ArrayList<Monument> 		getMonuments ()					{ return new ArrayList<Monument>( this.monuments );			}
-	public ArrayList<Etablissement> getEtablissements ()			{ return new ArrayList<Etablissement>( this.etablissements );	}
-	public int 						getMonnaie ()					{ return this.monnaie;				}
+	public String 					getPrenom ()								{ return this.prenom;				}
+	public ArrayList<Monument> 		getMonuments ()								{ return new ArrayList<Monument>( this.monuments );			}
+	public ArrayList<Etablissement> getEtablissements ()						{ return new ArrayList<Etablissement>( this.etablissements );	}
+	public int 						getMonnaie ()								{ return this.monnaie;				}
+	public int 						getnbEtablissements (Etablissement et)	
+	{
+		int nb = 0;
+		for (Etablissement etTemp : etablissements)
+			if (et.equals(etTemp))
+				nb++;
+		return nb;
+	}
 
 	/* SETTER */
 	public void 	setMonnaie (int valeur) {addMonnaie(valeur - this.monnaie);}

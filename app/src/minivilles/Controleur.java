@@ -43,6 +43,9 @@ public class Controleur
 			case "evaluation":
 				this.ihm.displayChoixPartieInit(true);
 				break;
+			case "2":
+				this.ihm.displayChoixPartieLoad();
+				break;
 		}
 		if ( !choix.matches("1|-1") )	this.ihm.displayMenu();
 	}
@@ -68,6 +71,11 @@ public class Controleur
 	public void reponseTourJoueur (int[] valDe)
 	{
 		this.gj.resultatTour( valDe );
+	}
+	
+	public void sauvegarde(String file)
+	{
+		this.gj.save (file);
 	}
 
 	public void activateCardsAction (int valDeTotale)

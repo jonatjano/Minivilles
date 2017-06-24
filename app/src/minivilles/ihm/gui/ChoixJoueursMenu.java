@@ -83,7 +83,7 @@ public class ChoixJoueursMenu extends JPanel implements ActionListener
 			boolean isTooLong 	= false;
 			for (ChoixJoueursLine line : lines)
 			{
-				if ( line.getText().matches(".*[a-zA-Z].*") )
+				if ( line.getText().matches("[.[^;]]*[a-zA-Z][.[^;]]*") )
 				{
 					for (ChoixJoueursLine otherLine : lines)
 					{
