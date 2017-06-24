@@ -32,6 +32,7 @@ public class GestionJeu
 		this.nbJoueur 			= names.size();
 		this.isEvaluation		= false;
 		this.indexFirstPlayer	= 0;
+		this.indexJoueurActuel 	= this.indexFirstPlayer;
 		this.numTour			= 1;
 
 		this.tabJoueur = new Joueur[this.nbJoueur];
@@ -55,6 +56,7 @@ public class GestionJeu
 			String[] infoPartie 	= sc.nextLine().split(";");
 			this.numTour	    	= Integer.parseInt(infoPartie[0]);
 			this.indexFirstPlayer	= Integer.parseInt(infoPartie[1]);
+			this.indexJoueurActuel	= Integer.parseInt(infoPartie[2]);
 			
 			String[] tabNomJoueur = ligneJoueur.split(";");
 			this.nbJoueur = tabNomJoueur.length;
@@ -92,8 +94,7 @@ public class GestionJeu
 
 	public void lancer ()
 	{
-		this.joueurActuel		= this.tabJoueur[ this.indexFirstPlayer ];
-		this.indexJoueurActuel 			= this.indexFirstPlayer;
+		this.joueurActuel		= this.tabJoueur[ this.indexJoueurActuel ];
 
 		this.ihm.displayDebutPartie( this );
 		this.ihm.displayTourJoueur( this );
