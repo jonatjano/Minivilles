@@ -17,10 +17,12 @@ public class Controleur
 	private GestionJeu 	gj;
 
 
-	public Controleur ()
+	public Controleur (boolean gui)
 	{
-		this.ihm = new IHMConsole( this );
-		// this.ihm = new IHMGraphique( this );
+		if (gui)
+			this.ihm = new IHMGraphique( this );
+		else
+			this.ihm = new IHMConsole( this );
 	}
 
 	public void lancer ()
@@ -100,7 +102,10 @@ public class Controleur
 
 	public static void main (String[] args)
 	{
-		Controleur controleur = new Controleur();
+		boolean gui = false;
+		if (args.length >= 1 && args[0].equalsIgnoreCase("GUI"))
+			gui = true;
+		Controleur controleur = new Controleur(gui);
 		controleur.lancer();
 	}
 }
