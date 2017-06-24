@@ -80,7 +80,7 @@ public class IHMConsole extends Ihm
 		this.controler.reponseChoixJoueurs( names );
 	}
 	
-	public void displayChoixPartieInit ()
+	public void displayChoixPartieInit (boolean ev)
 	{
 		Ihm.clearConsole();
 		System.out.println(	"~ CHOIX DU FICHIER D'INITIALISATION ~\n" );
@@ -105,7 +105,7 @@ public class IHMConsole extends Ihm
 				Integer.parseInt(choix) < 0 || Integer.parseInt(choix) >= fPartieInit.length);		
 		
 		
-		this.controler.nouvellePartie( fPartieInit[Integer.parseInt(choix)] );
+		this.controler.nouvellePartie( fPartieInit[Integer.parseInt(choix)] , true);
 	}
 	
 	public boolean displayDemande (String demande)

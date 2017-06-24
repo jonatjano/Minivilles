@@ -32,6 +32,7 @@ public class GestionJeu
 		this.nbJoueur 			= names.size();
 		this.isEvaluation		= false;
 		this.indexFirstPlayer	= 0;
+		this.numTour			= 1;
 
 		this.tabJoueur = new Joueur[this.nbJoueur];
 		for (int i = 0; i < nbJoueur; i++)
@@ -41,17 +42,18 @@ public class GestionJeu
 		this.joueurGagnant	= null;
 	}
 	
-	public GestionJeu (Ihm ihm, String file)
+	public GestionJeu (Ihm ihm, String file, boolean ev)
 	{
 		this.ihm 				= ihm;
 		this.pioche 			= new Pioche();
-		this.isEvaluation		= true;
+		this.isEvaluation		= ev;
 		this.indexFirstPlayer	= 0;
 		try
 		{
 			Scanner sc = new Scanner(new File(Controleur.PATH + "/PartieInit/" + file));
 		
 			String ligneJoueur = sc.nextLine();
+			this.numTour	   = Integer.parseInt(sc.nextLine());
 			
 			String[] tabNomJoueur = ligneJoueur.split(";");
 			this.nbJoueur = tabNomJoueur.length;
@@ -92,7 +94,6 @@ public class GestionJeu
 		this.indexFirstPlayer 	= 0;
 		this.joueurActuel		= this.tabJoueur[ this.indexFirstPlayer ];
 		this.indexJoueurActuel 			= this.indexFirstPlayer;
-		this.numTour			= 1;
 
 		this.ihm.displayDebutPartie( this );
 		this.ihm.displayTourJoueur( this );

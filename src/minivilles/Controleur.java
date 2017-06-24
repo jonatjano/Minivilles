@@ -41,7 +41,7 @@ public class Controleur
 				break;
 
 			case "evaluation":
-				this.ihm.displayChoixPartieInit();
+				this.ihm.displayChoixPartieInit(true);
 				break;
 		}
 		if ( !choix.matches("1|-1") )	this.ihm.displayMenu();
@@ -59,9 +59,9 @@ public class Controleur
 		this.gj.lancer();
 	}
 
-	public void nouvellePartie (String file)
+	public void nouvellePartie (String file , boolean ev)
 	{
-		this.gj = new GestionJeu(this.ihm, file);
+		this.gj = new GestionJeu(this.ihm, file , ev);
 		this.gj.lancer();
 	}
 
