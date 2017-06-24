@@ -12,7 +12,7 @@ then
     mkdir "$MINIVILLE11/images"
 fi
 cp InitTemplate.ini "$MINIVILLE11/PartieInit/"
-cp "images" "%MINIVILLE11%\images" -rf
+cp "images" "$MINIVILLE11\images" -rf
 
 clear
 javac -d "$MINIVILLE11" @sources.list
