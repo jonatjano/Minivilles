@@ -30,14 +30,14 @@ public class MainFrame extends JFrame
 		super();
 		
 		this.screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
+		this.setVisible(true);
 		// Police des panel
-		this.font = new Font("Arial", 0, 16);
+		this.font = new Font( "Arial", 0, (int) (8 + 0.03 * this.getWidth()) );
 
 		this.controler = controler;
 		this.setTitle("MiniVilles");
 
-		this.setSize(1300, 900);
+		this.setSize(1920, 1080);
 		this.setLocation(200, 100);
 		// this.setExtendedState( JFrame.MAXIMIZED_BOTH );
 		this.setDefaultCloseOperation( EXIT_ON_CLOSE );

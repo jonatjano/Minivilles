@@ -17,14 +17,20 @@ public abstract class Carte
 	private boolean				estLimite;
 	private Joueur				joueur;
 
+	private int 				col,
+								lig;
 
-	public Carte (String nom, String type, String description, boolean estLimite, int coutPiece)
+
+	public Carte (String nom, String type, String description, boolean estLimite, int coutPiece, int lig, int col)
 	{
 		this.nom 			= nom;
 		this.type 			= type;
 		this.description 	= description;
 		this.estLimite		= estLimite;
 		this.coutPiece		= coutPiece;
+
+		this.lig			= lig;
+		this.col			= col;
 
 		this.joueur 		= null;
 	}
@@ -37,6 +43,8 @@ public abstract class Carte
 	public int 				 	getCoutPiece ()		{ return this.coutPiece;	}
 	public boolean				estLimite ()		{ return this.estLimite;	}
 	public Joueur 				getJoueur ()		{ return this.joueur;		}
+	public 			int 	getLig () 				{ return this.lig; }
+	public 			int 	getCol () 				{ return this.col; }
 
 	/* SETTER */
 

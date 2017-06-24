@@ -39,6 +39,7 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 		this.frame.getBgPanel().setLayout( new BorderLayout() );
 		this.dernierLance = null;
 
+
 		this.gj 	= gj;
 		this.setLayout( new BorderLayout() );
 		this.setVisible(true);
@@ -47,9 +48,8 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 
 		this.imgCartes = null;
 		try 					{ this.imgCartes = ImageIO.read( new File("../images/etablissements.png") ); }
-		catch (IOException e)	{e.printStackTrace();}
-		System.out.println(1500/3920f);
-		this.rapCard = this.frame.getWidth() / 3750f;//0.5;
+		catch (IOException e)	{ e.printStackTrace(); }
+		this.rapCard = this.frame.getWidth() * 0.00025;
 
 
 		/* Panel de gauche */
@@ -63,8 +63,8 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 		centerP = new JPanel();
 		centerP.setLayout( new GridBagLayout() );
 
-		int[] dim = Utility.getPercentOfFrame(this.frame, 70, 80);
-		this.canvas = new JCanvas( new Dimension(dim[0], dim[1]) );
+		int[] dim = Utility.getPercentOfFrame(this.frame, 65, 80);
+		this.canvas = new JCanvas( this.frame, new Dimension(dim[0], dim[1]) );
 		this.canvas.setBorder( BorderFactory.createLineBorder(Color.black) );
 
 		centerP.add( this.canvas );
@@ -179,7 +179,7 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 		this.rightBottP = new JPanel();
 
 		int[] dim2 = Utility.getPercentOfFrame(this.frame, 20, 75);
-		this.achatP = new JCanvas( new Dimension(dim2[0], dim2[1]) );
+		this.achatP = new JCanvas( this.frame, new Dimension(dim2[0], dim2[1]) );
 		this.achatP.setBorder( BorderFactory.createLineBorder(Color.black) );
 		this.achatP.setEnabled(false);
 		this.rightBottP.add( this.achatP );
@@ -255,8 +255,8 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 				
 				this.canvas.printImage( 	imgCartes,
 									new Dimension( (int) (Etablissement.DIM_ET.getWidth() * this.rapCard), (int) (Etablissement.DIM_ET.getHeight() * this.rapCard) ),
-									(begX + main.get(j).getCol()*(185+5)),
-									(begY + main.get(j).getLig()*(273+7)),
+									(begX + (int) (main.get(j).getCol()*(Etablissement.DIM_ET.getWidth()+5))),
+									(begY + (int) (main.get(j).getLig()*(Etablissement.DIM_ET.getHeight()+7))),
 									Etablissement.DIM_ET,
 									coordCard[0] + (int) (col * (Etablissement.DIM_ET.getWidth()*this.rapCard + decalage)),
 									coordCard[1] + (int) (lig * (Etablissement.DIM_ET.getHeight()*this.rapCard + decalage)) );
@@ -282,6 +282,7 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 		int	centerCardX = 0,
 			centerCardY = 0;
 
+		// Affichage établissements
 		for (int j = 0; j < 15; j++)
 		{
 			if (pioche.getNbCartes()[j] > 0)
@@ -293,12 +294,12 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 											(int) (centerCardX - Etablissement.DIM_ET.getWidth()*this.rapCard/4f),
 											(int) (centerCardY - Etablissement.DIM_ET.getWidth()*this.rapCard/2f - 55*this.rapCard) );
 				this.achatP.printImage( 	imgCartes,
-									new Dimension( (int) (Etablissement.DIM_ET.getWidth() * this.rapCard),(int) (Etablissement.DIM_ET.getHeight() * this.rapCard) ),
-									(begX + colSrc*(185+5)),
-									(begY + ligSrc*(273+7)),
-									Etablissement.DIM_ET,
-									centerCardX,
-									centerCardY 	);
+											new Dimension( (int) (Etablissement.DIM_ET.getWidth() * this.rapCard),(int) (Etablissement.DIM_ET.getHeight() * this.rapCard) ),
+											(int) (begX + colSrc*(185+5)),
+											(int) (begY +  ligSrc*(273+7)),
+											Etablissement.DIM_ET,
+											centerCardX,
+											centerCardY 	);
 				col++;
 				if (col >= 3)
 				{
@@ -314,6 +315,25 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 				colSrc = 0;
 			}
 		}
+
+		begX = 7;
+		begY = 4;
+			// 10
+		// Affichage monuments
+		// ArrayList<Monument> tabMon = this.gj.getJoueurActuel().getMonuments();
+		// for (Monument mon : tabMon)
+		// {
+		// 	if ( !mon.estConstruit() )
+		// 	{
+		// 		this.achatP.printImage( 	imgCartes,
+		// 									new Dimension( (int) (Etablissement.DIM_ET.getWidth() * this.rapCard),(int) (Etablissement.DIM_ET.getHeight() * this.rapCard) ),
+		// 									(int) (begX + colSrc*(Monument.DIM_MON.getWidth()+10)),
+		// 									(int) (begY + ligSrc*(Monument.DIM_MON.getHeight()+10)),
+		// 									Etablissement.DIM_ET,
+		// 									centerCardX,
+		// 									centerCardY 	);
+		// 	}
+		// }
 	}
 
 	public void actionPerformed (ActionEvent e)

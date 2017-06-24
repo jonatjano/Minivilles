@@ -1,8 +1,11 @@
 package minivilles.metier.carte;
 
+import java.awt.Dimension;
+
 
 public class Monument extends Carte
 {
+	public static final Dimension DIM_MON = new Dimension(220, 326);
 	private static final String GARE 	=	"_____________________________________    \n"	+
 											"  __________/___________________\\______  \n"	+
 											"           |                     |       \n"	+
@@ -75,13 +78,12 @@ public class Monument extends Carte
 											"       /  \\\\   / \\   //  \\      \n"	+
 											"     /v\\  /v\\ /v v\\ /v\\  /v\\    \n"	+
 											"    / \\/||\\ / \\   / \\ /||\\/ \\   \n";
+	private boolean estConstruit;
 
-	boolean estConstruit;
 
-
-	public Monument (String nom, String description, int cout)
+	public Monument (String nom, String description, int cout, int lig, int col)
 	{
-		super(nom, "Monument", description, false, cout);
+		super(nom, "Monument", description, false, cout, lig, col);
 
 		this.estConstruit = false;
 	}

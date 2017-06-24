@@ -16,14 +16,15 @@ public class Joueur
 	private ArrayList<Etablissement> 	etablissements;
 	private ArrayList<Monument> 		monuments;
 
+
 	/* Constructeur principal */
 	public Joueur(String prenom, int monnaie)
 	{
 		this.prenom = prenom;
-		this.monuments 		= new ArrayList<Monument>( Arrays.asList(new Monument[] {	new Monument("Gare", "", 4),
-																						new Monument("Centre Commercial", "", 10),
-																						new Monument("Parc d'Attractions", "", 16),
-																						new Monument("Tour Radio", "", 22) }) );
+		this.monuments 		= new ArrayList<Monument>( Arrays.asList(new Monument[] {	new Monument("Gare", 				"", 	4,		1, 0),
+																						new Monument("Centre Commercial", 	"", 	10,		1, 1),
+																						new Monument("Parc d'Attractions", 	"", 	16,		1, 2),
+																						new Monument("Tour Radio", 			"", 	22,		1, 3) }) );
 
 		this.etablissements = new ArrayList<Etablissement>( Arrays.asList(new Etablissement[] { new EtablissementBleu("Champs de blé", 	"Culture", 	1, 1, 0, 0,		1	),
 																								new EtablissementVert("Boulangerie", 	"Commerce", 1, 1, 0, 2,		2,3 ) }) );

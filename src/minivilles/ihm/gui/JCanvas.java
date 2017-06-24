@@ -9,12 +9,14 @@ import java.awt.image.BufferedImage;
 
 public class JCanvas extends JPanel
 {
+	private MainFrame 					frame;
 	private LinkedList<DessinString> 	stringList = new LinkedList<DessinString>();
 	private LinkedList<DessinImage> 	imageList  = new LinkedList<DessinImage>();
 
 
-	public JCanvas (Dimension dim)
+	public JCanvas (MainFrame frame, Dimension dim)
 	{
+		this.frame = frame;
 		this.setPreferredSize( dim );
 	}
 
@@ -29,6 +31,7 @@ public class JCanvas extends JPanel
 		g.clearRect( 0, 0, this.getWidth(), this.getHeight() );
 
 		g.setColor( Color.BLACK );
+		g.setFont( new Font("Arial", 0, (int) (8 + 0.003 * this.frame.getWidth())) ); 
 
 		// Dessin des labels
 		for (DessinString ds : this.stringList)
