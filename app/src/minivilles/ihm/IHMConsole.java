@@ -208,7 +208,6 @@ public class IHMConsole extends Ihm
 		for (int val : valDe)
 			valDeTot += val;
 
-		boolean peutRelancer = false;
 		if ( joueurActuel.hasTourRadio() )
 		{
 			do
@@ -250,7 +249,10 @@ public class IHMConsole extends Ihm
 		}
 
 		this.controler.activateCardsAction(valDeTot);
-
+		toDisplay = this.displayNouveauTour(gj) + String.format("\n\n\t--- Tour de %s ---", joueurActuel.getPrenom());
+		Ihm.clearConsole();
+		System.out.println( toDisplay );
+		
 
 		toDisplay += "\n\n";
 		if (valDe.length == 1)		toDisplay += String.format( "\n. Lancer de dé : %d", valDeTot );
