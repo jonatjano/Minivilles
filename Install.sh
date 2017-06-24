@@ -11,6 +11,6 @@ cp InitTemplate.ini "$MINIVILLE11/PartieInit/"
 cp "images" "$MINIVILLE11" -rf
 
 clear
-javac -d "$MINIVILLE11" @sources.list
+javac -d "$MINIVILLE11" -encoding utf-8 @sources.list
 echo "appuyer sur une touche pour continuer..."
 read mot
