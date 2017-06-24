@@ -7,7 +7,7 @@ if [ ! -d "$MINIVILLE11/PartieInit" ]
 then
     mkdir "$MINIVILLE11/PartieInit"
 fi
-cp InitTemplate.ini "$MINIVILLE11/PartieInit/"
+cp PartieInit/InitTemplate.ini "$MINIVILLE11/PartieInit/"
 cp "images" "$MINIVILLE11" -rf
 
 clear
