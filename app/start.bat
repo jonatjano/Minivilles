@@ -1,3 +1,4 @@
+
 set current=%~dp0
 
 cd %MINIVILLE11%
