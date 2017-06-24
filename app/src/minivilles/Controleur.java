@@ -19,15 +19,15 @@ public class Controleur
 
 	public Controleur ()
 	{
-		this.ihm = new IHMConsole( this );
-		// this.ihm = new IHMGraphique( this );
+		//this.ihm = new IHMConsole( this );
+		 this.ihm = new IHMGraphique( this );
 	}
 
 	public void lancer ()
 	{
 		this.ihm.displayMenu();
 	}
-	
+
 	public boolean isEvaluationMode() {return gj.isEvaluationMode();}
 
 	public void reponseMenu (String choix)

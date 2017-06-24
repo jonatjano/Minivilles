@@ -49,13 +49,12 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 
 		this.imgCartes = null;
 		try 					{ this.imgCartes = ImageIO.read( new File("../images/etablissements.png") ); }
-		catch (IOException e)	{ e.printStackTrace(); }
+		catch (IOException e)	{}
 		this.rapCard = this.frame.getWidth() * 0.00025;
 
 		try 					{ this.imgCartes = ImageIO.read( new File(Controleur.PATH + "/images/etablissements.png") ); }
-		catch (IOException e)	{e.printStackTrace();}
-		System.out.println(1500/3920f);
-		this.rapCard = this.frame.getWidth() / 3750f;//0.5;
+		catch (IOException e)	{}
+		this.rapCard = this.frame.getWidth() * 0.00025;
 
 
 		/* Panel de gauche */
@@ -74,7 +73,7 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 		this.canvas.setBorder( BorderFactory.createLineBorder(Color.black) );
 
 		centerP.add( this.canvas );
-		leftP.add( centerP );	
+		leftP.add( centerP );
 
 
 		/* Panel du haut */
@@ -115,7 +114,7 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 		rightP = new JPanel();
 		rightP.setLayout( new BoxLayout(rightP, BoxLayout.Y_AXIS) );
 
-		
+
 		/* Panel haut droite */
 		// Création du tableau qu'affichera la combobx permettant de choisir le nombre de dés
 		this.rightTopP = new JPanel();
@@ -253,17 +252,27 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 													coords[i][0],//( (main.size() <= 4) ? (int) ((Etablissement.DIM_ET.getWidth()*this.rapCard + decalage)*(main.size()/4f)) : (int) ((Etablissement.DIM_ET.getWidth()*this.rapCard + decalage)*2f) ),
 													coords[i][1] + (Etablissement.DIM_ET.getHeight()*this.rapCard)/2 + (Etablissement.DIM_ET.getHeight()*this.rapCard*(3f/10)),
 													rot*(i+1) );
-			
+
 			int lig = 0;
 			int col = 0;
 			for (int j = 0; j < main.size(); j++)
 			{
-				
-				this.canvas.printImage( 	imgCartes,
-									new Dimension( (int) (Etablissement.DIM_ET.getWidth() * this.rapCard), (int) (Etablissement.DIM_ET.getHeight() * this.rapCard) ),
-									(begX + (int) (main.get(j).getCol()*(Etablissement.DIM_ET.getWidth()+5))),
-									(begY + (int) (main.get(j).getLig()*(Etablissement.DIM_ET.getHeight()+7))),
-									Etablissement.DIM_ET,
+				BufferedImage carte = imgCartes.getSubimage((begX + (int) (main.get(j).getCol()*(Etablissement.DIM_ET.getWidth()+5))),
+															(begY + (int) (main.get(j).getLig()*(Etablissement.DIM_ET.getHeight()+7))),
+															(int) Etablissement.DIM_ET.getWidth(),
+															(int) Etablissement.DIM_ET.getHeight());
+
+				int w = carte.getWidth();
+				int h = carte.getHeight();
+
+				BufferedImage newImage = new BufferedImage(2 * w, 2 * h, BufferedImage.TYPE_INT_ARGB);
+				Graphics2D graphic = newImage.createGraphics();
+
+				graphic.rotate(Math.toRadians(360 / len * (i + 1)), w, h);
+				graphic.drawImage(carte, null, 0, 0);
+
+				this.canvas.printImage( 	newImage,
+									new Dimension( (int) (newImage.getWidth() * this.rapCard), (int) (newImage.getHeight() * this.rapCard) ),
 									coordCard[0] + (int) (col * (Etablissement.DIM_ET.getWidth()*this.rapCard + decalage)),
 									coordCard[1] + (int) (lig * (Etablissement.DIM_ET.getHeight()*this.rapCard + decalage)) );
 				col++;
@@ -272,7 +281,7 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 					lig++;
 					col = 0;
 				}
-			}	
+			}
 		}
 
 		// Affichage des achats
@@ -313,7 +322,7 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 					col = 0;
 				}
 			}
-			
+
 			colSrc++;
 			if (colSrc >= 5)
 			{
@@ -356,7 +365,7 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 			{
 				this.dernierLance = this.frame.getControler().lancerDe( Integer.parseInt( (String) this.nbDeCB.getSelectedItem() ) );
 				this.resLanceL.setText( "Résultat du lancé : " + ((dernierLance.length == 1) ? ("" + dernierLance[0]) : String.format("%d (%d + %d)", (dernierLance[0] + dernierLance[1]), dernierLance[0], dernierLance[1])) );
-				
+
 				// Si le joueur a fait un double et a le parc d'attraction...
 				if ( this.gj.hasPlayerDouble(this.dernierLance) )
 				{
@@ -427,5 +436,3 @@ public class PartiePanel extends JPanel implements ActionListener, ItemListener
 
 	}
 }
-
-
